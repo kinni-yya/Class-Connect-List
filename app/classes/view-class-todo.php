@@ -1,10 +1,10 @@
 <?php
-include "includes/config.php";
+include "../../includes/config.php";
 if (session_status() != PHP_SESSION_ACTIVE) {
     session_start();
 }
 if (!isset($_SESSION["user_email"])) {
-    header("Location: index.php");
+    header("Location: ../../index.php");
     die();
 }
 if (!isset($_GET['class_id'])) {

@@ -27,7 +27,7 @@ if (!isset($_SESSION["user_email"])) {
                         <h4 class="my-0 fw-normal">See Class Lists</h4>
                     </div>
                     <div class="card-body">
-                        <a href="view-class.php"><button type="button" class="w-100 btn btn-lg btn-outline-primary">View Classes</button></a>
+                        <a href="app/classes/view-class.php"><button type="button" class="w-100 btn btn-lg btn-outline-primary">View Classes</button></a>
                     </div>
                 </div>
             </div>
@@ -37,7 +37,7 @@ if (!isset($_SESSION["user_email"])) {
                         <h4 class="my-0 fw-normal">Add Class</h4>
                     </div>
                     <div class="card-body">
-                        <a href="add-class.php"><button type="button" class="w-100 btn btn-lg btn-outline-primary">Add</button></a>
+                        <a href="app/classes/add-class.php"><button type="button" class="w-100 btn btn-lg btn-outline-primary">Add</button></a>
                     </div>
                 </div>
             </div>
