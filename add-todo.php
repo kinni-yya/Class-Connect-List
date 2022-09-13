@@ -4,14 +4,14 @@ session_start();
 if (!isset($_SESSION["user_email"])) {
     header("Location: index.php");
     die();
-}  
+}
 
 $msg = "";
 
-if (isset($_POST["addTodo"])){
+if (isset($_POST["addTodo"])) {
     $title = mysqli_real_escape_string($conn, $_POST["title"]);
     $desc = mysqli_real_escape_string($conn, $_POST["desc"]);
-    
+
     //Get User ID
     $sql = "SELECT id FROM users WHERE email='{$_SESSION["user_email"]}'";
     $res = mysqli_query($conn, $sql);
@@ -47,12 +47,12 @@ if (isset($_POST["addTodo"])){
     <?php getHead(); ?>
 </head>
 
-<body class= "bg-light">
+<body class="bg-light">
     <?php getHeader(); ?>
     <div class="container">
         <div class="row">
             <div class="col-md-5 mx-auto">
-                <div class="card bg-white p-4 rounded boarder shadow"> 
+                <div class="card bg-white p-4 rounded boarder shadow">
                     <div class="card-header">
                         <h4 class="card-title">Add To-Do</h4>
                     </div>
@@ -62,8 +62,8 @@ if (isset($_POST["addTodo"])){
                             <div class="mb-3">
                                 <label for="title" class="form-label">Title</label>
                                 <input type="text" class="form-control" id="title" name="title" placeholder="e.g. IAS Project" value="<?php if (isset($_POST["addTodo"])) {
-                                                                                                                                                    echo $_POST["title"];
-                                                                                                                                                } ?>" required>
+                                                                                                                                            echo $_POST["title"];
+                                                                                                                                        } ?>" required>
                             </div>
                             <div class="mb-3">
                                 <label for="desc" class="form-label">Details</label>

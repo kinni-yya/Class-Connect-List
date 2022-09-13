@@ -47,4 +47,3 @@ if(isset($_POST["register_email"])){
 }
 
 $conn->close();
-?>

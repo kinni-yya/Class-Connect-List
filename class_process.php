@@ -60,4 +60,3 @@ if(isset($_POST['code'])){
 }
 
 $conn->close();
-?>

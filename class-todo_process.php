@@ -36,4 +36,3 @@ if(isset($_POST['edit_note_title'])){
 
 
 $conn->close();
-?>
