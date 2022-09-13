@@ -22,8 +22,7 @@ function emailIsValid($email)
     $count = mysqli_num_rows($result);
     if ($count > 0) {
         return true;
-    }
-    else {
+    } else {
         return false;
     }
 }
@@ -38,8 +37,7 @@ function checkLoginDetails($email, $password)
     $count = mysqli_num_rows($result);
     if ($count > 0) {
         return true;
-    }
-    else {
+    } else {
         return false;
     }
 }
@@ -97,14 +95,14 @@ function getTodo($todo)
     $output = '
     <div class="card shadow-sm">
         <div class="card-body">
-            <h3 class="card-title">'. textLimit($todo['title'], 30) .'</h3>
-            <p class="card-text text-justify">'. textLimit($todo['description'], 27)    .'</p>
+            <h3 class="card-title">' . textLimit($todo['title'], 30) . '</h3>
+            <p class="card-text text-justify">' . textLimit($todo['description'], 27)    . '</p>
             <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                    <a href="view-todo.php?id='. $todo['id'] .'" type="button" class="btn btn-sm btn-outline-secondary">View</a>
-                    <a href="edit-todo.php?id='. $todo['id'] .'" type="button" class="btn btn-sm btn-outline-secondary">Edit</a>
+                    <a href="view-todo.php?id=' . $todo['id'] . '" type="button" class="btn btn-sm btn-outline-secondary">View</a>
+                    <a href="edit-todo.php?id=' . $todo['id'] . '" type="button" class="btn btn-sm btn-outline-secondary">Edit</a>
                 </div>
-                <small class="text-muted">'. $todo['date'] .'</small>
+                <small class="text-muted">' . $todo['date'] . '</small>
             </div>
         </div>
     </div>';
@@ -116,16 +114,16 @@ function getClassTodo($todo)
     $output = '
     <div class="card shadow-sm">
         <div class="card-body">
-            <h3 class="card-title">'. textLimit($todo['note_title'], 30) .'</h3>
-            <p class="card-text text-justify">'. textLimit($todo['note_description'], 27)    .'</p>
+            <h3 class="card-title">' . textLimit($todo['note_title'], 30) . '</h3>
+            <p class="card-text text-justify">' . textLimit($todo['note_description'], 27)    . '</p>
             <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                    <a href="view-ctodo.php?id='. $todo['id'] .'" type="button" class="btn btn-sm btn-outline-secondary">View</a>
-                    <a href="edit-class-todo.php?id='. $todo['id'] .'" type="button" class="btn btn-sm btn-outline-secondary">Edit</a>
+                    <a href="view-ctodo.php?id=' . $todo['id'] . '" type="button" class="btn btn-sm btn-outline-secondary">View</a>
+                    <a href="edit-class-todo.php?id=' . $todo['id'] . '" type="button" class="btn btn-sm btn-outline-secondary">Edit</a>
                 </div>
-                <small class="text-muted">'. $todo['date'] .'</small>
+                <small class="text-muted">' . $todo['date'] . '</small>
             </div>
         </div>
     </div>';
     echo $output;
-}    
+}
