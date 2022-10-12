@@ -4,7 +4,7 @@ if (session_status() != PHP_SESSION_ACTIVE) {
 }
 
 if (isset($_SESSION["user_email"])) {
-  header("Location: home.php");
+  header("Location: app/sections/join-section.php");
   die();
 }
 
