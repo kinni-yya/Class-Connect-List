@@ -65,17 +65,17 @@ function getHeader()
     $output = '    
     <header class="py-3 mb-4 border-bottom bg-white">
         <div class="d-flex flex-wrap justify-content-center container">
-            <a href="home.php" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+            <a href="app/sections/join-section.php" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
                 <span class="fs-4">&#128221; Class Connect: List</span>
             </a>
 
             <ul class="nav nav-pills">
-                <li class="nav-item"><a href="calendar.php" class="nav-link text-dark">Calendar</a></li>
+                <li class="nav-item"><a href="../../calendar.php" class="nav-link text-dark">Calendar</a></li>
                 <li class="nav-item"><a href="#" class="nav-link text-dark">Classes</a></li>
-                <li class="nav-item"><a href="group.php" class="nav-link text-dark">Groups</a></li>
-                <li class="nav-item"><a href="resources.php" class="nav-link text-dark">Resources</a></li>
-                <li class="nav-item"><a href="todos.php" class="nav-link text-dark">My List</a></li>
-                <li class="nav-item"><a href="logout.php" class="nav-link bg-danger text-white">Profile</a></li>
+                <li class="nav-item"><a href="../group.php" class="nav-link text-dark">Groups</a></li>
+                <li class="nav-item"><a href="../../resources.php" class="nav-link text-dark">Resources</a></li>
+                <li class="nav-item"><a href="../../todos.php" class="nav-link text-dark">My List</a></li>
+                <li class="nav-item"><a href="../../logout.php" class="nav-link bg-danger text-white">Profile</a></li>
             </ul>
         </div>
     </header>';

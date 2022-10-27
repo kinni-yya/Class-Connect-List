@@ -69,7 +69,7 @@ if (isset($_SESSION["user_email"])) {
         data: $("#loginForm").serialize(),
         success: function(data) {
           if (data == "0") {
-            window.location = "home.php";
+            window.location = "app/sections/join-section.php";
           } else if (data == "1") {
             alert("Incorrect email or password");
           }

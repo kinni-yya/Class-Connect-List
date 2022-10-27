@@ -6,18 +6,16 @@
 </head>
 
 <body>
-    <div class="v185_280">
-        <div class="v169_56">
-            <div class="v169_45">
-                <div class="v169_46"></div>
-                <div class="v169_47">
-                    <div class="name"></div>
-                    <div class="name"></div><span class="v169_50">My List</span><span class="v169_51">Resources</span><span class="v169_52">Groups</span><span class="v169_53">Classes</span><span class="v169_54">📝 Class Connect: List </span>
-                </div>
+    <div class="v169_56">
+        <div class="v169_45">
+            <div class="v169_46"></div>
+            <div class="v169_47">
+                <div class="name"></div>
+                <div class="name"></div><span class="v169_50">My List</span><span class="v169_51">Resources</span><span class="v169_52">Groups</span><span class="v169_53">Classes</span><span class="v169_54">📝 Class Connect: List </span>
             </div>
-            <div class="v169_44">
-                <div class="v12_102"><span class="v12_101">Join Section</span></div><span class="v12_103">Are you a class officer? Click here to create a classroom!</span><span class="v4_89">You have not joined any classes, yet. </span>
-            </div>
+        </div>
+        <div class="v169_44">
+            <div class="v12_102"><span class="v12_101">Join Section</span></div><span class="v12_103">Are you a class officer? Click here to create a classroom!</span><span class="v4_89">You have not joined any classes, yet. </span>
         </div>
     </div>
 </body>
@@ -30,20 +28,6 @@
 
     body {
         font-size: 14px;
-    }
-
-    .v185_280 {
-        width: 100%;
-        height: 720px;
-        background: url("../images/v185_280.png");
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size: cover;
-        opacity: 1;
-        position: relative;
-        top: 0px;
-        left: 0px;
-        overflow: hidden;
     }
 
     .v169_56 {
