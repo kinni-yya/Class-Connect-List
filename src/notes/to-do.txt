@@ -1,0 +1,77 @@
+	GET URL parameter of class_id
+
+	db connection
+
+	Disable or enable or edit dipending if full access or not
+
+	Add note and dues
+
+	Display notes
+
+	Announcement filters
+
+	Fix the due date formula
+
+	Lessen the thickness of the annoucnement and due date > Remove the details
+
+	Check on how to change the view from announcemnet to dues
+
+	Display Dues
+
+	Add comment
+
+	Get the design from Figma
+
+	Change the font-size of the tasks
+
+	Change the way the tabs are selected, just do a get instead of doing a javascript click and let it refresh on it's own
+
+	Add Calendar and Resource on the Tab and Pills since they are per individual and per class
+
+	Details shows up when you click the title
+
+	Edit Note
+
+	Complete tasks
+
+	Display Archive
+
+	Restore Archive
+
+Pending Database
+
+Archive Database
+
+Class name and subject code
+
+Archive process
+
+Member Settings display to all but can only be edited by user_id 1
+
+Add Note Suggestion
+
+Display My Pending
+
+Display Pending
+
+Suggest Edit
+
+Approve Pending
+
+Reject Pending
+
+Display Member
+
+Edit Member
+
+Remove Member
+
+
+
+
+
+Flow:
+1. On the index page there is "About" and "Contact" us information on the screen
+2. Scroll down to see the "Login" screen
+3. Once logged in you will see the "Home" page where the "Upcoming Event", "Change Log/Notification", and "Today's Schedule" are displayed.
+4. On the top header it has the nav option "Classes", "Calendar", "My List", and "Profile"
