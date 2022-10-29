@@ -1,5 +1,7 @@
 # Class-Connect-List
 
+PHP STRUCTURE: https://www.nikolaposa.in.rs/blog/2017/01/16/on-structuring-php-projects/
+
 WHAT TO DO
 1. CREATE SECTION
     - search on YT: creating a profile with unique account code (for adding class officers)
