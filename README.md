@@ -11,7 +11,7 @@ A centralized checklist for students, made by students.
     - edit 
     - delete
     - archive
-#### 3. NOTE - contains the announcements of each class and its processes
+#### 3. NOTES - contains the announcements of each class and its processes
     Class Officer Privileges
       - create announcement
       - edit announcement
