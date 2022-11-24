@@ -26,7 +26,7 @@ A centralized checklist for students, made by students.
       
 #### 4. CALENDAR: general and personal events will be added to the user's calendar
     a. Class Calendar: events from the student's corresponding class/es will be automatically 
-        synced to the calendar
+            synced to the calendar
     b. My List Calendar: personal events will not be shown on the class calendar
 
 # 📁 Miscellaneous Directories
