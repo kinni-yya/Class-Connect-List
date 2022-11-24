@@ -1,5 +1,6 @@
 <?php 
-require_once('db-connect.php');
+require_once('..\dbconnect.php');
+$conn = OpenCon();
 if($_SERVER['REQUEST_METHOD'] !='POST'){
     echo "<script> alert('Error: No data to save.'); location.replace('./calendar.php') </script>";
     $conn->close();
@@ -9,7 +10,7 @@ extract($_POST);
 $allday = isset($allday);
 
 if(empty($id)){
-    $sql = "INSERT INTO `calendar` (`title`,`description`,`start_datetime`,`end_datetime`) VALUES ('$title','$description','$start_datetime','$end_datetime')";
+    $sql = "INSERT INTO `calendar` (`title`,`description`,`start_datetime`,`end_datetime`, `class_id`) VALUES ('$title','$description','$start_datetime','$end_datetime', '1')";
 }else{
     $sql = "UPDATE `calendar` set `title` = '{$title}', `description` = '{$description}', `start_datetime` = '{$start_datetime}', `end_datetime` = '{$end_datetime}' where `id` = '{$id}'";
 }

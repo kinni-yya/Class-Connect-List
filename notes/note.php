@@ -43,13 +43,12 @@ $class_info = GetClassRecord($_GET['class_id']);
 	<!-- Bootstrap CDN -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<!-- Header CSS -->
-	<!-- <link rel="stylesheet" type="text/css" href="../css/navbar.css">
-	<link rel="stylesheet" type="text/css" href="../css/sections.css"> -->
+	<link rel="stylesheet" type="text/css" href="../css/navbar.css">
 
 </head>
 <body>
 
-	<!-- <?php DisplayNavHeader(); ?> -->
+	<?php DisplayNavHeader(); ?>
 
 	<!-- Row for the Navbar -->
 	<div class="container">

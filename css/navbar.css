@@ -1,56 +1,40 @@
-@import url('https://fonts.googleapis.com/css?family=Urbanist');
+@import url("https://fonts.googleapis.com/css?family=Urbanist");
 
-*{
-    margin: 0;
-    padding: 0;
-    background: #EDEDED;
-    font-family: Urbanist;
-    text-decoration: none;
-}
-
-.container{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    position: sticky;
-    top: 2.3vh;
-    margin-top: 2.3vh;
-
-}
-
-.container .topnav{
+.topnav{
     display: flex;
     flex-flow: row wrap;
     list-style-type: none;
     align-items: center;
-    width: 96.8%;
-    border-radius: 12px;
-    box-shadow:  5px 5px 7px rgba(100, 104, 128, 0.6),
-                -5px -5px 7px rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    box-shadow:  5px 5px 7px rgba(100, 104, 128, 0.6), -5px -5px 7px rgba(255, 255, 255, 0.8);
+    background-color: #EDEDED;
+    font-family: Urbanist;
 }
 
-.container li{
-    margin-block: 24px;
+.topnav li{
+    margin-block: 25px;
 }
 
-.container a{
-    font-weight: bold;
+.topnav a{
+    text-decoration: none;
     color: #000000;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: bold;
-    letter-spacing: .4px;
+    white-space: nowrap;
 }
 
 .topnav .title a{
     color: #009087; 
-    font-size: 27px;
-    letter-spacing: 1.2px;
-    margin-left: 24px;
+    font-size: 25px;
+    margin-left: 25px;
 }
 
 .topnav li:not(.title){
-    margin-left: 66px;
-    
+    margin-left: 65px;
+}
+
+.topnav a:hover{
+    color: #009087;
 }
 
 .topnav .profile{
@@ -60,8 +44,8 @@
     margin-right: 23px;
     transition: .2s ease;
     border-radius: 10px;
-    box-shadow:  5px 5px 7px rgba(100, 104, 128, 0.6),
-                -5px -5px 7px rgba(255, 255, 255, 0.7);
+    border: transparent;
+    box-shadow:  5px 5px 7px rgba(100, 104, 128, 0.6), -5px -5px 7px rgba(255, 255, 255, 0.7);
 }
 
 .topnav .profile:hover{

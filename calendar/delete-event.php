@@ -1,5 +1,6 @@
 <?php 
-require_once('db-connect.php');
+require_once('..\dbconnect.php');
+$conn = OpenCon();
 if(!isset($_GET['id'])){
     echo "<script> alert('Undefined Event ID.'); location.replace('./calendar.php') </script>";
     $conn->close();

@@ -48,22 +48,23 @@ function SynchTimeZone(){
 // Prints the div of the user based nav bar
 function DisplayNavHeader()
 {
-    $output = '
-    <div class="container">
-        <ul class="topnav">
-            <li class="title" style="flex-grow: 1"><a href="#">CLASS CONNECT: LIST</a></li>
-            <li><a href="#">CLASSES</a></li>
-            <li><a href="#">CALENDAR</a></li>
-            <li><a href="#">RESOURCES</a></li>
-            <li><a href="#">MY LIST</a></li>
-            <li><a class="profile" href="#">PROFILE</a></li>
+	$rootDir = realpath($_SERVER["DOCUMENT_ROOT"]);
+    $output = "
+    <div class=\"container container-top\">
+        <ul class=\"topnav\">
+            <li class=\"title\" style=\"flex-grow: 1\"><a href=\"#\">CLASS CONNECT: LIST</a></li>
+            <li><a href=\"../class/with-class.php\">CLASSES</a></li>
+            <li><a href=\"../calendar/calendar.php\">CALENDAR</a></li>
+            <li><a href=\"#\">RESOURCES</a></li>
+            <li><a href=\"#\">MY LIST</a></li>
+            <li><button class=\"profile\">PROFILE</button></li>
         </ul>
-    </div>';
+    </div>
+    ";
     echo $output;
 }
 
 include 'sql/notes-sql.php';
 include 'sql/class-sql.php';
 include 'sql/user-sql.php'
-
 ?>

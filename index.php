@@ -1,4 +1,12 @@
 <?php 
+if (session_status() != PHP_SESSION_ACTIVE) {
+    session_start();
+  }
+
+if (isset($_SESSION["user_id"])) {
+    header("Location: class/no-class.php");
+    die();
+  }
 
 // Temporary user_id for testing if needed DELETE LATER ON POST PRODUCTION
 // if (session_status() === PHP_SESSION_NONE) {
@@ -24,22 +32,19 @@
             <p class="title">CLASS CONNECT: LIST</p><br>
             <p class="para">A centralized checklist for students,<br>
             made by students.</p><br>
-            <label class="loginMessage"></label>
+            <!--<label class="loginMessage"></label>-->
         </div>
 
         <div class="form">
-            
             <form id="loginUser">
                 <label>EMAIL</label>
                 <input type="email" name="email" placeholder="Example@mail.com">
                 <label>PASSWORD</label>
                 <input type="password" name="password" placeholder="Password">
-
-                <label class="loginMessage"></label>
-
+                <div class="loginMessage"></div>
                 <button class="loginbtn" type="submit" name="submit" >LOGIN</button>
                 <hr>
-                <button><a class="createbtn" href="user/signup.php">CREATE NEW ACCOUNT</a></button>
+                <button class="createbtn" onclick="location.href='user/signup.php'">CREATE NEW ACCOUNT</button>
             </form>
         </div>
     </div>

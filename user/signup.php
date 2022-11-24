@@ -1,3 +1,14 @@
+<?php 
+if (session_status() != PHP_SESSION_ACTIVE) {
+    session_start();
+  }
+
+if (isset($_SESSION["user_id"])) {
+    header("Location: ../class/no-class.php");
+    die();
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,26 +27,26 @@
         </div>
 
         <div class="form">
-            <form action="includes/signup.inc.php" method="post">
+            <form action="" method="post" >
                 <!-- Full name must be split to F name, M name, L name -->
                 <!-- Use <input typ"text" required> -->
                 <label>FULLNAME</label>
                 <input type="text" name="fullname" placeholder="ex. Juan Dela Cruz" required>
                 <!-- Every type on the contact number must check the database if the number already exist -->
                 <label>CONTACT NUMBER</label>
-                <input type="number" name="contact" placeholder="ex. 09123456780">
+                <input type="tel" name="contact" placeholder="ex. 09123456780" pattern="[0-9]{11}" required>
                 <!-- Every type on the email must check the database if the email exist -->
                 <label>EMAIL</label>
-                <input type="email" name="email" placeholder="Example@mail.com">
+                <input type="email" name="email" placeholder="Example@mail.com" required>
                 <!-- Require password -->
                 <label>PASSWORD</label>
-                <input type="password" name="pwd" placeholder="Password">
+                <input type="password" name="pwd" placeholder="Password" required>
                 <!-- Every type on password must check if the password and retype password is the same -->
                 <!-- Once the password are matching remove the disabled attribute  -->
                 <label>RE-TYPE PASSWORD</label>
-                <input type="password" name="repwd" placeholder="Re-Type Password">
+                <input type="password" name="repwd" placeholder="Re-Type Password" required>
                 <!--<button><a class="regbtn" href="homepage.html">REGISTER</a></button>-->
-                <button class="regbtn" type="submit" name="submit" disabled>REGISTER</button>
+                <button class="regbtn" type="submit" name="submit" >REGISTER</button>
                 <hr>
                 <button><a class="lrdbtn" href="../index.php">ALREADY HAVE AN ACCOUNT?</a></button>
             </form>

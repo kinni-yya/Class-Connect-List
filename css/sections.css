@@ -12,17 +12,28 @@ div :not(ul.topnav) {
 */
 @import url("https://fonts.googleapis.com/css?family=Urbanist");
 
-.error {
-  color: red;
+*{
+    margin: 0;
+    padding: 0;
 }
 
-.container {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  position: sticky;
-  top: 2.3vh;
-  margin-top: 2.3vh;
+body{
+    background: #EDEDED;
+    font-family: Urbanist;
+    text-decoration: none;
+    margin: 25px;
+    top: 25px;
+}
+
+.container-top{
+    justify-content: center;
+    position: sticky;
+    top: 25px;
+    margin-top: 25px;
+}
+
+.error {
+  color: red;
 }
 
 .website-content {
