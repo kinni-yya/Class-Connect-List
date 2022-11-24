@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css?family=Urbanist');
+
+*{
+    margin: 0;
+    padding: 0;
+    background: #EDEDED;
+    font-family: Urbanist;
+    text-decoration: none;
+}
+
+.container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: sticky;
+    top: 2.3vh;
+    margin-top: 2.3vh;
+
+}
+
+.container .topnav{
+    display: flex;
+    flex-flow: row wrap;
+    list-style-type: none;
+    align-items: center;
+    width: 96.8%;
+    border-radius: 12px;
+    box-shadow:  5px 5px 7px rgba(100, 104, 128, 0.6),
+                -5px -5px 7px rgba(255, 255, 255, 0.8);
+}
+
+.container li{
+    margin-block: 24px;
+}
+
+.container a{
+    font-weight: bold;
+    color: #000000;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: .4px;
+}
+
+.topnav .title a{
+    color: #009087; 
+    font-size: 27px;
+    letter-spacing: 1.2px;
+    margin-left: 24px;
+}
+
+.topnav li:not(.title){
+    margin-left: 66px;
+    
+}
+
+.topnav .profile{
+    color: #009087;
+    background: #EDEDED;
+    padding: 12px 25px;
+    margin-right: 23px;
+    transition: .2s ease;
+    border-radius: 10px;
+    box-shadow:  5px 5px 7px rgba(100, 104, 128, 0.6),
+                -5px -5px 7px rgba(255, 255, 255, 0.7);
+}
+
+.topnav .profile:hover{
+    color: #ffffff;
+    background-color: rgba(0, 144, 135, 1);
+}
+
+@media (max-width: 1171px){
+    .container .topnav{
+        justify-content: center;
+    }
+
+    .topnav .title{
+        flex: 100%;
+    }
+
+    .topnav .title a{
+        display: flex;
+        justify-content: center;
+    }
+
+    .topnav .profile{
+        margin-right: 1%;
+    }
+
+    .topnav li:not(.title){
+        display: flex;
+        justify-content: center;
+        flex: 10%;
+        margin-top: 0px;
+        margin-inline: 1%;
+    }
+}

@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css?family=Urbanist');
+
+*{
+    background: #EDEDED;
+    font-family: Urbanist;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+
+.container{
+    height: 100vh;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    color: #44466B;
+}
+
+.container div:last-child{
+    margin-right: 10%;
+}
+
+.container div:first-child{
+    margin-left: 10%;
+}
+
+.container .content .title{
+    font-size: 53px;
+    font-weight: bold;
+}
+
+.container .content .para{
+    font-size: 40px;
+}
+
+.form{
+    outline: 1px solid rgb(68, 70, 106, 0.3);
+    display: flex;
+    flex-direction: column;
+    width: 379px;
+    padding-inline: 24px;
+    padding-block: 18px;
+    border-radius: 10px;
+    box-shadow:  7px 7px 7px rgba(100, 104, 128, 0.6),
+                -7px -7px 7px rgba(255, 255, 255, 0.9);
+}
+
+.form label{
+    font-size: 20px;
+}
+
+.form input{
+    border: none;
+    height: 40px;
+    width: 95%;
+    padding-left: 20px;
+    font-size: 20px;
+    margin-top: 8px;
+    margin-bottom: 23px;
+    border-radius: 10px;
+    background: #EDEDED;
+    box-shadow: inset 4px 4px 5px rgba(100, 104, 128, 0.6),
+           inset -6px -6px 9px rgba(255, 255, 255, 1);
+}
+
+.form input:focus{
+    outline: none;
+}
+
+.form button{
+    margin-block-start: 20px;
+    margin-block-end: 20px;
+    border: none;
+}
+
+.regbtn{
+    background-color: #009087;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    color: white;
+    padding: 15px 134px;
+    width: 100%;
+    font-size: 20px;
+    border-radius: 10px;
+    box-shadow:  6px 6px 7px rgba(100, 104, 128, 0.6),
+                -6px -6px 7px rgba(255, 255, 255, 0.9);
+}
+
+.regbtn:hover{
+    transition: .2s ease;
+    color: #009087;
+    background-color: #EDEDED;
+}
+
+hr{
+    margin-block: 15px; 
+    width: 100%;
+}
+
+.lrdbtn{
+    background-color: #EDEDED;
+    color: #009087;
+    letter-spacing: 1.5px;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 15px 33px;
+    border-radius: 10px;
+    box-shadow:  6px 6px 6px rgba(100, 104, 128, 0.6),
+                -6px -6px 6px rgba(255, 255, 255, 0.9);
+}
+
+.lrdbtn:hover{
+    transition: .2s ease;
+    color: #ffffff;
+    background-color: #009087
+}
+
+@media (max-width: 800px){
+    .container{
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .container p{
+        margin: none;
+    }
+
+    .container .content{
+        text-align: center;
+        margin-inline: 10%;
+    }
+
+    .container .form{
+        margin-inline: 10%;
+        margin-bottom: 30px;
+    }
+}

@@ -1,0 +1,128 @@
+@import url("https://fonts.googleapis.com/css?family=Urbanist:400, 700, 500, 600");
+
+.frame-44 {
+  align-items: flex-start;
+  border: 1px none;
+  display: flex;
+  gap: 46px;
+  height: 389px;
+  margin-top: 31px;
+  min-width: 1858px;
+  z-index: 4;
+}
+
+.frame-4 {
+  align-items: center;
+  background-color: #ffffff99;
+  border: 1px none;
+  border-radius: 30px;
+  box-shadow: 6px 6px 9px #64688999, -6px -6px 9px #ffffff99;
+  display: flex;
+  flex-direction: column;
+  min-height: 389px;
+  padding: 18px 0;
+  width: 335px;
+}
+
+.frame-40 {
+  align-items: center;
+  background-color: #ffffff99;
+  border: 1px none;
+  border-radius: 15px;
+  box-shadow: 6px 6px 9px #64688099, -6px -6px 9px #ffffff99;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 140px;
+  margin-top: 2px;
+  overflow: hidden;
+  padding: 17px 0;
+  width: 295px;
+}
+
+.buhay-at-mga-sinulat-ni-rizal {
+  height: 58px;
+  letter-spacing: 0;
+  line-height: normal;
+  margin-top: 14px;
+  text-align: center;
+  width: 295px;
+}
+
+.valign-text-middle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* INSERT urbanist-bold-gossamer-24px */
+
+.address {
+  height: 24px;
+  letter-spacing: 0;
+  line-height: normal;
+  min-width: 103px;
+  text-align: center;
+}
+
+/* INSERT urbanist-bold-gossamer-20px */
+
+.sevilla-maria-angelica {
+  height: 29px;
+  letter-spacing: 0;
+  line-height: normal;
+  margin-top: 19px;
+  min-width: 301px;
+  text-align: center;
+}
+
+/* INSERT urbanist-semi-bold-black-24px */
+
+.group-14-3 {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-left: 6px;
+  margin-top: 21px;
+  min-height: 61px;
+  width: 179px;
+}
+
+.wed {
+  height: 29px;
+  letter-spacing: 0;
+  line-height: normal;
+  margin-right: 4px;
+  min-width: 51px;
+  text-align: center;
+}
+
+.group-15-1 {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-left: 4px;
+  margin-top: 20px;
+  min-height: 61px;
+  width: 179px;
+}
+
+.x13pm-300pm {
+  height: 29px;
+  letter-spacing: 0;
+  line-height: normal;
+  margin-right: 4px;
+  min-width: 175px;
+  text-align: center;
+}
+
+.sat-1 {
+  height: 29px;
+  letter-spacing: 0;
+  line-height: normal;
+  margin-right: 3px;
+  min-width: 44px;
+  text-align: center;
+}

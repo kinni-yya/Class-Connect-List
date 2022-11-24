@@ -1,0 +1,111 @@
+/* Elements inside an <h2> that aren't a <span> with a class of `.foo`
+h2 :not(span.foo) {
+    color: red;
+  } 
+source: https://developer.mozilla.org/en-US/docs/Web/CSS/:not#examples
+
+div :not(ul.topnav) {
+  padding-top: ;
+  text-align: center;
+  line-height: 100px;
+}
+*/
+@import url("https://fonts.googleapis.com/css?family=Urbanist");
+
+.error {
+  color: red;
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: sticky;
+  top: 2.3vh;
+  margin-top: 2.3vh;
+}
+
+.website-content {
+  padding: 15% 10%;
+  text-align: center;
+  line-height: 100px;
+}
+
+.website-content h1 {
+  font-size: 64px;
+  font-weight: normal;
+}
+
+.website-content p {
+  font-size: 36px;
+}
+
+.btn {
+  display: inline;
+  margin-left: 5%;
+  margin-right: 5%;
+  width: 50%;
+  height: 50%;
+  padding: 2%;
+  border-radius: 120px;
+  box-shadow: 5px 5px 7px rgba(100, 104, 128, 0.6),
+    -5px -5px 7px rgba(255, 255, 255, 0.8);
+}
+
+.btn:hover {
+  color: #ffffff;
+  background-color: rgba(0, 144, 135, 1);
+}
+
+
+
+.para{
+    /* border: 3px solid green; */
+    /*outline: solid 1px;*/
+    display: flex;
+    flex-direction: column;
+    height: 90vh;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.para .p1{
+    font-size: 51px;
+}
+
+.para .p2{
+    font-size: 29px;
+    margin-top: 45px;
+}
+
+.para button{   
+    margin: 35px;
+    margin-top: 83px;
+    cursor: pointer;
+    border: none;
+}
+
+.para a{
+    color: #009087;
+    font-weight: bold;
+    font-size: 21px;
+    letter-spacing: 1px;
+    border-radius: 25px;
+    box-shadow:  5px 5px 7px rgba(100, 104, 128, 0.6),
+    -5px -5px 7px rgba(255, 255, 255, 0.7);
+}
+
+.join{
+    padding: 23px 40px;
+}
+
+.create{
+    padding: 23px 23px;
+}
+
+.para a:hover {
+    transition: .2s ease;
+    color: #ffffff;
+    background-color: rgba(0, 144, 135, 1);
+}
