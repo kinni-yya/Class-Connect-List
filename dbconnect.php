@@ -57,7 +57,7 @@ function DisplayNavHeader()
             <li><a href=\"../calendar/calendar.php\">CALENDAR</a></li>
             <li><a href=\"#\">RESOURCES</a></li>
             <li><a href=\"#\">MY LIST</a></li>
-            <li><button class=\"profile\">PROFILE</button></li>
+            <li><a class=\"profile\" href=../logout.php>PROFILE</a></li>
         </ul>
     </div>
     ";
