@@ -2,17 +2,17 @@
 A centralized checklist for students, made by students.
 
 # 💻 Modules
-1. USER: contains the multiple processes for the user of the website
+1. USER: contains the multiple processes for the user of the website.
     - login 
     - register
     - edit profile settings
-2. CLASS: contains the multiple processes for each respective class
+2. CLASS: contains the multiple processes for each respective class.
     - create class
     - edit 
     - delete
     - archive
-3. NOTES: contains the announcements of each class and its processes
-    Class Officer Privileges
+3. NOTES: contains the announcements of each class and its processes.
+    \nClass Officer Privileges
       - create announcement
       - edit announcement
       
