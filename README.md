@@ -12,7 +12,7 @@ A centralized checklist for students, made by students.
     - delete
     - archive
 3. NOTES: contains the announcements of each class and its processes.
-    \nClass Officer Privileges
+    Class Officer Privileges
       - create announcement
       - edit announcement
       
