@@ -20,12 +20,12 @@ OpenSession();
     <?php 
     DisplayNavHeader();?>
 
-    <div class="container">
-        <div class="website-content">
-            <h1>You have not joined any classes, yet.</h1>
-            <p>Are you a class officer? Click below to create a classroom!</p>
-            <a href="create-class.php" class="btn">CREATE CLASS</a>
-            <a href="join-class.php" class="btn">JOIN CLASS</a>
+    <div class="para">
+        <p class="p1">You have not joined any classes, yet.</p>
+        <p class="p2">Are you a class officer? Click here to create a classroom!</p>
+        <div class="btns">
+            <button><a class="create" href="create-class.php">CREATE CLASS</a></button>
+            <button><a class="join"href="join-class.php">JOIN CLASS</a></button>
         </div>
     </div>
 
