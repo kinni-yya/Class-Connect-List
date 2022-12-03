@@ -19,39 +19,95 @@ if (isset($_SESSION["user_id"])) {
     <link rel="stylesheet" href="../css/signup.css">
 </head>
 <body>
-    <div class="container">
+    <div class="details">
         <div class="content">
             <p class="title">SIGN-UP</p><br>
             <p class="para">Create an account to manage your<br>
             to-dos.</p><br>
         </div>
 
-        <div class="form">
-            <form action="" method="post" >
-                <!-- Full name must be split to F name, M name, L name -->
-                <!-- Use <input typ"text" required> -->
-                <label>FULLNAME</label>
-                <input type="text" name="fullname" placeholder="ex. Juan Dela Cruz" required>
-                <!-- Every type on the contact number must check the database if the number already exist -->
-                <label>CONTACT NUMBER</label>
-                <input type="tel" name="contact" placeholder="ex. 09123456780" pattern="[0-9]{11}" required>
-                <!-- Every type on the email must check the database if the email exist -->
-                <label>EMAIL</label>
-                <input type="email" name="email" placeholder="Example@mail.com" required>
-                <!-- Require password -->
-                <label>PASSWORD</label>
-                <input type="password" name="pwd" placeholder="Password" required>
-                <!-- Every type on password must check if the password and retype password is the same -->
-                <!-- Once the password are matching remove the disabled attribute  -->
-                <label>RE-TYPE PASSWORD</label>
-                <input type="password" name="repwd" placeholder="Re-Type Password" required>
-                <!--<button><a class="regbtn" href="homepage.html">REGISTER</a></button>-->
-                <button class="regbtn" type="submit" name="submit" >REGISTER</button>
-                <hr>
-                <button><a class="lrdbtn" href="../index.php">ALREADY HAVE AN ACCOUNT?</a></button>
+        <div class="content2">
+            <form id="signupUser" novalidate>
+                <div class="form1">
+                    <div style="flex-grow: 8">
+                        <label>LAST NAME</label>
+                        <input type="text" name="lname" placeholder="ex. Dela Cruz" required>
+                    </div>
+                    <div style="flex-grow: 8">
+                        <label>FIRST NAME</label>
+                        <input type="text" name="fname" placeholder="ex. Juan" required>
+                    </div>
+                    <div style="flex-grow: 1">
+                        <label>M.I</label>
+                        <input id="mi" type="text" name="mi" placeholder="ex. A">
+                    </div>
+                </div>
+                <div class="form2">
+                    <div class="part1">
+                        <div>
+                            <label>CONTACT NUMBER</label>
+                            <input type="tel" name="contact" placeholder="ex. 09123456780" pattern="[0-9]{11}" required>
+                        </div>
+                        <div>
+                            <label>EMAIL</label>
+                            <input type="email" name="email" placeholder="example@mail.com" required>
+                        </div>
+                    </div>
+                    <div class="part2">
+                        <div>
+                            <label>PASSWORD</label>
+                            <input type="password" name="password" placeholder="Password" required>
+                        </div>                    
+                        <div>
+                            <label>CONFIRM PASSWORD</label>
+                            <input type="password" name="repassword" placeholder="Confirm Password" required>
+                        </div>
+                    </div>
+                    <div class="part3">                        
+                        <div class="loginMessage"></div>
+                        <button class="regbtn" type="submit" name="submit" >REGISTER</button>
+                        <hr>
+                        <button class="lrdbtn" onclick="location.href='../index.php'">ALREADY HAVE AN ACCOUNT?</button>
+                    </div>
+                </div>
             </form>
-        </div>
+        </div>  
     </div>
+
+    <!-- AJAX / jQuery CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script type="text/javascript">
+$("#signupUser").submit(function(e){
+    e.preventDefault();
+    var form = $(this);
+
+    $.ajax({
+        type: 'POST',
+        url: '../user/signup.process.php',
+        data: form.serialize(),
+        success: function(data){
+            if((data == "Email Already Exist") || (data == "Contact Number Already Exist") || (data == "Password Not Same")){
+                $(".loginMessage").html(data);
+            }
+            else if (data == "Success"){
+                alert("Account Successfully Created");
+                window.location.replace("../index.php");
+            }
+            else{
+                $(".loginMessage").html(data);
+            }
+        }
+    });
+});
+</script>
+<script>
+        $(function() {
+            $('#mi').keyup(function() {
+                this.value = this.value.toLocaleUpperCase();
+            });
+        });
+    </script> 
 
 </body>
 </html>
