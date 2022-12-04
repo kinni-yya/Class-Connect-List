@@ -27,7 +27,7 @@ if (isset($_SESSION["user_id"])) {
         </div>
 
         <div class="content2">
-            <form id="signupUser" novalidate>
+            <form id="signupUser">
                 <div class="form1">
                     <div style="flex-grow: 8">
                         <label>LAST NAME</label>
