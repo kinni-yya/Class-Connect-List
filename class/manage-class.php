@@ -1,3 +1,10 @@
+<?php 
+// Include the dbconnect.php file that has the function for the database queries
+include '../dbconnect.php';
+// Check if session exist
+OpenSession();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,6 +26,7 @@
 </head>
 
 <body>
+    <button class="button" onclick="location.href='with-class.php'">GO BACK</button>
     <button class="open-button" onclick="openForm()">ADD SUBJECT</button>
     <!-- FETCH FROM DATABASE AND DISPLAY
         https://www.geeksforgeeks.org/how-to-fetch-data-from-localserver-database-and-display-on-html-table-using-php/ -->
