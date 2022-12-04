@@ -7,13 +7,7 @@ if (isset($_SESSION["user_id"])) {
     header("Location: class/no-class.php");
     die();
   }
-
-// Temporary user_id for testing if needed DELETE LATER ON POST PRODUCTION
-// if (session_status() === PHP_SESSION_NONE) {
-//     // Start session
-//     session_start();
-// }
-// $_SESSION['user_id'] = '1';
+  
  ?>
 
 <!DOCTYPE html>
@@ -38,9 +32,9 @@ if (isset($_SESSION["user_id"])) {
         <div class="form">
             <form id="loginUser">
                 <label>EMAIL</label>
-                <input type="email" name="email" placeholder="Example@mail.com">
+                <input type="email" name="email" placeholder="Example@mail.com" required>
                 <label>PASSWORD</label>
-                <input type="password" name="password" placeholder="Password">
+                <input type="password" name="password" placeholder="Password" required>
                 <div class="loginMessage"></div>
                 <button class="loginbtn" type="submit" name="submit" >LOGIN</button>
                 <hr>

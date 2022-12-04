@@ -81,6 +81,17 @@ function GetClass($user_id)
 	return $result;
 }
 
+function GetClassId($class_code){
+	$conn = OpenCon();
+	$sql = "SELECT class_id
+			FROM class
+			WHERE class_code = '$class_code'";
+	$result = $conn->query($sql);
+	// convert to array/dictionary
+	$class_id = $result->fetch_assoc();
+	$conn->close();
+	return $class_id['class_id'];
+}
 // 2 Types of using SQL row
 // 1 row expected:
 // $result = $conn->query($sql);

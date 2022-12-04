@@ -25,6 +25,10 @@
     margin-left: 10%;
 }
 
+.content{
+    text-align: center;
+}
+
 .container .content .title{
     font-size: 53px;
     font-weight: bold;
@@ -133,19 +137,32 @@ hr{
     margin-bottom: 20px;
 }
 
-@media (max-width: 800px){
+@media (max-width: 900px){
+    body{
+        margin-inline: 20px;
+    }
+
     .container{
-        margin: 10px;
-        justify-content: center;
-        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: center;
+        height: 800px;
+        justify-content:flex-start;
+    }
+
+    .container div:first-child{
+        margin: 0;
+    }
+
+    .container div:last-child{
+        margin: 0;
     }
 
     .container .content{
         text-align: center;
-        margin-inline: 10%;
+        margin: none;
     }
 
-    .container .form{
-        margin-inline: 10%;
+    input, label{
+        font-size: 15px;
     }
 }

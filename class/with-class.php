@@ -23,7 +23,7 @@ OpenSession();
         <div class="website-content">
             <?php
             // GETs the parameter from the URL php?parameter=[value]&anohterParamaterifthereis=[value]
-            echo "<h1>" . SelectClassName($_GET['class_id']) . "</h1>";
+            // echo "<h1>" . SelectClassName($_GET['class_id']) . "</h1>";
             echo "<p>Welcome " . SelectUserName($_SESSION['user_id']) . "!<p>";
             ?>
         </div>
@@ -40,16 +40,19 @@ OpenSession();
      */
 
     while ($rows = $class_info->fetch_assoc()) {
-    ?>
-        <?php echo $rows['class_name']; ?>
-        <!-- <?php echo '<button type="button">$rows["class_name"]</button>;' ?> -->
-        <?php echo $rows['class_code']; ?>
-        <?php echo $rows['school_year']; ?>
-        <?php echo $rows['school_year']; ?>
+        ?>
     <?php
-        echo '&nbsp<button type="button">View Class</button>&nbsp';
-        echo '<button type="button">Manage Class</button><br>';
-        echo '<br><br>';
+        echo $rows['class_name']; echo "</br>";
+            echo $rows['class_code']; echo " ";
+            echo $rows['school_year']; echo " ";
+            echo $rows['school_year']; ?> </br>
+        <form method="GET" action="note.php">
+            <input type="hidden" name="class_id" value="<?php echo GetClassId($rows['class_code']);?>">
+            <button type="button" onclick="location.href='../notes/note.php'">View Class</button>
+            <button type="button" onclick="location.href='../notes/note.php?class_id=<?php echo GetClassId($rows['class_code']);?>&tab=due'">View Class</button>
+        </br>
+        </br>
+        <!-- </form> -->
     }
     ?>
 <!-- 

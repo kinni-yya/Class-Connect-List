@@ -37,7 +37,7 @@ body{
 }
 
 .website-content {
-  padding: 15% 10%;
+  padding: 10% 5%;
   text-align: center;
   line-height: 100px;
 }
@@ -98,6 +98,7 @@ body{
 }
 
 .para a{
+    text-decoration: none;
     color: #009087;
     font-weight: bold;
     font-size: 21px;
