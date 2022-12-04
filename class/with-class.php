@@ -39,9 +39,6 @@ OpenSession();
      * 2. LOOP TILL END OF DATA (kailangan si $rows kasi doon naka store yung naconvert)
      */
 
-
-    // class table = class_id, class_name, class_code, school_year
-    // member table = member_type
     while ($rows = $class_info->fetch_assoc()) {
         ?>
     <?php
@@ -56,9 +53,22 @@ OpenSession();
         </br>
         </br>
         <!-- </form> -->
-    <?php
-        echo '<br>';
     }
     ?>
+<!-- 
+    VIEW CLASSES
+    1. CLICK VIEW BUTTON 
+    2. GO TO NOTE.PHP (noting class_id)
+
+    MANAGE CLASSES
+    OFFICER
+	    - add and remove subj, 
+	    - edit the class name, 
+	    - change member access, 
+	    - remove member
+    MEMBER 
+        - access class and see corresponding subjects
+        - archive classes
+-->
 
 </html>
