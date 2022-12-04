@@ -28,35 +28,38 @@ OpenSession();
             ?>
         </div>
     </div>
-
     <!-- SHOW CLASSES OF THE USER -->
-    <?php
+    <div class="case">
+        <?php
 
-    $class_info = GetClass($_SESSION['user_id']);
-    /**
-     * 1. WHAT IS "$class_info->fetch_assoc())"
-     *       = convert class_info (aka results GetClass()) into a dictionary/array
-     * 2. LOOP TILL END OF DATA (kailangan si $rows kasi doon naka store yung naconvert)
-     */
+        $class_info = GetClass($_SESSION['user_id']);
+        /**
+         * 1. WHAT IS "$class_info->fetch_assoc())"
+         *       = convert class_info (aka results GetClass()) into a dictionary/array
+         * 2. LOOP TILL END OF DATA (kailangan si $rows kasi doon naka store yung naconvert)
+         */
 
-    while ($rows = $class_info->fetch_assoc()) {
-        ?>
-    <?php
-        echo $rows['class_name']; echo "</br>";
-            echo $rows['class_code']; echo " ";
-            echo $rows['school_year']; echo " ";
-            echo $rows['school_year']; ?> </br>
-        <form method="GET" action="note.php">
-            <input type="hidden" name="class_id" value="<?php echo GetClassId($rows['class_code']);?>">
-            <button type="button" onclick="location.href='../notes/note.php'">View Class</button>
-            <button type="button" onclick="location.href='../notes/note.php?class_id=<?php echo GetClassId($rows['class_code']);?>&tab=due'">View Class</button>
-        </br>
-        </br>
+        while ($rows = $class_info->fetch_assoc()) {
+        echo "<div class=\"card\">";
+            echo $rows['class_name']; echo "</br></br>";
+                echo $rows['class_code']; echo "</br>";
+                echo $rows['school_year']; echo " ";
+                echo $rows['school_year']; ?> </br>
+            <form method="GET" action="note.php">
+                <input type="hidden" name="class_id" value="<?php echo GetClassId($rows['class_code']);?>">
+                </br>
+
+                <!-- <button type="button" onclick="location.href='../notes/note.php'">View Class</button> -->
+                <button type="button" class="view" onclick="location.href='../notes/note.php?class_id=<?php echo GetClassId($rows['class_code']);?>&tab=due'">VIEW CLASS</button></br>
+        </div>
+    
         <!-- </form> -->
-    <?php
-    }
-    ?>
-<!-- 
+        <?php
+        }
+        ?>
+    </div>
+
+    <!-- 
     VIEW CLASSES
     1. CLICK VIEW BUTTON 
     2. GO TO NOTE.PHP (noting class_id)
