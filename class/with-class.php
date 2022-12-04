@@ -43,13 +43,6 @@ OpenSession();
     // class table = class_id, class_name, class_code, school_year
     // member table = member_type
     while ($rows = $class_info->fetch_assoc()) {
-<<<<<<< Updated upstream
-    ?>
-        <?php echo $rows['class_name']; ?>\
-        <?php echo $rows['class_code']; ?>
-        <?php echo $rows['school_year']; ?>
-        <!-- INSERT BUTTONS -->
-=======
         ?>
     <?php
         echo $rows['class_name']; echo "</br>";
@@ -63,7 +56,6 @@ OpenSession();
         </br>
         </br>
         <!-- </form> -->
->>>>>>> Stashed changes
     <?php
         echo '<br>';
     }

@@ -81,8 +81,6 @@ function GetClass($user_id)
 	return $result;
 }
 
-<<<<<<< Updated upstream
-=======
 function GetClassId($class_code){
 	$conn = OpenCon();
 	$sql = "SELECT class_id
@@ -94,8 +92,6 @@ function GetClassId($class_code){
 	$conn->close();
 	return $class_id['class_id'];
 }
-
->>>>>>> Stashed changes
 // 2 Types of using SQL row
 // 1 row expected:
 // $result = $conn->query($sql);
