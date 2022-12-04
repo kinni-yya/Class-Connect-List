@@ -48,9 +48,8 @@ OpenSession();
             <form method="GET" action="note.php">
                 <input type="hidden" name="class_id" value="<?php echo GetClassId($rows['class_code']);?>">
                 </br>
-
-                <!-- <button type="button" onclick="location.href='../notes/note.php'">View Class</button> -->
                 <button type="button" class="view" onclick="location.href='../notes/note.php?class_id=<?php echo GetClassId($rows['class_code']);?>&tab=due'">VIEW CLASS</button></br>
+                <button type="button" class="view" onclick="location.href='manage-class.php?class_id=<?php echo GetClassId($rows['class_code']);?>'">MANAGE CLASS</button></br>
         </div>
     
         <!-- </form> -->
