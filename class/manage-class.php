@@ -12,6 +12,8 @@ OpenSession();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/subject.css">
     <title>Manage Class</title>
 
     <script type="text/javascript">
@@ -26,8 +28,14 @@ OpenSession();
 </head>
 
 <body>
-    <button class="button" onclick="location.href='with-class.php'">GO BACK</button>
-    <button class="open-button" onclick="openForm()">ADD SUBJECT</button>
+    <?php
+    // HEADER
+    DisplayNavHeader();
+    ?>
+    <div class="buttons">
+        <button class="button" onclick="location.href='with-class.php'">GO BACK</button>
+        <button class="open-button" onclick="openForm()">ADD SUBJECT</button>
+    </div>
     <!-- FETCH FROM DATABASE AND DISPLAY
         https://www.geeksforgeeks.org/how-to-fetch-data-from-localserver-database-and-display-on-html-table-using-php/ -->
 
