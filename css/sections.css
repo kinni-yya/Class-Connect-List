@@ -24,14 +24,6 @@ body{
 
 }
 
-.container-top{
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  position: sticky;
-  top: 3vh;
-  margin-top: 3vh;
-}
 
 .error {
   color: red;
