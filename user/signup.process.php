@@ -9,8 +9,7 @@ $email_result = checkEmail($_POST['email']);
 $contact_result = checkContact($_POST['contact']);
 
 if($contact_result != NULL){
-    echo "Contact Number Already Exist"; echo "<br>";
-    echo $contact_result['contact_no'];
+    echo "Contact Number Already Exist";
 }
 elseif($email_result != NULL){
     echo "Email Already Exist";
