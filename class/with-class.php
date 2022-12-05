@@ -31,28 +31,27 @@ OpenSession();
     <!-- SHOW CLASSES OF THE USER -->
     <div class="case">
         <?php
-
         $class_info = GetClass($_SESSION['user_id']);
         /**
          * 1. WHAT IS "$class_info->fetch_assoc())"
          *       = convert class_info (aka results GetClass()) into a dictionary/array
          * 2. LOOP TILL END OF DATA (kailangan si $rows kasi doon naka store yung naconvert)
          */
-
-        while ($rows = $class_info->fetch_assoc()) {
-        echo "<div class=\"card\">";
-            echo $rows['class_name']; echo "</br></br>";
-                echo $rows['class_code']; echo "</br>";
-                echo $rows['school_year']; echo " ";
-                echo $rows['school_year']; ?> </br>
+        while ($rows = $class_info->fetch_assoc()) {    ?>
+            <div class="card">
+                <div class="cname"><p><?php echo $rows['class_name']; ?></p></div> 
+                <p>Class Code: <span><?php echo $rows['class_code']; ?></span></p></br>
+                <p>SY: <?php echo $rows['school_year']; ?></p>
             <form method="GET" action="note.php">
                 <input type="hidden" name="class_id" value="<?php echo GetClassId($rows['class_code']);?>">
                 </br>
-                <button type="button" class="view" onclick="location.href='../notes/note.php?class_id=<?php echo GetClassId($rows['class_code']);?>&tab=due'">VIEW CLASS</button></br>
-                <button type="button" class="view" onclick="location.href='manage-class.php?class_id=<?php echo GetClassId($rows['class_code']);?>'">MANAGE CLASS</button></br>
-        </div>
-    
+                <div class="buttons">
+                <!-- <button type="button" onclick="location.href='../notes/note.php'">View Class</button> -->
+                    <button type="button" class="view" onclick="location.href='../notes/note.php?class_id=<?php echo GetClassId($rows['class_code']);?>&tab=due'">VIEW CLASS</button>
+                    <button type="button" class="view" onclick="location.href='manage-class.php?class_id=<?php echo GetClassId($rows['class_code']);?>'">MANAGE CLASS</button></br></br>
+                </div>
         <!-- </form> -->
+        </div>
         <?php
         }
         ?>
