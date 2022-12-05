@@ -1,0 +1,98 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background: #EDEDED;
+    height: 100vh;
+}
+
+.container-top{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: sticky;
+    top: 3vh;
+    margin-top: 3vh;
+    margin-bottom: 6vh;
+}
+
+label{
+    font-size: 20px;
+}
+
+label span{
+    font-size: 30px;
+}
+
+input:not(.class-pres){
+    border: none;
+    width: 97%;
+    height: 40px;
+    font-size: 20px;
+    padding-left: 3%;
+    margin-top: 8px;
+    border-radius: 10px;
+    background: #EDEDED;
+    box-shadow: inset 4px 4px 5px rgba(100, 104, 128, 0.6),
+           inset -6px -6px 9px rgba(255, 255, 255, 1);
+}
+
+input:focus{
+    outline: 1px solid rgb(68, 70, 106, 0.3);
+}
+
+.create-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+p{
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    line-height: 50px;
+    margin-bottom: 10px;
+}
+
+.create-form{
+    display: flex;
+    border-radius: 10px;
+    box-shadow:  5px 5px 7px rgba(100, 104, 128, 0.6), -5px -5px 7px rgba(255, 255, 255, 0.8);
+    outline: 1px solid rgb(68, 70, 106, 0.2);
+}
+
+.create-form div, button{
+    margin: 20px;
+}
+
+.class-pres{
+    border: none;
+    background-color: transparent;
+    font-size: 30px;
+    padding-left: 10px;
+}
+
+.class-pres:focus{
+    outline: none;
+}
+
+.create-form button{
+    color: rgba(0, 144, 135, 1);
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    margin-top: 5px;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 7px rgba(100, 104, 128, 0.6),
+    -5px -5px 7px rgba(255, 255, 255, 0.8);
+}
+
+.create-form button:hover{
+    color: #ffffff;
+    background-color: rgba(0, 144, 135, 1);
+}
