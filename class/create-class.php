@@ -41,7 +41,7 @@ OpenSession();
                 </div>
                 <div>
                     <label>SCHOOL YEAR</label>
-                    <input type="number" id="school_year" name="school_year" min="1900" max="2099" placeholder="2022" required>
+                    <input type="number" id="school_year" name="school_year" min="1900" max="2099" placeholder="e.g. 2022" required>
                 </div>
                 <button type="submit" class="btn">CREATE CLASS</button>
         </div>
