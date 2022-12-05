@@ -94,9 +94,9 @@ $("#signupUser").submit(function(e){
                 alert("Account Successfully Created");
                 window.location.replace("../index.php");
             }
-            else{
-                $(".loginMessage").html(data);
-            }
+            // else{
+            //     $(".loginMessage").html(data);
+            // }
         }
     });
 });
