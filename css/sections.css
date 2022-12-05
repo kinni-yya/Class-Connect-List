@@ -62,11 +62,11 @@ body{
   font-size: 18px;
   margin: 20px;
   width: 20%;
-  border-radius: 10px;
-  box-shadow:  5px 5px 7px rgba(100, 104, 128, 0.6), -5px -5px 7px rgba(255, 255, 255, 0.8);
   background-color: #EDEDED;
   padding: 15px;
-  outline: 1px solid rgb(68, 70, 106, 0.3);
+  border-radius: 10px;
+  box-shadow:  5px 5px 7px rgba(100, 104, 128, 0.6), -5px -5px 7px rgba(255, 255, 255, 0.8);
+  outline: 1px solid rgb(68, 70, 106, 0.2);
 }
 
 .view{
@@ -107,8 +107,6 @@ body{
   color: #ffffff;
   background-color: rgba(0, 144, 135, 1);
 }
-
-
 
 .para{
     /* border: 3px solid green; */
@@ -173,4 +171,30 @@ body{
     margin-top: 30px;
   }
 
+}
+
+.cname{ border-bottom: #fafbfe solid;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.cname p{
+  margin: 10px;
+  font-size: 30px;
+}
+
+.card span{
+  color: #009087;
+  font-weight: bold;
+  letter-spacing: 1.2px;
+}
+
+.buttons{
+  display: flex;
+}
+
+.buttons button{
+  width: 50%;
+  margin-inline: 10px;
 }
