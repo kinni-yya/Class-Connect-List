@@ -4,6 +4,14 @@
     font-family: Urbanist;
 }
 
+.container-top{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: sticky;
+    top: 3vh;
+    margin-top: 3vh;
+}
 
 
 .topnav{
