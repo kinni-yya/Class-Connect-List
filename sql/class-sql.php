@@ -134,3 +134,37 @@ function InsertSubject($subject_name, $subject_code, $subject_details, $professo
 	}
 	$conn->close();
 }
+
+function InsertStudent($class_code, $user_id, $conn){
+	// 0 is non-officer
+	$sql = "INSERT INTO member (member_type, class_id, user_id)
+			VALUES (0, class_id, '$user_id')
+			FROM class
+			WHERE class_code = '$class_code'";
+	if ($conn->query($sql) === TRUE) {
+		echo "Student added successfully to {class_id}!";
+	} else {
+		echo "Error: " . $sql . "<br>" . $conn->error;
+	}
+	$conn->close();
+}
+
+function InsertIrreg($user_id, $subject_code, $conn){
+	// 0 is non-officer
+
+	// SELECT class_id, subject_id
+	// FROM subject
+	// WHERE subject_code = '$subject_code';
+	// https://tinyurl.com/INSERT-with-subquery
+	$sql = "INSERT INTO member (member_type, class_id, user_id, subject_id)
+			VALUES (0, class_id, '$user_id', subject_id)
+			FROM subject
+			WHERE subject_code = '$subject_code'";
+
+	if ($conn->query($sql) === TRUE) {
+		echo "Subject added successfully!";
+	} else {
+		echo "Error: " . $sql . "<br>" . $conn->error;
+	}
+	$conn->close();
+}
