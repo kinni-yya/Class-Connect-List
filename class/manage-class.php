@@ -40,7 +40,7 @@ OpenSession();
         https://www.geeksforgeeks.org/how-to-fetch-data-from-localserver-database-and-display-on-html-table-using-php/ -->
 
     <div class="form-popup" id="add-subj-form">
-        <form action="with-class-process.php" method="POST" class="form-container">
+        <form action="manage-class-process.php" method="POST" class="form-container">
             <h1>ADD SUBJECT</h1>
             <input type="hidden" name="class_id" value="<?php echo $_GET['class_id']; ?>">
 
@@ -48,10 +48,11 @@ OpenSession();
             <input type="text" placeholder="Subject Name" name="subject_name" required>
 
             <label for="subject"><b>SUBJECT CODE</b></label>
-            <input type="text" placeholder="Subject Code" name="subject_code">
+            <input type="text" placeholder="Subject Code" name="subject_details">
 
             <label for="subject"><b>PROFESSOR</b></label>
             <input type="text" placeholder="Professor" name="professor">
+
             <button type="submit" class="btn">ADD SUBJECT</button>
             <button type="button" class="btn cancel" onclick="closeForm()">CANCEL</button>
         </form>
