@@ -14,18 +14,18 @@ OpenSession();
     <title>Welcome - Class Connect List</title>
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/sections.css">
+    <link rel="stylesheet" href="../css/with-class.css">
 </head>
 
 <body>
-    <?php 
-    DisplayNavHeader();?>
+    <?php DisplayNavHeader();?>
 
     <div class="para">
         <p class="p1">You have not joined any classes, yet.</p>
-        <p class="p2">Are you a class officer? Click here to create a classroom!</p>
+        <p class="p2">Are you a class officer? Click the button below to create a classroom!</p>
         <div class="btns">
             <button><a class="create" href="create-class.php">CREATE CLASS</a></button>
-            <button><a class="join"href="join-class.php">JOIN CLASS</a></button>
+            <button><a class="join" href="join-class.php">JOIN CLASS</a></button>
         </div>
     </div>
 
