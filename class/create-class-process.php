@@ -9,7 +9,11 @@ $school_year = $_POST['school_year']."-01-01";
 
 // Check if the class_name have values and it is not an empty value
 if(isset($_POST['class_name']) && !empty($_POST['class_name'])){
-	$class_id = InputClass($_POST['class_name'], $class_code, $_SESSION['user_id'], $school_year);
+	$class_id = InputClass(
+		$_POST['class_name'], 
+		$class_code, 
+		$_SESSION['user_id'], 
+		$school_year);
 }
 
 // Process to check if the class_name and the school year exist at the same time on a single record, if yes say that the class already exist
