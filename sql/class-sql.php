@@ -20,6 +20,7 @@ function InputClass($class_name, $class_code, $user_id, $school_year)
 	// Insert into class table
 	$sql = "INSERT INTO class (class_name, class_code, creator_id, school_year)
 			VALUES ('$class_name', '$class_code', '$user_id', '$school_year')";
+	
 	if ($conn->query($sql) === TRUE) {
 		// Select the last insert id or the class id created
 		$sql = "SELECT LAST_INSERT_ID();";
@@ -75,21 +76,24 @@ function GetClass($user_id)
 			ON class.class_id = member.class_id
 			WHERE member.user_id = '$user_id'";
 	// why query() = simple queries (e.g., select, update, delete, insert)
-	// multiquery() = ex. select sa loob ng WHERE; so far si jim lang gumagamit 
+	// multiquery() = ex. select sa loob ng WHERE/SELECT; so far si jim lang gumagamit 
 	$result = $conn->query($sql);
 	$conn->close();
 	return $result;
 }
 
 function GetClassId($class_code){
+	// opens connection to database
 	$conn = OpenCon();
 	$sql = "SELECT class_id
 			FROM class
 			WHERE class_code = '$class_code'";
+	// conn can query, then stores the result to $result
 	$result = $conn->query($sql);
-	// convert to array/dictionary
+	// convert to array/dictionary for PHP to make use of the info (since only sql can understand $result)
 	$class_id = $result->fetch_assoc();
 	$conn->close();
+	// return value
 	return $class_id['class_id'];
 }
 // 2 Types of using SQL row
@@ -118,11 +122,9 @@ function GetSubject($class_id)
 function InsertSubject($subject_name, $subject_code, $subject_details, $professor, $class_id, $conn)
 {
 	$sql = "INSERT INTO subject (subject_name, subject_code, subject_details, professor, class_id)
-			VALUES ('$subject_name', " .
+			VALUES ('$subject_name', '$subject_code'," .
 		# TERNARY: NOT REQUIRED
 		# IF variable is null, put "NULL"; else put the inputted variable
-		($subject_code == null ? "NULL" : "'$subject_code'")
-		. ", " .
 		($subject_details == null ? "NULL" : "'$subject_details'")
 		. ", " .
 		($professor == null ? "NULL" : "'$professor'")
@@ -138,11 +140,11 @@ function InsertSubject($subject_name, $subject_code, $subject_details, $professo
 function InsertStudent($class_code, $user_id, $conn){
 	// 0 is non-officer
 	$sql = "INSERT INTO member (member_type, class_id, user_id)
-			VALUES (0, class_id, '$user_id')
+			SELECT '0', class_id, '$user_id' 
 			FROM class
 			WHERE class_code = '$class_code'";
 	if ($conn->query($sql) === TRUE) {
-		echo "Student added successfully to {class_id}!";
+		echo "Student added successfully!";
 	} else {
 		echo "Error: " . $sql . "<br>" . $conn->error;
 	}
@@ -157,7 +159,7 @@ function InsertIrreg($user_id, $subject_code, $conn){
 	// WHERE subject_code = '$subject_code';
 	// https://tinyurl.com/INSERT-with-subquery
 	$sql = "INSERT INTO member (member_type, class_id, user_id, subject_id)
-			VALUES (0, class_id, '$user_id', subject_id)
+			VALUES ('0', class_id, '$user_id', subject_id)
 			FROM subject
 			WHERE subject_code = '$subject_code'";
 

@@ -1,6 +1,7 @@
 <?php
 include "../dbconnect.php";
 OpenSession();
+// $sesh_id = $_SESSION['user_id'];
 ?>
 
 <!DOCTYPE html>
@@ -28,6 +29,63 @@ OpenSession();
             ?>
         </div>
     </div>
+
+    <div class="card">
+        <div class="buttons">
+            <button type="button" class="view" onclick="openAddClassForm()">Add Class</button>
+            <button type="button" class="view" onclick="openAddSubjForm()">Add Subject</button>
+        </div>
+    </div>
+
+    <div class="form-popup" id="add-class-form">
+        <form action="with-class-process.php" method="POST" class="form-container">
+            <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
+            <button type="button" id="close" onclick="closeAddClassForm()">X</button>
+
+            <h1>JOIN CLASSROOM</h1>
+            <p1>Enter the classroom code of the desired section.<br></p1>
+            <p1>Doing so will send a join request towards the section's class officers.<br></p1>
+            <strong><em><br>Proceeding means that you are currently studying on multiple college degrees.<br></em></strong>
+
+            <input type="text" placeholder="Enter Class Code" name="class_code" required>
+
+            <br><button type="submit">CONTINUE</button>
+        </form>
+    </div>
+
+    <div class="form-popup" id="add-subj-form">
+        <form action="with-class-process.php" method="POST" class="form-container">
+            <button type="button" id="close" onclick="closeAddSubjForm()">X</button>
+
+            <h1>ADD SUBJECT</h1>
+            <p1>Enter the subject code of the desired subject.<br></p1>
+            <p1>Doing so will send a join request towards the section’s class officers.<br></p1>
+            <strong><em><br>Proceeding means that you are taking extra subjects that your current section does not partake (e.g. Irregular Student).<br></em></strong>
+
+            <input type="text" placeholder="Enter Subject Code" name="subj_code" required>
+
+            <br><button type="submit">CONTINUE</button>
+        </form>
+    </div>
+
+    <script type="text/javascript">
+        function openAddClassForm() {
+            document.getElementById("add-class-form").style.display = "block";
+        }
+
+        function closeAddClassForm() {
+            document.getElementById("add-class-form").style.display = "none";
+        }
+
+        function openAddSubjForm() {
+            document.getElementById("add-subj-form").style.display = "block";
+        }
+
+        function closeAddSubjForm() {
+            document.getElementById("add-subj-form").style.display = "none";
+        }
+    </script>
+
     <!-- SHOW CLASSES OF THE USER -->
     <div class="case">
         <?php
@@ -39,19 +97,19 @@ OpenSession();
          */
         while ($rows = $class_info->fetch_assoc()) {    ?>
             <div class="card">
-                <div class="cname"><p><?php echo $rows['class_name']; ?></p></div> 
+                <div class="cname">
+                    <p><?php echo $rows['class_name']; ?></p>
+                </div>
                 <p>Class Code: <span><?php echo $rows['class_code']; ?></span></p></br>
                 <p>SY: <?php echo $rows['school_year']; ?></p>
-            <form method="GET" action="note.php">
-                <input type="hidden" name="class_id" value="<?php echo GetClassId($rows['class_code']);?>">
-                </br>
-                <div class="buttons">
-                <!-- <button type="button" onclick="location.href='../notes/note.php'">View Class</button> -->
-                    <button type="button" class="view" onclick="location.href='../notes/note.php?class_id=<?php echo GetClassId($rows['class_code']);?>&tab=due'">VIEW CLASS</button>
-                    <button type="button" class="view" onclick="location.href='manage-class.php?class_id=<?php echo GetClassId($rows['class_code']);?>'">MANAGE CLASS</button></br></br>
-                </div>
-        <!-- </form> -->
-        </div>
+                <form method="GET" action="note.php">
+                    <input type="hidden" name="class_id" value="<?php echo GetClassId($rows['class_code']); ?>">
+                    </br>
+                    <div class="buttons">
+                        <button type="button" class="view" onclick="location.href='../notes/note.php?class_id=<?php echo GetClassId($rows['class_code']); ?>&tab=due'">VIEW CLASS</button>
+                        <button type="button" class="view" onclick="location.href='manage-class.php?class_id=<?php echo GetClassId($rows['class_code']); ?>'">MANAGE CLASS</button></br></br>
+                    </div>
+            </div>
         <?php
         }
         ?>
@@ -64,7 +122,7 @@ OpenSession();
 
     MANAGE CLASSES
     OFFICER
-	    - add and remove subj, 
+	    - addClassForm and remove subj, 
 	    - edit the class name, 
 	    - change member access, 
 	    - remove member
