@@ -12,7 +12,6 @@ body {
 }
 button {
   width: 100px;
-  height: 30px;
 }
 #popup {
   display: none;
@@ -45,10 +44,6 @@ input {
   margin-top: -19px;
   width: 30px;
   height: 27px;
-}
-p1 {
-  float: left;
-  margin-left: 30px;
 }
 .cont {
   background-color: #e3f2fd;
