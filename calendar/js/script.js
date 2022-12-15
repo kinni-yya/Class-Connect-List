@@ -25,6 +25,7 @@
             themeSystem: 'bootstrap',
             //Random default events
             events: events,
+            eventColor: '#009087',
             eventClick: function(info) {
                 var _details = $('#event-details-modal')
                 var id = info.event.id
