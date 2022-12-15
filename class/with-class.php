@@ -36,8 +36,8 @@ if(checkClassJoin($_SESSION['user_id']) == FALSE){
 
     <div class="card">
         <div class="buttons">
-            <button type="button" class="view" onclick="openAddClassForm()">Add Class</button>
-            <button type="button" class="view" onclick="openAddSubjForm()">Add Subject</button>
+            <button type="button" class="view" onclick="location.href='create-class.php'">CREATE NEW CLASS</button>
+            <button type="button" class="view" onclick="openAddClassForm()">ADD CLASS</button>
         </div>
     </div>
 
@@ -57,21 +57,6 @@ if(checkClassJoin($_SESSION['user_id']) == FALSE){
         </form>
     </div>
 
-    <div class="form-popup" id="add-subj-form">
-        <form action="with-class-process.php" method="POST" class="form-container">
-            <button type="button" id="close" onclick="closeAddSubjForm()">X</button>
-
-            <h1>ADD SUBJECT</h1>
-            <p1>Enter the subject code of the desired subject.<br></p1>
-            <p1>Doing so will send a join request towards the section’s class officers.<br></p1>
-            <strong><em><br>Proceeding means that you are taking extra subjects that your current section does not partake (e.g. Irregular Student).<br></em></strong>
-
-            <input type="text" placeholder="Enter Subject Code" name="subj_code" required>
-
-            <br><button type="submit">CONTINUE</button>
-        </form>
-    </div>
-
     <script type="text/javascript">
         function openAddClassForm() {
             document.getElementById("add-class-form").style.display = "block";
@@ -79,14 +64,6 @@ if(checkClassJoin($_SESSION['user_id']) == FALSE){
 
         function closeAddClassForm() {
             document.getElementById("add-class-form").style.display = "none";
-        }
-
-        function openAddSubjForm() {
-            document.getElementById("add-subj-form").style.display = "block";
-        }
-
-        function closeAddSubjForm() {
-            document.getElementById("add-subj-form").style.display = "none";
         }
     </script>
 

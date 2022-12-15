@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Urbanist");
-
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@100;200;300;400;500;600;700;800;900&display=swap');
 *{
-    font-family: Urbanist;
+    font-family: 'Urbanist', sans-serif;
 }
 
 .container-top{
@@ -35,7 +35,7 @@
     text-decoration: none;
     color: #000000;
     font-size: 17px;
-    font-weight: bold;
+    font-weight: 600;
     white-space: nowrap;
 }
 

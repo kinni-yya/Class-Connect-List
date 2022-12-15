@@ -24,9 +24,8 @@ OpenSession();
         <div class="create-form">
             <form id="formJoinClass">
                 <div class="cp">
-                    <span>
-                        <p1>Enter the classroom code of the desired section.<br></p1>
-                        <p1>Doing so will send a join request towards the section's class officers.<br></p1>
+                    <p class="details">Enter the classroom code of the desired class.</p>
+                    <p class="details">Doing so will send a join request towards the class officers.<br></p>
                 </div>
                 <div>
                     <input type="text" placeholder="Enter Class Code" name="class_code" class="form-control" required>
