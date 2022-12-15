@@ -18,7 +18,7 @@
 <body class="bg-light">
     <div class="container py-5" id="page-container">
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-9" color: #009087;>
                 <div id="calendar"></div>
             </div>
             <div class="col-md-3">
