@@ -19,7 +19,6 @@ if(checkClassJoin($_SESSION['user_id']) == TRUE){
     <title>Welcome - Class Connect List</title>
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/sections.css">
-    <link rel="stylesheet" href="../css/with-class.css">
 </head>
 
 <body>
