@@ -2,8 +2,16 @@
 include '../dbconnect.php';
 OpenSession();
 
-$class_code = bin2hex(random_bytes(5));;
-// Check on the database if this randomly generated class code already exist in the database
+$confirm_class_code = 1;
+while ($confirm_class_code = 1) {
+	$class_code = bin2hex(random_bytes(5));;
+	// Check on the database if this randomly generated class code already exist in the database
+	$confirm_class_code = checkClassCode($class_code);
+	if ($confirm_class_code == 0){
+		break;
+	}
+}
+
 
 $school_year = $_POST['school_year']."-01-01";
 
@@ -22,6 +30,6 @@ if(isset($_POST['class_name']) && !empty($_POST['class_name'])){
 if($class_id > 0){
 	// Redirect to the add subject page
 	// header("location: add_subject.php?class_id=$class_id");
-	header("location: with-class.php?class_id=$class_id");
+	header("location: manage-class.php?class_id=$class_id");
 }
 ?>

@@ -2,6 +2,11 @@
 include "../dbconnect.php";
 // Check if session exist
 OpenSession();
+
+// Check if the user is in a class
+if(checkClassJoin($_SESSION['user_id']) == TRUE){
+    header("location: with-class.php");
+}
 ?>
 
 <!DOCTYPE html>

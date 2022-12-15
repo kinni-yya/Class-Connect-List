@@ -47,8 +47,8 @@ OpenSession();
             <label for="subject"><b>SUBJECT</b></label>
             <input type="text" placeholder="Subject Name" name="subject_name" required>
 
-            <label for="subject"><b>SUBJECT CODE</b></label>
-            <input type="text" placeholder="Subject Code" name="subject_details">
+            <label for="subject"><b>SUBJECT DETAILS</b></label>
+            <input type="text" placeholder="Subject Details" name="subject_details">
 
             <label for="subject"><b>PROFESSOR</b></label>
             <input type="text" placeholder="Professor" name="professor">

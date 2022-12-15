@@ -119,10 +119,10 @@ function GetSubject($class_id)
 	return $row;
 }
 
-function InsertSubject($subject_name, $subject_code, $subject_details, $professor, $class_id, $conn)
+function InsertSubject($subject_name, $subject_details, $professor, $class_id, $conn)
 {
-	$sql = "INSERT INTO subject (subject_name, subject_code, subject_details, professor, class_id)
-			VALUES ('$subject_name', '$subject_code'," .
+	$sql = "INSERT INTO subject (subject_name, subject_details, professor, class_id)
+			VALUES ('$subject_name', " .
 		# TERNARY: NOT REQUIRED
 		# IF variable is null, put "NULL"; else put the inputted variable
 		($subject_details == null ? "NULL" : "'$subject_details'")
@@ -137,36 +137,103 @@ function InsertSubject($subject_name, $subject_code, $subject_details, $professo
 	$conn->close();
 }
 
-function InsertStudent($class_code, $user_id, $conn){
-	// 0 is non-officer
-	$sql = "INSERT INTO member (member_type, class_id, user_id)
-			SELECT '0', class_id, '$user_id' 
+// Check if the class code generated is unique
+function checkClassCode($class_code){
+	$conn = OpenCon();
+	$sql = "SELECT class_id
 			FROM class
 			WHERE class_code = '$class_code'";
-	if ($conn->query($sql) === TRUE) {
-		echo "Student added successfully!";
-	} else {
-		echo "Error: " . $sql . "<br>" . $conn->error;
+	$result = $conn->query($sql);
+	if ($result->num_rows > 0){
+		$conn->close();
+		return 1;
+	}
+	else{
+		$conn->close();
+		return 0;
+
+	}
+}
+
+// Check if the user has a full access on the class
+function checkManageClass($class_id, $user_id){
+	$conn = OpenCon();
+	$sql = "SELECT class_id
+			FROM member
+			WHERE class_id = '$class_id' AND user_id = '$user_id' AND member_type = '1'";
+	$result = $conn->query($sql);
+	if ($result->num_rows > 0){
+		$conn->close();
+		return TRUE;
+	}
+	else{
+		$conn->close();
+		return FALSE;
+	}
+}
+
+// Check if the user is in a class or not for the no-class and with-class page
+function checkClassJoin($user_id){
+	$conn = OpenCon();
+	$sql = "SELECT member_id
+			FROM member
+			WHERE user_id = '$user_id'";
+	$result = $conn->query($sql);
+	if ($result->num_rows > 0){
+		$conn->close();
+		return TRUE;
+	}
+	else{
+		$conn->close();
+		return FALSE;
+	}
+}
+
+// User joining using a class code
+function InsertMemberJoin($class_code, $user_id){
+	$conn = OpenCon();
+	// Check if the class code exist
+	$sql = "SELECT class_id
+			FROM class
+			WHERE class_code = '$class_code'";
+	$result = $conn->query($sql);
+	$row = $result->fetch_assoc();
+	if ($result->num_rows > 0){
+		// If the class exist insert the member
+		$sql = "INSERT INTO member (member_type, class_id, user_id) 
+				VALUES ('0', '".$row['class_id']."', '$user_id')";
+		if ($conn->query($sql) === TRUE) {
+			echo $row['class_id'];
+		} else {
+			echo "Error: " . $sql . "<br>" . $conn->error;
+		}
+	}
+	else{
+		echo 0;
 	}
 	$conn->close();
 }
 
-function InsertIrreg($user_id, $subject_code, $conn){
-	// 0 is non-officer
-
-	// SELECT class_id, subject_id
-	// FROM subject
-	// WHERE subject_code = '$subject_code';
-	// https://tinyurl.com/INSERT-with-subquery
-	$sql = "INSERT INTO member (member_type, class_id, user_id, subject_id)
-			VALUES ('0', class_id, '$user_id', subject_id)
+// Select all the subject for a specific class
+function SelectClassSubjectList($class_id, $member_id){
+	$conn = OpenCon();
+	$sql = "SELECT *
 			FROM subject
-			WHERE subject_code = '$subject_code'";
-
-	if ($conn->query($sql) === TRUE) {
-		echo "Subject added successfully!";
-	} else {
-		echo "Error: " . $sql . "<br>" . $conn->error;
-	}
+			WHERE class_id = '$class_id'";
+	$result = $conn->query($sql);
 	$conn->close();
+	return $result;
+}
+
+// Select all the member of a specific class
+function SelectClassMemberList($class_id){
+	$conn = OpenCon();
+	$sql = "SELECT member.*, user.f_name, user.m_name, user.l_name
+			FROM member
+			JOIN user
+			ON member.user_id = user.user_id
+			WHERE class_id = '$class_id'";
+	$result = $conn->query($sql);
+	$conn->close();
+	return $result;
 }

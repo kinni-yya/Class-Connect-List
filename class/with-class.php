@@ -1,7 +1,11 @@
 <?php
 include "../dbconnect.php";
 OpenSession();
-// $sesh_id = $_SESSION['user_id'];
+
+// Check if the user is in a class
+if(checkClassJoin($_SESSION['user_id']) == FALSE){
+    header("location: no-class.php");
+}
 ?>
 
 <!DOCTYPE html>
@@ -103,11 +107,17 @@ OpenSession();
                 <p>Class Code: <span><?php echo $rows['class_code']; ?></span></p></br>
                 <p>SY: <?php echo $rows['school_year']; ?></p>
                 <form method="GET" action="note.php">
-                    <input type="hidden" name="class_id" value="<?php echo GetClassId($rows['class_code']); ?>">
+                    <input type="hidden" name="class_id" value="<?php echo $rows['class_id']; ?>">
                     </br>
                     <div class="buttons">
-                        <button type="button" class="view" onclick="location.href='../notes/note.php?class_id=<?php echo GetClassId($rows['class_code']); ?>&tab=due'">VIEW CLASS</button>
-                        <button type="button" class="view" onclick="location.href='manage-class.php?class_id=<?php echo GetClassId($rows['class_code']); ?>'">MANAGE CLASS</button></br></br>
+                        <button type="button" class="view" onclick="location.href='../notes/note.php?class_id=<?php echo $rows['class_id']; ?>&tab=due'">VIEW CLASS</button>
+
+                        <?php 
+                        // Check if the creator id of the class is the user logged in
+                        $manage_class_id = checkManageClass($rows['class_id'], $_SESSION['user_id']);
+                        if($manage_class_id == TRUE) {
+                        echo "<button type=\"button\" class=\"view\" onclick=\"location.href='manage-class.php?class_id=".$rows['class_id']."'\">MANAGE CLASS</button></br></br>";
+                        }?>
                     </div>
             </div>
         <?php

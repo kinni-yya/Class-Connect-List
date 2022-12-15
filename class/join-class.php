@@ -22,7 +22,7 @@ OpenSession();
     <div class="create-container">
         <p>JOIN CLASS</p>
         <div class="create-form">
-            <form action="with-class-process.php" method="POST">
+            <form id="formJoinClass">
                 <div class="cp">
                     <span>
                         <p1>Enter the classroom code of the desired section.<br></p1>
@@ -35,6 +35,33 @@ OpenSession();
         </div>
         </form>
     </div>
-</body>
 
+    <!-- AJAX / jQuery CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script type="text/javascript">
+$("#formJoinClass").submit(function(e){
+    e.preventDefault();
+    var form = $(this);
+
+    $.ajax({
+        type: 'POST',
+        url: 'with-class-process.php',
+        data: form.serialize(),
+        success: function(data){
+            if(data > 0){
+                alert("Class joined successfully!");
+                window.location.replace("../notes/note.php?class_id=" + data);
+            }
+            else if(data == 0){
+                alert("Class doesn't exist!");
+            }
+            else{
+                alert(data);
+            }
+        }
+    });
+});
+</script>
+</body>
 </html>

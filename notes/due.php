@@ -14,7 +14,6 @@ $class_id = $_GET['class_id'];
 // Select all note table records without due date
 $select_due_result = SelectDueRecord($class_id, $member_id);
 while($row = $select_due_result->fetch_assoc()) {
-
 ?>
 
 <!-- Box -->
@@ -112,7 +111,7 @@ while($row = $select_due_result->fetch_assoc()) {
 						<select name="subject_id" class="form-control">
 							<option value="0">General Note</option>
 							<?php 
-							$subject_specific = GetAMemberSubjectNames($_GET['class_id']);
+							$subject_specific = GetAMemberSubjectNames($member_id, $_GET['class_id']); 
 							// Get all the subject id and title from database and show it in a dropdown list
 							while($subject_row = $subject_specific->fetch_assoc()){
 								// Check if the subject id list match with the subject id of the note
@@ -153,7 +152,7 @@ while($row = $select_due_result->fetch_assoc()) {
 				<div class="form-group">
 					<input type="hidden" name="note_id" value="<?php echo $row['note_id'];?>">
 				</div>
-			<!-- END Form to add Note -->
+			<!-- END Form to edit Note -->
       		</div>
       		<div class="modal-footer">
         		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -193,7 +192,7 @@ while($row = $select_due_result->fetch_assoc()) {
 						<select name="subject_id" class="form-control">
 							<option value="0">General Note</option>
 							<?php 
-							$subject_specific = GetAMemberSubjectNames($_GET['class_id']);
+							$subject_specific = GetAMemberSubjectNames($member_id, $_GET['class_id']); 
 							// Get all the subject id and title from database and show it in a dropdown list
 							while($subject_row = $subject_specific->fetch_assoc()){
 								// Check if the subject id list match with the subject id of the note

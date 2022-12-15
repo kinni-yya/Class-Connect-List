@@ -101,7 +101,7 @@ while($row = $select_announcement_result->fetch_assoc()) {
 						<select name="subject_id" class="form-control">
 							<option value="0">General Note</option>
 							<?php 
-							$subject_specific = GetAMemberSubjectNames($_GET['class_id']);
+							$subject_specific = GetAMemberSubjectNames($member_id, $_GET['class_id']); 
 							// Get all the subject id and title from database and show it in a dropdown list
 							while($subject_row = $subject_specific->fetch_assoc()){
 								// Check if the subject id list match with the subject id of the note
@@ -183,7 +183,7 @@ while($row = $select_announcement_result->fetch_assoc()) {
 						<select name="subject_id" class="form-control">
 							<option value="0">General Note</option>
 							<?php 
-							$subject_specific = GetAMemberSubjectNames($_GET['class_id']);
+							$subject_specific = GetAMemberSubjectNames($member_id, $_GET['class_id']); 
 							// Get all the subject id and title from database and show it in a dropdown list
 							while($subject_row = $subject_specific->fetch_assoc()){
 								// Check if the subject id list match with the subject id of the note

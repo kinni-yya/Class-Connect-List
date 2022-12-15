@@ -4,22 +4,22 @@ include '../dbconnect.php';
 // Check if session exist
 OpenSession();
 
-// Check if the page has the class_id parameter and tab parameter for the nav bar
-if(!isset($_GET['class_id']) && empty($_SESSION['class_id'])){
-	// class_id parameter is empty or doesn't exist
-	// Throw 404 error
-	// ***TEMPORARY sets the class_id so we can proceed with the page
-	$_GET['class_id'] = 1;
+// Check if the page has the tab parameter that sets the information to display
+if(!isset($_GET['tab']) && empty($_SESSION['tab'])){
+	// Tab parameter is empty so the tab can't figure out which information to display
+	// Redirect page
+	$_GET['tab'] = "due";
 
-	// Check if the page has the tab parameter that sets the information to display
-	if(!isset($_GET['tab']) && empty($_SESSION['tab'])){
-		// Tab parameter is empty so the tab can't figure out which information to display
-		// Redirect page
-		$_GET['tab'] = "due";
+	// Check if the page has the class_id parameter and tab parameter for the nav bar
+	if(!isset($_GET['class_id']) && empty($_SESSION['class_id'])){
+		header("Location: ../class/no-class.php");
 	}
-
-	header("Location: note.php?class_id=".$_GET['class_id']."&tab=".$_GET['tab']);
+	else{
+		header("Location: note.php?class_id=".$_GET['class_id']."&tab=".$_GET['tab']);
+	}
 }
+	
+
 
 //Get the access attribute from Database, if 0 regular if 1 full
 $member_info = MemberInfo($_SESSION['user_id'], $_GET['class_id']);
@@ -62,6 +62,9 @@ $class_info = GetClassRecord($_GET['class_id']);
 		    <a class="nav-link text-success" id="announcement-navlink" href="#" onclick="window.location.href='note.php?class_id=<?php echo $_GET['class_id']; ?>&tab=announcement';">Announcement</a>
 		  </li>
 		  <li class="nav-item">
+		    <a class="nav-link text-success" id="all-navlink" href="#" onclick="window.location.href='note.php?class_id=<?php echo $_GET['class_id']; ?>&tab=all';">All</a>
+		  </li>
+		  <li class="nav-item">
 		    <a class="nav-link text-success" id="archive-navlink" href="#" onclick="window.location.href='note.php?class_id=<?php echo $_GET['class_id']; ?>&tab=archive';">Archive</a>
 		  </li>
 		  <li class="nav-item">
@@ -75,9 +78,6 @@ $class_info = GetClassRecord($_GET['class_id']);
 		  echo '<li class="nav-item">';
 		  echo  '<a class="nav-link text-success" id="pending-navlink" href="#" onclick="window.location.href=\'note.php?class_id='.$_GET['class_id'].'&tab=pending\'" disabled>Pending Notes</a>';
 		  echo '</li>';
-		  echo '<li class="nav-item">';
-		  echo   '<a class="nav-link text-success" id="member-navlink" href="#" onclick="window.location.href=\'note.php?class_id='.$_GET['class_id'].'&tab=member\'" >Member Settings</a>';
-		  echo '</li>';
 		  }
 		  else if($access == 0){
 		  echo '<li class="nav-item">';
@@ -85,6 +85,9 @@ $class_info = GetClassRecord($_GET['class_id']);
 		  echo '</li>';
 		  }
 		  ?>
+		  <li class="nav-item">
+		    <a class="nav-link text-success" id="member-navlink" href="#" onclick="window.location.href='note.php?class_id=<?php echo $_GET['class_id']; ?>&tab=member';">Member Settings</a>
+		  </li>
 		</ul>
 
 		<?php 
@@ -113,7 +116,6 @@ $class_info = GetClassRecord($_GET['class_id']);
 	        		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	      		</div>
 	      		<div class="modal-body">
-	      			<?php echo NULL; ?>
 	      		<!-- Form to add Note -->
 	        		<div class="form-group">
 					    <label>Note/Task Title</label>
@@ -134,7 +136,7 @@ $class_info = GetClassRecord($_GET['class_id']);
 							<select name="subject_id" class="form-control">
 								<option value="0" selected>General Note</option>
 								<?php 
-								$subject_specific = GetAMemberSubjectNames($_GET['class_id']); 
+								$subject_specific = GetAMemberSubjectNames($member_id, $_GET['class_id']); 
 								while($row = $subject_specific->fetch_assoc()){
 									echo "<option value=\"".$row['subject_id']."\">".$row['subject_name']."</option>";
 								}
@@ -208,7 +210,7 @@ $class_info = GetClassRecord($_GET['class_id']);
 							<select name="subject_id" class="form-control">
 								<option value="0" selected>General Note</option>
 								<?php 
-								$subject_specific = GetAMemberSubjectNames($member_id); 
+								$subject_specific = GetAMemberSubjectNames($member_id, $_GET['class_id']); 
 								while($row = $subject_specific->fetch_assoc()){
 									echo "<option value=\"".$row['subject_id']."\">".$row['subject_name']."</option>";
 								}
@@ -299,6 +301,10 @@ $("#formAddNote").submit(function(e){
 	if (tab_selected == "due") {
 		$("#note-section").load("due.php?class_id=<?php echo $_GET['class_id']; ?>");
 		$("#due-navlink").addClass("active");
+	}
+	if (tab_selected == "all") {
+		$("#note-section").load("all.php?class_id=<?php echo $_GET['class_id']; ?>");
+		$("#all-navlink").addClass("active");
 	}
 	if (tab_selected == "archive") {
 		$("#note-section").load("archive.php?class_id=<?php echo $_GET['class_id']; ?>");

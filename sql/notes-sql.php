@@ -23,13 +23,14 @@ function GetClassRecord($class_id){
 }
 
 // Get all the subject names from a given class
-function GetAMemberSubjectNames($member_id){
+function GetAMemberSubjectNames($member_id, $class_id){
 	$conn = OpenCon();
-	$sql = "SELECT enrollee.subject_id, subject.subject_name
-			FROM enrollee
-			JOIN subject 
-			ON enrollee.subject_id = subject.subject_id
-			WHERE member_id = $member_id";
+	$sql = "SELECT subject_id, subject_name
+			FROM subject
+			WHERE class_id = '$class_id' AND subject_id NOT IN (
+				SELECT subject_id
+				FROM unenroll
+				WHERE member_id = '$member_id')";
 	$result = $conn->query($sql);
 	$conn -> close();
 	return $result;
@@ -61,16 +62,13 @@ function InsertNote($class_id, $subject_id, $due_date, $due_time, $note_title, $
 // Select records from the note table where due date have values
 function SelectDueRecord($class_id, $member_id){
 	$conn = OpenCon();
-	$sql = "SELECT note.*
+	$sql = "SELECT *
 			FROM note
-			LEFT OUTER JOIN enrollee 
-			ON note.subject_id = enrollee.subject_id
-			WHERE ((note.class_id = '$class_id' AND enrollee.member_id = '$member_id' AND note.due_date IS NOT NULL) OR (note.subject_id IS NULL AND note.class_id = '$class_id' AND note.due_date IS NOT NULL)) AND note_id NOT IN (
-				SELECT note_id 
-				FROM archive_note 
-				WHERE member_id = '$member_id'
-				)
-			ORDER BY note.due_date ASC";
+			WHERE class_id = '$class_id' AND due_date IS NOT NULL AND (subject_id NOT IN (
+				SELECT subject_id
+			    FROM unenroll
+			    WHERE member_id = '$member_id') OR subject_id IS NULL)  
+			ORDER BY due_date ASC";
 	$result = $conn->query($sql);
 	$conn -> close();
 	return $result;
@@ -79,16 +77,13 @@ function SelectDueRecord($class_id, $member_id){
 // Select records from the note table where due date is null
 function SelectAnnouncementRecord($class_id, $member_id){
 	$conn = OpenCon();
-	$sql = "SELECT note.*
+	$sql = "SELECT *
 			FROM note
-			LEFT OUTER JOIN enrollee 
-			ON note.subject_id = enrollee.subject_id
-			WHERE ((note.class_id = '$class_id' AND enrollee.member_id = '$member_id' AND note.due_date IS NULL) OR (note.subject_id IS NULL AND note.class_id = '$class_id' AND note.due_date IS NULL)) AND note_id NOT IN (
-				SELECT note_id 
-				FROM archive_note 
-				WHERE member_id = '$member_id'
-				)
-			ORDER BY note.due_date ASC";
+			WHERE class_id = '$class_id' AND due_date IS NULL AND (subject_id NOT IN (
+				SELECT subject_id
+			    FROM unenroll
+			    WHERE member_id = '$member_id') OR subject_id IS NULL)  
+			ORDER BY post_date ASC";
 	$result = $conn->query($sql);
 	$conn -> close();
 	return $result;
