@@ -3,6 +3,7 @@
 include '../dbconnect.php';
 // Check if session exist
 OpenSession();
+$class_info = GetClassRecord($_GET['class_id']);
 ?>
 
 <!DOCTYPE html>
@@ -13,7 +14,7 @@ OpenSession();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/navbar.css">
-    <link rel="stylesheet" href="../css/subject.css">
+    <!-- <link rel="stylesheet" href="../css/subject.css"> -->
     <title>Manage Class</title>
 
     <script type="text/javascript">
@@ -41,7 +42,7 @@ OpenSession();
 
     <div class="form-popup" id="add-subj-form">
         <form action="manage-class-process.php" method="POST" class="form-container">
-            <h1>ADD SUBJECT</h1>
+            <h1>ADD SUBJECT for <?php echo $class_info['class_name']; ?></h1>
             <input type="hidden" name="class_id" value="<?php echo $_GET['class_id']; ?>">
 
             <label for="subject"><b>SUBJECT</b></label>
