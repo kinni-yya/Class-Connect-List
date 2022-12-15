@@ -74,7 +74,7 @@ p{
     background-color: transparent;
     font-size: 30px;
     padding-left: 10px;
-    font-weight: bold;
+    font-weight: 600;
     letter-spacing: 1.5px;
     color: rgba(0, 144, 135, 1);
 }
@@ -98,4 +98,12 @@ p{
 .create-form button:hover{
     color: #ffffff;
     background-color: rgba(0, 144, 135, 1);
+}
+
+.details{
+    font-weight: 400;
+    font-size: 25px;
+    margin: 0;
+    line-height: 35px;
+    letter-spacing: 1px;
 }
