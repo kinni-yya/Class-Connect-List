@@ -17,12 +17,13 @@
 
         calendar = new Calendar(document.getElementById('calendar'), {
             headerToolbar: {
-                left: 'prev,next today',
-                right: 'dayGridMonth,dayGridWeek,list',
+                right: 'today prev,next',
+                left: 'dayGridMonth,dayGridWeek,list',
                 center: 'title',
             },
+            
             selectable: true,
-            themeSystem: 'bootstrap',
+            themeSystem: 'bootstrap5',
             //Random default events
             events: events,
             eventClick: function(info) {

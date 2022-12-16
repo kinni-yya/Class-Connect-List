@@ -16,10 +16,11 @@
     <link rel="stylesheet" href="fullcalendar/lib/main.min.css">
 </head>
 
-<body class>
-    <?php DisplayNavHeader();?>
-     
-    <div class="container py-5" id="page-container">
+<body>
+    <div id="page-container">
+        <?php DisplayNavHeader();?>
+    </div>
+    <div class="container" id="page-container">
         <div class="row">
             <div class="col-md-9">
                 <div id="calendar"></div>
@@ -63,8 +64,8 @@
                     </div>
                     <div class="card-footer">
                         <div class="text-center">
-                            <button class="btn btn-primary btn-sm rounded-0" type="submit" form="event-form"><i class="fa fa-save"></i> Save</button>
-                            <button class="btn btn-default border btn-sm rounded-0" type="reset" form="event-form"><i class="fa fa-reset"></i> Cancel</button>
+                            <button class="btn btn-primary btn-sm rounded-4" type="submit" form="event-form"><i class="fa fa-save"></i> Save</button>
+                            <button class="btn btn-default border btn-sm rounded-4" type="reset" form="event-form"><i class="fa fa-reset"></i> Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -85,7 +86,7 @@
                         <dl>
                             <dt class="text-muted">Event Title</dt>
                             <dd id="title" class="fw-bold fs-4"></dd>
-                            <dt class="text-muted">Event Description</dt>
+                            <dt class="text-muted">Description</dt>
                             <dd id="description" class=""></dd>
                             <dt class="text-muted">Event Start</dt>
                             <dd id="start" class=""></dd>
@@ -96,7 +97,7 @@
                 </div>
                 <div class="modal-footer rounded-4">
                     <div class="text-end">
-                        <!--button type="button" class="btn btn-primary btn-sm rounded-0" id="edit" data-id="">Edit</button -->
+                        <button type="button" class="btn btn-primary btn-sm rounded-0" id="edit" data-id="">Edit</button>
                         <button type="button" class="btn btn-danger btn-sm rounded-0" id="delete" data-id="">Delete</button>
                         <button type="button" class="btn btn-secondary btn-sm rounded-0" data-bs-dismiss="modal">Close</button>
                     </div>
