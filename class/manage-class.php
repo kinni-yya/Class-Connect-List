@@ -42,66 +42,71 @@ $class_info = GetClassRecord($_GET['class_id']);
     <!-- FETCH FROM DATABASE AND DISPLAY
         https://www.geeksforgeeks.org/how-to-fetch-data-from-localserver-database-and-display-on-html-table-using-php/ -->
 
+    <form>
+        <div class="form-popup" id="add-subj-form">
+            <form action="manage-class-process.php" method="POST" class="form-container">
+                <h1>ADD SUBJECT for
+                    <?php
+                    $class_name = $class_info['class_name'];
+                    echo "<span class='class_name'>$class_name</span>";
+                    ?></h1>
+                <input type="hidden" name="class_id" value="<?php echo $_GET['class_id']; ?>">
 
-    <div class="form-popup" id="add-subj-form">
-        <form action="manage-class-process.php" method="POST" class="form-container">
-            <h1>ADD SUBJECT for <?php echo $class_info['class_name']; ?></h1>
-            <input type="hidden" name="class_id" value="<?php echo $_GET['class_id']; ?>">
+                <label for="subject"><b>SUBJECT</b></label>
+                <input type="text" placeholder="e.g. English" name="subject_name" required><br>
 
-            <label for="subject"><b>SUBJECT</b></label>
-            <input type="text" placeholder="e.g. English" name="subject_name" required><br>
+                <label for="subject"><b>COURSE CODE</b></label>
+                <input type="text" placeholder="e.g. EN 1001" name="subject_details" required><br>
 
-            <label for="subject"><b>COURSE CODE</b></label>
-            <input type="text" placeholder="e.g. EN 1001" name="subject_details" required><br>
+                <label for="subject"><b>PROFESSOR</b></label>
+                <input type="text" placeholder="e.g. Juan Dela Cruz" name="professor"><br>
+                <label for="subject"><b>MEETING TIME</b></label>
 
-            <label for="subject"><b>PROFESSOR</b></label>
-            <input type="text" placeholder="e.g. Juan Dela Cruz" name="professor"><br>
-            <label for="subject"><b>MEETING TIME</b></label>
+            </form>
+        </div>
+
+        <form id="myForm">
+            <ul class="donate-now">
+                <li>
+                    <input type="radio" id="MON" name="button" value="MON" />
+                    <label for="MON">MON</label>
+                </li>
+                <li>
+                    <input type="radio" id="TUE" name="button" value="TUE" />
+                    <label for="TUE">TUE</label>
+                </li>
+                <li>
+                    <input type="radio" id="WED" name="button" value="WED" />
+                    <label for="WED">WED</label>
+                </li>
+                <li>
+                    <input type="radio" id="THU" name="button" value="THU" />
+                    <label for="THU">THU</label>
+                </li>
+                <li>
+                    <input type="radio" id="FRI" name="button" value="FRI" />
+                    <label for="FRI">FRI</label>
+                </li>
+                <li>
+                    <input type="radio" id="SAT" name="button" value="SAT" />
+                    <label for="SAT">SAT</label>
+                </li>
+                <li>
+                    <input type="radio" id="SUN" name="button" value="SUN" />
+                    <label for="SUN">SUN</label>
+                </li>
+            </ul>
+            <br><br><br>
+
+            <label for="from"><b>FROM</b></label>
+            <input type="time" id="time1" required>
+
+            <label for="subject"><b>TO</b></label>
+            <input type="time" id="time2" required>
+
+            <br><button type="submit" onclick="appendValue(event)">Add Meeting Time</button>
 
         </form>
-    </div>
-    <br>
-
-    <form id="myForm">
-        <ul class="donate-now">
-            <li>
-                <input type="radio" id="MON" name="button" value="MON" />
-                <label for="MON">MON</label>
-            </li>
-            <li>
-                <input type="radio" id="TUE" name="button" value="TUE" />
-                <label for="TUE">TUE</label>
-            </li>
-            <li>
-                <input type="radio" id="WED" name="button" value="WED" />
-                <label for="WED">WED</label>
-            </li>
-            <li>
-                <input type="radio" id="THU" name="button" value="THU" />
-                <label for="THU">THU</label>
-            </li>
-            <li>
-                <input type="radio" id="FRI" name="button" value="FRI" />
-                <label for="FRI">FRI</label>
-            </li>
-            <li>
-                <input type="radio" id="SAT" name="button" value="SAT" />
-                <label for="SAT">SAT</label>
-            </li>
-            <li>
-                <input type="radio" id="SUN" name="button" value="SUN" />
-                <label for="SUN">SUN</label>
-            </li>
-        </ul>
-        <br><br><br>
-
-        <label for="from"><b>FROM</b></label>
-        <input type="time" id="time1" required>
-
-        <label for="subject"><b>TO</b></label>
-        <input type="time" id="time2" required>
-
-        <br><button type="submit" onclick="appendValue(event)">Add Meeting Time</button>
 
     </form>
     <div id="output"></div>

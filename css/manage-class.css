@@ -52,3 +52,7 @@ label, input, button {
   display: inline;
   margin: 10px;
 }
+
+.class_name {
+  color: rgba(0, 144, 135, 1);
+}
