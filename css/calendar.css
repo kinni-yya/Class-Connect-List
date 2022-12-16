@@ -2,13 +2,17 @@
     --bs-success-rgb: 71, 222, 152 !important;
 }
 
-html,
-body {
+html, body {
+    margin: 0;
+    padding:0;
     overflow: relative;
     height: 100%;
     width: 100%;
     font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
     max-width: 1500px;
+    background: rgba(226,226,226,0.6800000071525574);
+    
 }
 
 .btn-info.text-light:hover,
@@ -18,16 +22,27 @@ body {
 .card-header {
     background: #009087;
 }
-table, tbody, td, tfoot, th, thead, tr {
+table, tbody, tfoot, thead, tr {
     border-color: #00908631 !important;
     border-style: solid;
     border-width: 0.5px !important;
+    border-radius: 10px;
+}
+th, td{
+    -webkit-text-fill-color: black;
+    border-color: #00908631 !important;
 }
 #calendar {
     width: 100%;
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.fc-widget-header {
+    background-color: #009087;
 }
 .modal-header {
     background-color: #009087;
     border-style: hidden;
+}
+.event-form {
+    border-radius: 10px;
 }

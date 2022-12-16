@@ -6,7 +6,7 @@
         if (!!scheds) {
             Object.keys(scheds).map(k => {
                 var row = scheds[k]
-                events.push({ id: row.id, title: row.title, start: row.start_datetime, end: row.end_datetime });
+                events.push({ id: row.id, title: row.title, description: row.description, event_type:row.event_type,  start: row.start_datetime, end: row.end_datetime });
             })
         }
         
@@ -17,21 +17,21 @@
 
         calendar = new Calendar(document.getElementById('calendar'), {
             headerToolbar: {
-                left: 'prev,next today',
-                right: 'dayGridMonth,dayGridWeek,list',
+                right: 'today prev,next',
+                left: 'dayGridMonth,dayGridWeek,list',
                 center: 'title',
             },
             selectable: true,
-            themeSystem: 'bootstrap',
+            themeSystem: 'bootstrap5',
             //Random default events
             events: events,
-            eventColor: '#009087',
             eventClick: function(info) {
                 var _details = $('#event-details-modal')
                 var id = info.event.id
                 if (!!scheds[id]) {
                     _details.find('#title').text(scheds[id].title)
                     _details.find('#description').text(scheds[id].description)
+                    _details.find('#event_type').text(scheds[id].event_type)
                     _details.find('#start').text(scheds[id].sdate)
                     _details.find('#end').text(scheds[id].edate)
                     _details.find('#edit,#delete').attr('data-id', id)
@@ -63,6 +63,7 @@
                 _form.find('[name="id"]').val(id)
                 _form.find('[name="title"]').val(scheds[id].title)
                 _form.find('[name="description"]').val(scheds[id].description)
+                _form.find('[name="event_type"]').val(scheds[id].event_type)
                 _form.find('[name="start_datetime"]').val(String(scheds[id].start_datetime).replace(" ", "T"))
                 _form.find('[name="end_datetime"]').val(String(scheds[id].end_datetime).replace(" ", "T"))
                 $('#event-details-modal').modal('hide')
