@@ -7,9 +7,6 @@
 @default-border-radius: 10px;
 @breakpoint-medium: "screen and (min-width: 700px)"; */
 
-body {
-  text-align: center;
-}
 button {
   width: 100px;
 }
@@ -21,7 +18,31 @@ button {
   left: 0;
   position: fixed;
   background-color: rgba(50, 50, 50, 0.9);
+  
 }
+
+.center{
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#add-class-form{
+  text-align: center;
+  display: none;
+  background-color: #EDEDED;
+  padding: 15px;
+  border-radius: 10px;
+  outline: 1px solid rgb(68, 70, 106, 0.2);
+  outline: 1px solid rgb(68, 70, 106, 0.3);
+    border-radius: 10px;
+    box-shadow:  7px 7px 7px rgba(100, 104, 128, 0.6),
+                -7px -7px 7px rgba(255, 255, 255, 0.9);
+}
+
 #form {
   position: absolute;
   background-color: #f5f5f5;
@@ -56,4 +77,78 @@ input {
 }
 #add {
   margin: 10px;
+}
+
+.form-popup button{
+  color: rgba(0, 144, 135, 1);
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  margin-top: 5px;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 7px rgba(100, 104, 128, 0.6),
+  -5px -5px 7px rgba(255, 255, 255, 0.8);
+}
+
+.form-popup button:hover{
+  color: #ffffff;
+  background-color: rgba(0, 144, 135, 1);
+}
+
+#close{
+  position: absolute;
+  top: 30px;
+  right: 10px;
+  padding: 5px;
+  text-align: center;
+  width: 40px;
+  height: 40px;
+}
+
+input{
+  border: none;
+  width: 97%;
+  height: 40px;
+  font-size: 20px;
+  padding-left: 3%;
+  margin-top: 8px;
+  border-radius: 10px;
+  background: #EDEDED;
+  box-shadow: inset 4px 4px 5px rgba(100, 104, 128, 0.6),
+          inset -6px -6px 9px rgba(255, 255, 255, 1);
+}
+
+input:focus{
+  outline: 1px solid rgb(68, 70, 106, 0.3);
+}
+
+.details{
+  font-weight: 400;
+  font-size: 20px;
+  margin: 0;
+  line-height: 35px;
+  letter-spacing: 1px;
+}
+
+.cardwclass{
+  width: 360px;
+  margin-left: 10px;
+  
+}
+
+.cardwclass button{
+  font-size: 15px;
+  background-color: #EDEDED;
+    color: #009087;
+}
+
+.buttonswclass{
+  display: flex;
+  height: 57px;
+}
+
+.buttonswclass button{
+  width: 50%;
+  margin-inline: 10px;
 }
