@@ -36,15 +36,15 @@
                                 <input type="hidden" name="id" value="">
                                 <div class="form-group mb-2">
                                     <label for="title" class="control-label">Event Title:</label>
-                                    <input type="text" class="form-control form-control-sm rounded-0" name="title" id="title" required>
+                                    <input type="text" class="" name="title" id="title" required>
                                 </div>
                                 <div class="form-group mb-2">
                                     <label for="description" class="control-label">Event Description:</label>
-                                    <textarea rows="3" class="form-control form-control-sm rounded-0" name="description" id="description"></textarea>
+                                    <textarea rows="3" class="" name="description" id="description"></textarea>
                                 </div>
                                 <div class="form-group mb-2">
                                     <label for="event_type" class="control-label">Event Type:</label>
-                                    <select class="form-select form-select-sm" aria-label=".form-select-sm" name="event_type" id="event_type">
+                                    <select class="" aria-label=".form-select-sm" name="event_type" id="event_type">
                                         <option selected disabled></option>
                                         <option value="0">With Due Date</option>
                                         <option value="1">Subject Schedule</option>
@@ -53,19 +53,19 @@
                                 </div>
                                 <div class="form-group mb-2">
                                     <label for="start_datetime" class="control-label">Event Start:</label>
-                                    <input type="datetime-local" class="form-control form-control-sm rounded-0" name="start_datetime" id="start_datetime" required>
+                                    <input type="datetime-local" class="cal" name="start_datetime" id="start_datetime" required>
                                 </div>
                                 <div class="form-group mb-2">
                                     <label for="end_datetime" class="control-label">Event Due:</label>
-                                    <input type="datetime-local" class="form-control form-control-sm rounded-0" name="end_datetime" id="end_datetime">
+                                    <input type="datetime-local" class="" name="end_datetime" id="end_datetime">
                                 </div>
                             </form>
                         </div>
                     </div>
                     <div class="card-footer">
                         <div class="text-center">
-                            <button class="btn btn-primary btn-sm rounded-4" type="submit" form="event-form"><i class="fa fa-save"></i> Save</button>
-                            <button class="btn btn-default border btn-sm rounded-4" type="reset" form="event-form"><i class="fa fa-reset"></i> Cancel</button>
+                            <button class="savebtn" type="submit" form="event-form"><i class="fa fa-save"></i> Save</button>
+                            <button class="savebtn2" type="reset" form="event-form"><i class="fa fa-reset"></i> Cancel</button>
                         </div>
                     </div>
                 </div>
