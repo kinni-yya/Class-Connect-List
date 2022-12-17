@@ -20,7 +20,7 @@ function InputClass($class_name, $class_code, $user_id, $school_year)
 	// Insert into class table
 	$sql = "INSERT INTO class (class_name, class_code, creator_id, school_year)
 			VALUES ('$class_name', '$class_code', '$user_id', '$school_year')";
-	
+
 	if ($conn->query($sql) === TRUE) {
 		// Select the last insert id or the class id created
 		$sql = "SELECT LAST_INSERT_ID();";
@@ -82,7 +82,8 @@ function GetClass($user_id)
 	return $result;
 }
 
-function GetClassId($class_code){
+function GetClassId($class_code)
+{
 	// opens connection to database
 	$conn = OpenCon();
 	$sql = "SELECT class_id
@@ -138,59 +139,59 @@ function InsertSubject($subject_name, $subject_details, $professor, $class_id, $
 }
 
 // Check if the class code generated is unique
-function checkClassCode($class_code){
+function checkClassCode($class_code)
+{
 	$conn = OpenCon();
 	$sql = "SELECT class_id
 			FROM class
 			WHERE class_code = '$class_code'";
 	$result = $conn->query($sql);
-	if ($result->num_rows > 0){
+	if ($result->num_rows > 0) {
 		$conn->close();
 		return 1;
-	}
-	else{
+	} else {
 		$conn->close();
 		return 0;
-
 	}
 }
 
 // Check if the user has a full access on the class
-function checkManageClass($class_id, $user_id){
+function checkManageClass($class_id, $user_id)
+{
 	$conn = OpenCon();
 	$sql = "SELECT class_id
 			FROM member
 			WHERE class_id = '$class_id' AND user_id = '$user_id' AND member_type = '1'";
 	$result = $conn->query($sql);
-	if ($result->num_rows > 0){
+	if ($result->num_rows > 0) {
 		$conn->close();
 		return TRUE;
-	}
-	else{
+	} else {
 		$conn->close();
 		return FALSE;
 	}
 }
 
 // Check if the user is in a class or not for the no-class and with-class page
-function checkClassJoin($user_id){
+function checkClassJoin($user_id)
+{
 	$conn = OpenCon();
 	$sql = "SELECT member_id
 			FROM member
 			WHERE user_id = '$user_id'";
 	$result = $conn->query($sql);
-	if ($result->num_rows > 0){
+	if ($result->num_rows > 0) {
 		$conn->close();
 		return TRUE;
-	}
-	else{
+	} else {
 		$conn->close();
 		return FALSE;
 	}
 }
 
 // User joining using a class code
-function InsertMemberJoin($class_code, $user_id){
+function InsertMemberJoin($class_code, $user_id)
+{
 	$conn = OpenCon();
 	// Check if the class code exist
 	$sql = "SELECT class_id
@@ -198,24 +199,24 @@ function InsertMemberJoin($class_code, $user_id){
 			WHERE class_code = '$class_code'";
 	$result = $conn->query($sql);
 	$row = $result->fetch_assoc();
-	if ($result->num_rows > 0){
+	if ($result->num_rows > 0) {
 		// If the class exist insert the member
 		$sql = "INSERT INTO member (member_type, class_id, user_id) 
-				VALUES ('0', '".$row['class_id']."', '$user_id')";
+				VALUES ('0', '" . $row['class_id'] . "', '$user_id')";
 		if ($conn->query($sql) === TRUE) {
 			echo $row['class_id'];
 		} else {
 			echo "Error: " . $sql . "<br>" . $conn->error;
 		}
-	}
-	else{
+	} else {
 		echo 0;
 	}
 	$conn->close();
 }
 
 // Select all the subject for a specific class
-function SelectClassSubjectList($class_id, $member_id){
+function SelectClassSubjectList($class_id, $member_id)
+{
 	$conn = OpenCon();
 	$sql = "SELECT *
 			FROM subject
@@ -226,13 +227,28 @@ function SelectClassSubjectList($class_id, $member_id){
 }
 
 // Select all the member of a specific class
-function SelectClassMemberList($class_id){
+function SelectClassMemberList($class_id)
+{
 	$conn = OpenCon();
 	$sql = "SELECT member.*, user.f_name, user.m_name, user.l_name
 			FROM member
 			JOIN user
 			ON member.user_id = user.user_id
 			WHERE class_id = '$class_id'";
+	$result = $conn->query($sql);
+	$conn->close();
+	return $result;
+}
+
+function GetArchivedClass($user_id)
+{
+	$conn = OpenCon();
+
+	$sql = "SELECT class.class_id, class.class_name, class.class_code, class.school_year
+			FROM class
+			JOIN archive_class
+			ON class.class_id = archive_class.class_id
+			WHERE archive_class.user_id = '$user_id'";
 	$result = $conn->query($sql);
 	$conn->close();
 	return $result;
