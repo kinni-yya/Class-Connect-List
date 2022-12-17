@@ -12,25 +12,22 @@ div :not(ul.topnav) {
 */
 @import url("https://fonts.googleapis.com/css?family=Urbanist");
 
-*{
-    margin: 0;
-    padding: 0;
+* {
+  margin: 0;
+  padding: 0;
 }
 
-body{
-    background: #EDEDED;
-    font-family: Urbanist;
-    text-decoration: none;
-
+body {
+  background: #ededed;
+  font-family: Urbanist;
+  text-decoration: none;
 }
-
 
 .error {
   color: red;
 }
 
 .website-content {
-
   text-align: center;
   line-height: 100px;
 }
@@ -44,37 +41,39 @@ body{
   font-size: 36px;
 }
 
-.case{
+.case {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
 }
 
-.card{ 
+.card {
   font-size: 18px;
   margin: 20px;
   width: 308px;
-  background-color: #EDEDED;
+  background-color: #ededed;
   padding: 15px;
   border-radius: 10px;
-  box-shadow:  5px 5px 7px rgba(100, 104, 128, 0.6), -5px -5px 7px rgba(255, 255, 255, 0.8);
+  box-shadow: 5px 5px 7px rgba(100, 104, 128, 0.6),
+    -5px -5px 7px rgba(255, 255, 255, 0.8);
   outline: 1px solid rgb(68, 70, 106, 0.2);
 }
 
-.view{
+.view {
   font-size: 15px;
   font-weight: bold;
-  letter-spacing: .5px;
+  letter-spacing: 0.5px;
   color: #009087;
-  background: #EDEDED;
+  background: #ededed;
   padding: 10px 20px;
-  transition: .2s ease;
+  transition: 0.2s ease;
   border-radius: 10px;
   border: transparent;
-  box-shadow:  5px 5px 7px rgba(100, 104, 128, 0.6), -5px -5px 7px rgba(255, 255, 255, 0.7);
+  box-shadow: 5px 5px 7px rgba(100, 104, 128, 0.6),
+    -5px -5px 7px rgba(255, 255, 255, 0.7);
 }
 
-.view:hover{
+.view:hover {
   color: #ffffff;
   background-color: rgba(0, 144, 135, 1);
 }
@@ -91,7 +90,7 @@ body{
     -5px -5px 7px rgba(255, 255, 255, 0.8);
 }
 
-.btns a{
+.btns a {
   text-decoration: none;
 }
 
@@ -100,95 +99,94 @@ body{
   background-color: rgba(0, 144, 135, 1);
 }
 
-.para{
-    /* border: 3px solid green; */
-    /*outline: solid 1px;*/
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    text-align: center;
-    margin-top: 170px;
-    align-items: center;
+.para {
+  /* border: 3px solid green; */
+  /*outline: solid 1px;*/
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  text-align: center;
+  margin-top: 170px;
+  align-items: center;
 }
 
-.para .p1{
-    font-size: 51px;
+.para .p1 {
+  font-size: 51px;
 }
 
-.para .p2{
-    font-size: 29px;
-    margin-top: 45px;
+.para .p2 {
+  font-size: 29px;
+  margin-top: 45px;
 }
 
-.para button{   
-    margin: 35px;
-    margin-top: 83px;
-    cursor: pointer;
-    border: none;
+.para button {
+  margin: 35px;
+  margin-top: 83px;
+  cursor: pointer;
+  border: none;
 }
 
-.para a{
-    background: #EDEDED;
-    color: #009087;
-    font-weight: bold;
-    font-size: 21px;
-    letter-spacing: 1px;
-    border-radius: 25px;
-    box-shadow:  5px 5px 7px rgba(100, 104, 128, 0.6),
+.para a {
+  background: #ededed;
+  color: #009087;
+  font-weight: bold;
+  font-size: 21px;
+  letter-spacing: 1px;
+  border-radius: 25px;
+  box-shadow: 5px 5px 7px rgba(100, 104, 128, 0.6),
     -5px -5px 7px rgba(255, 255, 255, 0.7);
-
 }
 
-.join{
-    padding: 23px 40px;
+.join {
+  padding: 23px 40px;
 }
 
-.create{
-    padding: 23px 23px;
+.create {
+  padding: 23px 23px;
 }
 
 .para a:hover {
-    transition: .2s ease;
-    color: #ffffff;
-    background-color: rgba(0, 144, 135, 1);
+  transition: 0.2s ease;
+  color: #ffffff;
+  background-color: rgba(0, 144, 135, 1);
 }
 
-@media (max-width: 1171px){
-  .para{
+@media (max-width: 1171px) {
+  .para {
     margin-top: 100px;
   }
-
 }
 
-@media (max-width: 500px){
-  .para{
+@media (max-width: 500px) {
+  .para {
     margin-top: 30px;
   }
-
 }
 
-.cname{ border-bottom: #fafbfe solid;
+.cname {
+  border-bottom: #fafbfe solid;
   display: flex;
   justify-content: center;
   margin-bottom: 15px;
 }
 
-.cname p{
+.cname p {
   margin: 10px;
   font-size: 30px;
 }
 
-.card span{
+.card span {
   color: #009087;
   font-weight: bold;
   letter-spacing: 1.2px;
 }
 
-.buttons{
+.buttons {
   display: flex;
 }
 
-.buttons button{
+.buttons button {
   width: 50%;
   margin-inline: 10px;
 }
+
