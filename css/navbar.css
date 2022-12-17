@@ -1,7 +1,13 @@
 @import url("https://fonts.googleapis.com/css?family=Urbanist");
 @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@100;200;300;400;500;600;700;800;900&display=swap');
 *{
+    margin: 0;
+    padding: 0;
     font-family: 'Urbanist', sans-serif;
+}
+
+body{
+    background-color: #EDEDED!important;
 }
 
 .container-top{
@@ -40,7 +46,7 @@
 }
 
 .topnav .title a{
-    color: #009087; 
+    color: #009087;
     font-size: 27px;
     letter-spacing: 1.2px;
     margin-left: 24px;
