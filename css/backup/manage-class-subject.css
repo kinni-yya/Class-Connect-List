@@ -1,17 +1,40 @@
 @import url("https://fonts.googleapis.com/css?family=Urbanist:400, 700, 500, 600");
 
-.frame-44 {
-  align-items: flex-start;
-  border: 1px none;
-  display: flex;
-  gap: 46px;
-  height: 389px;
-  margin-top: 31px;
-  min-width: 1858px;
-  z-index: 4;
+.btn-container{
+  width: 360px;
+  margin-left: 10px;
+  display: block;
 }
 
-.frame-4 {
+.buttons{
+  display: flex;
+}
+
+.button{
+  font-size: 15px;
+    font-weight: bold;
+    letter-spacing: .5px;
+    color: #009087;
+    background: #EDEDED;
+    padding: 10px 20px;
+    transition: .2s ease;
+    border-radius: 10px;
+    border: transparent;
+    box-shadow: 5px 5px 7px rgb(100 104 128 / 60%), -5px -5px 7px rgb(255 255 255 / 70%);
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  flex-direction: row;
+}
+
+.semi-bold {
+  font-weight: 600;
+}
+
+.subj-frame {
   align-items: center;
   background-color: #ffffff99;
   border: 1px none;
@@ -22,9 +45,11 @@
   min-height: 389px;
   padding: 18px 0;
   width: 335px;
+  font-weight: bold;
+  margin: 20px;
 }
 
-.frame-40 {
+.subj-name-and-details {
   align-items: center;
   background-color: #ffffff99;
   border: 1px none;
@@ -38,47 +63,40 @@
   overflow: hidden;
   padding: 17px 0;
   width: 295px;
+  color: #009087;
+  justify-content: center;
 }
 
-.buhay-at-mga-sinulat-ni-rizal {
+.subj_name {
   height: 58px;
-  letter-spacing: 0;
   line-height: normal;
   margin-top: 14px;
   text-align: center;
   width: 295px;
+  font-size: 24px;
+  font-weight: bold;
 }
 
-.valign-text-middle {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-/* INSERT urbanist-bold-gossamer-24px */
-
-.address {
+.subj_details {
   height: 24px;
-  letter-spacing: 0;
   line-height: normal;
   min-width: 103px;
   text-align: center;
+  font-size: 20px;
 }
 
-/* INSERT urbanist-bold-gossamer-20px */
-
-.sevilla-maria-angelica {
+.professor {
   height: 29px;
   letter-spacing: 0;
   line-height: normal;
   margin-top: 19px;
   min-width: 301px;
   text-align: center;
+  font-size: 20px;
+  font-weight: bold; /* semi-bold */
 }
 
-/* INSERT urbanist-semi-bold-black-24px */
-
-.group-14-3 {
+.subj-sched {
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -87,9 +105,10 @@
   margin-top: 21px;
   min-height: 61px;
   width: 179px;
+  font-size: 20px;
 }
 
-.wed {
+.day {
   height: 29px;
   letter-spacing: 0;
   line-height: normal;
@@ -98,31 +117,12 @@
   text-align: center;
 }
 
-.group-15-1 {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  margin-left: 4px;
-  margin-top: 20px;
-  min-height: 61px;
-  width: 179px;
-}
-
-.x13pm-300pm {
+.time {
   height: 29px;
   letter-spacing: 0;
   line-height: normal;
   margin-right: 4px;
   min-width: 175px;
   text-align: center;
-}
-
-.sat-1 {
-  height: 29px;
-  letter-spacing: 0;
-  line-height: normal;
-  margin-right: 3px;
-  min-width: 44px;
-  text-align: center;
+  font-weight: 500;
 }

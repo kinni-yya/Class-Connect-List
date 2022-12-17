@@ -39,8 +39,6 @@ $class_info = GetClassRecord($_GET['class_id']);
         <button class="button" onclick="location.href='with-class.php'">GO BACK</button>
         <button class="open-button" onclick="openForm()">ADD SUBJECT</button>
     </div>
-    <!-- FETCH FROM DATABASE AND DISPLAY
-        https://www.geeksforgeeks.org/how-to-fetch-data-from-localserver-database-and-display-on-html-table-using-php/ -->
 
     <form>
         <div class="form-popup" id="add-subj-form">
