@@ -50,7 +50,8 @@ $("#formJoinClass").submit(function(e){
         success: function(data){
             if(data > 0){
                 alert("Class joined successfully!");
-                window.location.replace("../notes/note.php?class_id=" + data);
+                // window.location.replace("../notes/note.php?class_id=" + data);
+                window.location.replace("with-class.php");
             }
             else if(data == 0){
                 alert("Class doesn't exist!");
