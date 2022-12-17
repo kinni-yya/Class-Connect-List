@@ -203,8 +203,7 @@ function InsertMemberJoin($class_code, $user_id){
 		$sql = "INSERT INTO member (member_type, class_id, user_id) 
 				VALUES ('0', '".$row['class_id']."', '$user_id')";
 		if ($conn->query($sql) === TRUE) {
-			// echo $row['class_id'];
-			header("location: ../class/with-class.php");
+			echo $row['class_id'];
 		} else {
 			echo "Error: " . $sql . "<br>" . $conn->error;
 		}
