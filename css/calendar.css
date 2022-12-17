@@ -11,7 +11,7 @@ html, body {
     font-weight: bold;
     font-family: Arial, Helvetica, sans-serif;
     max-width: 1500px;
-    background: rgba(226,226,226,0.6800000071525574);
+    background: #EDEDED;
     
 }
 
@@ -45,4 +45,91 @@ th, td{
 }
 .event-form {
     border-radius: 10px;
+}
+
+.savebt, .savebtn2{
+    margin: 10px;
+}
+
+.savebtn{
+    border: none;
+    outline: 1px solid rgb(68, 70, 106, 0.2);
+    padding-inline: 20px;
+    padding-block: 10px;
+    box-shadow:  5px 5px 7px rgba(100, 104, 128, 0.6), -5px -5px 7px rgba(255, 255, 255, 0.7);
+    border-radius: 10px;
+    color: #009087;
+    background: #EDEDED;
+}
+
+.savebtn:hover{
+    transition: .2s ease;
+    color: #EDEDED;  
+    background-color: #009087;
+}
+
+.savebtn2{
+    border: none;
+    padding-inline: 20px;
+    padding-block: 10px;
+    box-shadow:  5px 5px 7px rgba(100, 104, 128, 0.6), -5px -5px 7px rgba(255, 255, 255, 0.7);
+    border-radius: 10px;
+    color: #EDEDED;
+    background: #009087;
+}
+
+.savebtn2:hover{
+    transition: .2s ease;
+    color: #009087;
+    background: #EDEDED;
+}
+
+textarea{
+    border: none;
+    width: 95%;
+    font-size: 20px;
+    padding-inline: 5%;
+    margin-top: 8px;
+    border-radius: 10px;
+    background: #EDEDED;
+    box-shadow: inset 4px 4px 5px rgba(100, 104, 128, 0.6),
+           inset -6px -6px 9px rgba(255, 255, 255, 1);
+}
+
+select{
+    border: none;
+    width: 95%;
+    font-size: 20px;
+    padding-inline: 5%;
+    margin-top: 8px;
+    border-radius: 10px;
+    background: transparent;
+    box-shadow: inset 4px 4px 5px rgba(100, 104, 128, 0.6),
+           inset -6px -6px 9px rgba(255, 255, 255, 1);
+}
+
+input{
+    border: none;
+    width: 95%;
+    height: 40px;
+    font-size: 20px;
+    padding-inline: 5%;
+    margin-top: 8px;
+    border-radius: 10px;
+    background: #EDEDED;
+    box-shadow: inset 4px 4px 5px rgba(100, 104, 128, 0.6),
+           inset -6px -6px 9px rgba(255, 255, 255, 1);
+}
+
+input:focus, select:focus, textarea:focus{
+    outline: 1px solid rgb(68, 70, 106, 0.3);
+}
+
+/* .cal, .cal::before, .cal::after{
+    box-sizing: border-box;
+} */
+
+input [type="datetime-local"]{
+    background-color: green;
+    padding: 15px;
 }
