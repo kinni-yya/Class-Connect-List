@@ -59,7 +59,7 @@ if(checkClassJoin($_SESSION['user_id']) == FALSE){
                         <p><?php echo $rows['class_name']; ?></p>
                     </div>
                     <p>Class Code: <span><?php echo $rows['class_code']; ?></span></p></br>
-                    <p>SY: <?php echo date("Y", strtotime($rows['school_year'])); echo "-"; echo (date("Y", strtotime($rows['school_year']))); ?></p>
+                    <p>SY: <?php echo date("Y", strtotime($rows['school_year'])); echo "-"; echo date("Y", strtotime($rows['school_year'])) + 1; ?></p>
                     <form method="GET" action="note.php">
                         <input type="hidden" name="class_id" value="<?php echo $rows['class_id']; ?>">
                     </form>
