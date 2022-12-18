@@ -44,7 +44,6 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
     </div>
 
     <!-- SHOW CLASSES OF THE USER -->
-    <!-- <div id="blur2"> -->
     <div class="case">
         <?php
         $class_info = GetClass($_SESSION['user_id']);
@@ -83,8 +82,8 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
         }
         ?>
     </div>
-    <!-- </div> -->
-    <div id="blur"></div>
+
+    <div id="blur" onclick="closeAddClassForm()"></div>
     <!-- POPUP -->
     <div class="center" id="center">
         <div class="form-popup" id="add-class-form">
