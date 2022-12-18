@@ -3,7 +3,7 @@ include "../dbconnect.php";
 OpenSession();
 
 // Check if the user is in a class
-if(checkClassJoin($_SESSION['user_id']) == FALSE){
+if (checkClassJoin($_SESSION['user_id']) == FALSE) {
     header("location: no-class.php");
 }
 ?>
@@ -21,7 +21,7 @@ if(checkClassJoin($_SESSION['user_id']) == FALSE){
     <link rel="stylesheet" href="../css/with-class.css">
 </head>
 
-<body >
+<body>
     <div id="blur">
         <?php DisplayNavHeader(); ?>
 
@@ -39,6 +39,7 @@ if(checkClassJoin($_SESSION['user_id']) == FALSE){
             <div class="buttons">
                 <button type="button" class="view" onclick="location.href='create-class.php'">CREATE NEW CLASS</button>
                 <button type="button" class="view" onclick="openAddClassForm()">JOIN CLASS</button>
+                <button type="button" class="view" onclick="location.href='archive-class.php'">SEE ARCHIVED CLASSES</button>
             </div>
         </div>
     </div>
@@ -59,21 +60,24 @@ if(checkClassJoin($_SESSION['user_id']) == FALSE){
                         <p><?php echo $rows['class_name']; ?></p>
                     </div>
                     <p>Class Code: <span><?php echo $rows['class_code']; ?></span></p></br>
-                    <p>SY: <?php echo date("Y", strtotime($rows['school_year'])); echo "-"; echo date("Y", strtotime($rows['school_year'])) + 1; ?></p>
+                    <p>SY: <?php
+                            echo date("Y", strtotime($rows['school_year']));
+                            echo "-";
+                            echo date("Y", strtotime($rows['school_year'])) + 1; ?></p>
                     <form method="GET" action="note.php">
                         <input type="hidden" name="class_id" value="<?php echo $rows['class_id']; ?>">
                     </form>
-                        </br>
-                        <div class="buttonswclass">
-                            <button type="button" class="view" onclick="location.href='../notes/note.php?class_id=<?php echo $rows['class_id']; ?>&tab=due'">VIEW CLASS</button>
+                    </br>
+                    <div class="buttonswclass">
+                        <button type="button" class="view" onclick="location.href='../notes/note.php?class_id=<?php echo $rows['class_id']; ?>&tab=due'">VIEW CLASS</button>
 
-                            <?php 
-                            // Check if the creator id of the class is the user logged in
-                            $manage_class_id = checkManageClass($rows['class_id'], $_SESSION['user_id']);
-                            if($manage_class_id == TRUE) {
-                            echo "<button type=\"button\" class=\"view\" onclick=\"location.href='manage-class.php?class_id=".$rows['class_id']."'\">MANAGE CLASS</button></br></br>";
-                            }?>
-                        </div>
+                        <?php
+                        // Check if the creator id of the class is the user logged in
+                        $manage_class_id = checkManageClass($rows['class_id'], $_SESSION['user_id']);
+                        if ($manage_class_id == TRUE) {
+                            echo "<button type=\"button\" class=\"view\" onclick=\"location.href='manage-class.php?class_id=" . $rows['class_id'] . "'\">MANAGE CLASS</button></br></br>";
+                        } ?>
+                    </div>
                 </div>
             <?php
             }
@@ -84,7 +88,7 @@ if(checkClassJoin($_SESSION['user_id']) == FALSE){
     <!-- POPUP -->
     <div class="center" id="center">
         <div class="form-popup" id="add-class-form">
-            <form action="with-class-process.php" method="POST" class="form-container">
+            <form id="formJoinClass" class="form-container">
                 <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
                 <button type="button" id="close" onclick="closeAddClassForm()">X</button>
 
@@ -100,19 +104,49 @@ if(checkClassJoin($_SESSION['user_id']) == FALSE){
         </div>
     </div>
 
-    <script type="text/javascript">
-            function openAddClassForm() {
-                document.getElementById("add-class-form").style.display = "block";
-                document.getElementById('blur').style.filter = "blur(5px)";
-                document.getElementById('blur2').style.filter = "blur(5px)";
-                document.getElementById('center').style.position = "absolute";
-            }
+    <!-- AJAX / jQuery CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-            function closeAddClassForm() {
-                document.getElementById("add-class-form").style.display = "none";
-                document.getElementById('blur').style.filter = "blur(0)";
-                document.getElementById('blur2').style.filter = "blur(0)";
+<!-- Get the form value and send to the with-class-process for joining class -->
+<script type="text/javascript">
+$("#formJoinClass").submit(function(e){
+    e.preventDefault();
+    var form = $(this);
+
+    $.ajax({
+        type: 'POST',
+        url: 'with-class-process.php',
+        data: form.serialize(),
+        success: function(data){
+            if(data > 0){
+                alert("Class joined successfully!");
+                // window.location.replace("../notes/note.php?class_id=" + data);
+                window.location.replace("../notes/note.php?class_id="+data);
             }
+            else if(data == 0){
+                alert("Class doesn't exist!");
+            }
+            else{
+                alert(data);
+            }
+        }
+    });
+});
+</script>
+
+    <script type="text/javascript">
+        function openAddClassForm() {
+            document.getElementById("add-class-form").style.display = "block";
+            document.getElementById('blur').style.filter = "blur(5px)";
+            document.getElementById('blur2').style.filter = "blur(5px)";
+            document.getElementById('center').style.position = "absolute";
+        }
+
+        function closeAddClassForm() {
+            document.getElementById("add-class-form").style.display = "none";
+            document.getElementById('blur').style.filter = "blur(0)";
+            document.getElementById('blur2').style.filter = "blur(0)";
+        }
     </script>
 
 
@@ -132,4 +166,5 @@ if(checkClassJoin($_SESSION['user_id']) == FALSE){
         - archive classes
 -->
 
+</body>
 </html>

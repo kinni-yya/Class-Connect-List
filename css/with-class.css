@@ -152,3 +152,34 @@ input:focus{
   width: 50%;
   margin-inline: 10px;
 }
+
+.container-top {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: sticky;
+  top: 3vh;
+  margin-top: 3vh;
+  margin-bottom: 6vh;
+}
+
+.archive-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.archive-title {
+  text-align: center;
+  font-size: 35px;
+  font-weight: bold;
+  line-height: 50px;
+  margin-bottom: 10px;
+}
+
+.unarchive-btn{
+  display: flex;
+  height: 57px;
+  justify-content: center;
+}

@@ -56,7 +56,7 @@ while($row = $select_approval_result->fetch_assoc()) {
 		<div class="container d-flex justify-content-around">
 			<?php 
 				if($row['subject_id'] != NULL){
-					echo "<span>Subject: ".SelectSubjectName($class_id)."</span>";
+					echo "<span>Subject: ".SelectSubjectName($row['subject_id'])."</span>";
 				}
 				else{
 					echo "<span>Subject: General</span>";
@@ -97,7 +97,7 @@ while($row = $select_approval_result->fetch_assoc()) {
 		<div class="container d-flex justify-content-around">
 			<?php 
 				if($note_row['subject_id'] != NULL){
-					echo "<span>Subject: ".SelectSubjectName($class_id)."</span>";
+					echo "<span>Subject: ".SelectSubjectName($row['subject_id'])."</span>";
 				}
 				else{
 					echo "<span>Subject: General</span>";
@@ -145,7 +145,7 @@ while($row = $select_approval_result->fetch_assoc()) {
 		<div class="container d-flex justify-content-around">
 			<?php 
 				if($history_row['prev_subject_id'] != NULL){
-					echo "<span>Subject: ".SelectSubjectName($class_id)."</span>";
+					echo "<span>Subject: ".SelectSubjectName($row['subject_id'])."</span>";
 				}
 				else{
 					echo "<span>Subject: General</span>";
