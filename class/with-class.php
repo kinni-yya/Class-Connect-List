@@ -54,7 +54,7 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
          */
         while ($rows = $class_info->fetch_assoc()) {    ?>
             <div class="card">
-            <i class="fa-solid fa-box-archive" onclick="location.href='#'"></i>
+                <i class="fa-solid fa-box-archive" onclick="location.href='#'"></i>
                 <div class="cname">
                     <p><?php echo $rows['class_name']; ?></p>
                 </div>

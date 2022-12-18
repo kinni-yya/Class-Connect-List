@@ -178,6 +178,10 @@ input[type="time"]{
   outline: 1px solid rgb(68, 70, 106, 0.2);
 }
 
+.subjname div{
+  margin: 5px;
+}
+
 .details{
   font-size: 17px;
   font-weight: 600;
