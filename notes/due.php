@@ -37,13 +37,13 @@ while($row = $select_due_result->fetch_assoc()) {
 			<span class="note-due"><?php 
 				$difference = (strtotime($row['due_date']) - strtotime(date("Y-m-d"))) / (24*60*60);
 				if($difference < 0 ){
-					echo "<span class=\"note-due\" style=\"color: red;\">".abs($difference)." day\\s late ".$row['due_time']."</span>";
+					echo "<span class=\"note-due\" style=\"color: red;\">".abs($difference)." day\\s late ".date('h:i A',strtotime($row['due_time']))."</span>";
 				}
 				else if($difference == 0){
-					echo "<span class=\"note-due\" style=\"color: orange;\">Today! ".$row['due_time']."</span>";
+					echo "<span class=\"note-due\" style=\"color: orange;\">Today ".date('h:i A',strtotime($row['due_time']))."</span>";
 				}
 				else if ($difference > 0) {
-					echo "<span class=\"note-due\" style=\"color: green;\">$difference day\\s ".$row['due_time']."</span>";
+					echo "<span class=\"note-due\" style=\"color: green;\">Due on $difference day\\s ".date('h:i A',strtotime($row['due_time']))."</span>";
 				}
 			 ?></span>
 			<br>

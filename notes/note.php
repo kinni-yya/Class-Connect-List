@@ -44,6 +44,8 @@ $class_info = GetClassRecord($_GET['class_id']);
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<!-- Header CSS -->
 	<link rel="stylesheet" type="text/css" href="../css/navbar.css">
+	<!-- Calendar CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/fullcalendar@5.10.1/main.min.css">
 
 </head>
 <body>
@@ -55,8 +57,10 @@ $class_info = GetClassRecord($_GET['class_id']);
 		<h1><?php echo $class_info['class_name']; ?></h1>
 	<div class="row">
 		<ul class="nav nav-tabs col-10">
-		<li class="nav-item">
-		    <a class="nav-link text-success" id="due-navlink" href="#" onclick="window.location.href='note.php?class_id=<?php echo $_GET['class_id']; ?>&tab=due';">Dues</a>
+			<?php // Count how many notes are due for today
+			$due_count = CountDueNoteToday($_GET['class_id'], $member_id);?>
+		  <li class="nav-item">
+		    <a class="nav-link text-success" id="due-navlink" href="#" onclick="window.location.href='note.php?class_id=<?php echo $_GET['class_id']; ?>&tab=due';">Dues <span class="badge rounded-pill bg-danger"><?php echo $due_count; ?></span></a>
 		  </li>
 		  <li class="nav-item">
 		    <a class="nav-link text-success" id="announcement-navlink" href="#" onclick="window.location.href='note.php?class_id=<?php echo $_GET['class_id']; ?>&tab=announcement';">Announcement</a>
@@ -75,8 +79,10 @@ $class_info = GetClassRecord($_GET['class_id']);
 		  </li>
 		  <?php 
 		  if($access == 1){
+		  // Count how many pending items are open
+		  $pending_count = CountPendingNote($_GET['class_id']);
 		  echo '<li class="nav-item">';
-		  echo  '<a class="nav-link text-success" id="pending-navlink" href="#" onclick="window.location.href=\'note.php?class_id='.$_GET['class_id'].'&tab=pending\'" disabled>Pending Notes</a>';
+		  echo  '<a class="nav-link text-success" id="pending-navlink" href="#" onclick="window.location.href=\'note.php?class_id='.$_GET['class_id'].'&tab=pending\'" disabled>Pending Notes <span class="badge rounded-pill bg-danger">'.$pending_count.'</span></a>';
 		  echo '</li>';
 		  }
 		  else if($access == 0){
@@ -268,6 +274,9 @@ $class_info = GetClassRecord($_GET['class_id']);
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<!-- Bootstrap JS CDN -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+	<!-- Full calendar script -->
+    <script src="https://unpkg.com/fullcalendar@5.10.1/main.js"></script>
+
 
 <!-- Submit the AddNote form -->
 <script type="text/javascript">
@@ -491,6 +500,83 @@ function proccessPendingNote(e){
 		}
 	});
 }
+</script>
+
+<!-- Script for unenrolling and enrolling subjects-->
+<script type="text/javascript">
+	function EnrollSubject(e){
+		var unenroll_id = $(e).attr("data-unenroll-id");
+
+		$.ajax({
+			type: 'POST',
+			url: 'unenroll_process.php',
+			data: {
+				"unenroll_id": unenroll_id,
+				"process_type": 1
+			},
+			success: function(data){
+				alert(data);
+				location.reload();
+			}
+		});
+	}
+
+	function UnenrollSubject(e){
+		var subject_id = $(e).attr("data-subject-id");
+		var member_id = $(e).attr("data-member-id");
+
+		$.ajax({
+			type: 'POST',
+			url: 'unenroll_process.php',
+			data: {
+				"subject_id": subject_id,
+				"member_id": member_id,
+				"process_type": 0
+			},
+			success: function(data){
+				alert(data);
+				location.reload();
+			}
+		});
+	}
+</script>
+
+<!-- Script for changing member type and removing members-->
+<script type="text/javascript">
+	function ChangeMemberType(e){
+		var member_id = $(e).attr("data-member-id");
+		var member_type = $(e).attr("data-member-type");
+
+		$.ajax({
+			type: 'POST',
+			url: 'member_process.php',
+			data: {
+				"member_id": member_id,
+				"member_type": member_type
+			},
+			success: function(data){
+				alert(data);
+				location.reload();
+			}
+		});
+	}
+
+	function RemoveMember(e){
+		var member_id = $(e).attr("data-member-id");
+
+		$.ajax({
+			type: 'POST',
+			url: 'member_process.php',
+			data: {
+				"member_id": member_id,
+				"member_type": null
+			},
+			success: function(data){
+				alert(data);
+				location.reload();
+			}
+		});
+	}
 </script>
 
 </body>

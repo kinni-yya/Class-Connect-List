@@ -26,7 +26,7 @@ $class_id = $_GET['class_id'];
 	</thead>
 	<tbody>
 	<?php 
-		$result = SelectClassSubjectList($_GET['class_id'], $member_id);
+		$result = SelectClassSubjectList($_GET['class_id']);
 		while($row = $result->fetch_assoc()){
 	?>
 		<tr>
@@ -34,7 +34,19 @@ $class_id = $_GET['class_id'];
 			<td><?php echo $row['subject_name'];?></td>
 			<td><?php echo $row['professor'];?></td>
 			<td><?php echo $row['subject_details'];?></td>
-			<td><button class="btn btn-outline-danger">Unenroll</button></td>
+			<td><?php 
+				// Check if the subject id and member id is listed as unenrolled
+				$unenroll_row = SelectUnenrollbySubjectID($row['subject_id'], $member_id);
+				if($unenroll_row == FALSE){
+					// Display unenroll
+					echo "<button class=\"btn btn-outline-danger\" data-subject-id=\"".$row['subject_id']."\" data-member-id=\"".$member_id."\" onclick=\"UnenrollSubject(this)\">Unenroll</button>";
+				}
+				else if($unenroll_row['subject_id'] == $row['subject_id']){
+					// Display enroll and delete from unenroll table
+					echo "<button class=\"btn btn-outline-success\" data-unenroll-id=\"".$unenroll_row['unenroll_id']."\" onclick=\"EnrollSubject(this)\">Enroll</button>";
+				}
+			 ?>
+			</td>
 		</tr>
 	<?php } ?>
 	</tbody>
@@ -75,7 +87,8 @@ $class_id = $_GET['class_id'];
 			<td><?php
 			// Check if the user logged in is a full user of the class to give access to change type of other users
 			if($access == 1 && ($_SESSION['user_id'] != $row['user_id'])){
-				echo "<button class=\"btn btn-outline-info\">Change Type</button>";
+				echo "<button class=\"btn btn-outline-info\" data-member-id=\"".$row['member_id']."\" data-member-type=\"".$row['member_type']."\" onclick=\"ChangeMemberType(this)\">Change Type</button> ";
+				echo "<button class=\"btn btn-outline-danger\" data-member-id=\"".$row['member_id']."\" onclick=\"RemoveMember(this)\">Remove</button>";
 			}?></td>
 		</tr>
 	<?php } ?>
