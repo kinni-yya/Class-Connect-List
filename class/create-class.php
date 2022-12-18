@@ -22,6 +22,7 @@ OpenSession();
     <div class="create-container">
         <p>CREATE CLASSROOM</p>
         <div class="create-form">
+        <button type="button" id="c" onClick="location.href='with-class.php'">X</button>
             <form method="POST" action="create-class-process.php">
                 <div class="cp">
                     <label><span>CLASS PRESIDENT</span></label>
@@ -36,8 +37,8 @@ OpenSession();
                     <input type="number" id="school_year" name="school_year" min="1900" max="2099" placeholder="e.g. 2022" required>
                 </div>
                 <button type="submit" class="btn">CREATE CLASS</button>
+            </form>
         </div>
-        </form>
     </div>
 </body>
 
