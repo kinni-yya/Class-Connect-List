@@ -2,6 +2,7 @@
   background-color: #EDEDED;
 }
 
+
 .container-top{
   margin-bottom: 6vh;
 }
@@ -152,8 +153,10 @@ input[type="time"]{
 }
 
 .classcard{
+  position: relative;
   display: flex;
   flex-direction: column;
+  align-items: center;
   text-align: center;
   width: 240px;
   margin: 15px;
@@ -173,6 +176,7 @@ input[type="time"]{
   justify-content: center;
   border-radius: 10px;
   padding: 18px;
+  width: 210px;
   height: 90px;
   box-shadow:  5px 5px 7px rgba(100, 104, 128, 0.6), -5px -5px 7px rgba(255, 255, 255, 0.8);
   outline: 1px solid rgb(68, 70, 106, 0.2);
@@ -188,11 +192,9 @@ input[type="time"]{
 }
 
 .subjbuttons{
-  width: 100%!important;
-}
-
-.subjbuttons button{
-  width: 40%;
+  background-color: transparent;
+  position: absolute;
+  bottom: 13px;
 }
 
 .subjprof{
@@ -210,7 +212,7 @@ input[type="time"]{
 }
 
 .scheds{
-  height: 100px;
+  margin-bottom: 63px;
 }
 
 .subjsched1{
