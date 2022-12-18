@@ -36,15 +36,14 @@ $class_info = GetClassRecord($_GET['class_id']);
     <!-- POPUP -->
     <div id="popup">
         <form action="manage-class-process.php" method="POST" class="form-container" id="addSubjectForm">
-
-                <p class="addsubj-title">
-                    ADD SUBJECT for
-                    <?php
-                    $class_name = $class_info['class_name'];
-                    echo "<span class='class_name'>$class_name</span>";
-                    ?>
-                </p>
-            <div id="add-subj-form">   
+            <p class="addsubj-title">
+                ADD SUBJECT for
+                <?php
+                $class_name = $class_info['class_name'];
+                echo "<span class='class_name'>$class_name</span>";
+                ?>
+            </p>
+            <div id="add-subj-form">
                 <input type="hidden" name="class_id" value="<?php echo $_GET['class_id']; ?>">
 
                 <label for="subject"><b>SUBJECT</b></label>
@@ -76,8 +75,7 @@ $class_info = GetClassRecord($_GET['class_id']);
 
                 <label for="to"><b>TO</b></label>
                 <input type="time" id="time2" name="to_time[]" required>
-
-                
+                <button onclick="removeSubjectDate(this)">Remove</button>
                 <br>
             </div>
             <div id="output"></div>
@@ -86,92 +84,94 @@ $class_info = GetClassRecord($_GET['class_id']);
             </div>
         </form>
     </div>
-    
+
     <!-- Table of all the subjects for the class -->
     <br>
     <div class="classcase">
-        <?php 
-        $result = SelectClassSubjectList($_GET['class_id']);
-        while($row = $result->fetch_assoc()){       ?>
+        <?php
+        $subj = SelectClassSubjectList($_GET['class_id']);
+        while ($subj_row = $subj->fetch_assoc()) {       ?>
             <div class="classcard">
                 <div class="subjname">
                     <div>
-                        <?php echo $row['subject_name'];?>
+                        <?php echo $subj_row['subject_name']; ?>
                     </div>
                     <div class="details">
-                        <?php echo $row['subject_details'];?>
+                        <?php echo $subj_row['subject_details']; ?>
                     </div>
                 </div>
                 <div class="subjprof">
-                    <p><?php echo $row['professor'];?></p>
+                    <p><?php echo $subj_row['professor']; ?></p>
                 </div>
-                <div class="subjsched1">
-                    <p class="subjday">Day</p>
-                    <p>echo sched time dapat</p>
-                </div>
-                <div class="subjsched2">
-                    <p class="subjday">Day</p> 
-                    <p>echo sched dapat</p>
-                </div>
+                <?php
+                $sched = SelectClassSubjectSched($_GET['class_id'], $subj_row['subject_id']);
+                while ($sched_row = $sched->fetch_assoc()) {       ?>
+                    <div class="subjsched1">
+                        <!-- echo date("h:i A", strtotime($time)); -->
+                        <p class="subjday"><?php echo $sched_row['day']; ?></p>
+                        <p><?php echo date("h:i A", strtotime($sched_row['from_time'])) . " - " . date("h:i A", strtotime($sched_row['to_time'])); ?></p>
+                    </div>
+                <?php } ?>
                 <div class="subjbuttons">
-                    <button>Edit</button> 
-                    <button data-subject-id="<?php echo $row['subject_id']; ?>" onclick="RemoveSubject(this)">Delete</button>
+                    <button>Edit</button>
+                    <button onclick="RemoveSubject(this)">Delete</button>
                 </div>
             </div>
         <?php } ?>
     </div>
 
-<!-- AJAX / jQuery CDN -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- AJAX / jQuery CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-<!-- Script for cloning or duplicating the input for the subject schedule -->
-<script type="text/javascript">
-    function addSubjectDate(e){
-        $('#scheduled_time').clone().prependTo('#output');
-    }
-
-    function removeSubjectDate(e){
-        $(e).parent().remove();
-    }
-</script>
-
-<!-- Delete the subject -->
-<script type="text/javascript">
-function RemoveSubject(e) {
-    var subject_id = $(e).attr("data-subject-id");
-
-    $.ajax({
-        type: 'POST',
-        url: 'manage-class-process.php',
-        data: {
-            "subject_id": subject_id,
-            "process_type": "delete"
-        },
-        success: function(data){
-            alert(data);
-            location.reload();
+    <!-- Script for cloning or duplicating the input for the subject schedule -->
+    <script type="text/javascript">
+        function addSubjectDate(e) {
+            $('#scheduled_time').clone().prependTo('#output');
         }
-    });
-}
-</script>
+
+        function removeSubjectDate(e) {
+            $(e).parent().remove();
+        }
+    </script>
+
+    <!-- Delete the subject -->
+    <script type="text/javascript">
+        function RemoveSubject(e) {
+            var subject_id = $(e).attr("data-subject-id");
+
+            $.ajax({
+                type: 'POST',
+                url: 'manage-class-process.php',
+                data: {
+                    "subject_id": subject_id,
+                    "process_type": "delete"
+                },
+                success: function(data) {
+                    alert(data);
+                    location.reload();
+                }
+            });
+        }
+    </script>
 
 
-<!-- Popup JS -->
-<script type="text/javascript">
-    function openAddClassForm() {
-        document.getElementById("popup").style.display = "block";
-        document.getElementById("blur").style.display = "block";
-        document.getElementById("blur").style.filter = "blur(10px)";
-        document.getElementById("scrll").style.overflow = "hidden";
-    }
+    <!-- Popup JS -->
+    <script type="text/javascript">
+        function openAddClassForm() {
+            document.getElementById("popup").style.display = "block";
+            document.getElementById("blur").style.display = "block";
+            document.getElementById("blur").style.filter = "blur(10px)";
+            document.getElementById("scrll").style.overflow = "hidden";
+        }
 
-    function closeAddClassForm() {
-        document.getElementById("popup").style.display = "none";
-        document.getElementById('blur').style.filter = "blur(0)";
-        document.getElementById('blur').style.display = "none";
-        document.getElementById('scrll').style.overflow = "auto";
-    }
-</script>
+        function closeAddClassForm() {
+            document.getElementById("popup").style.display = "none";
+            document.getElementById('blur').style.filter = "blur(0)";
+            document.getElementById('blur').style.display = "none";
+            document.getElementById('scrll').style.overflow = "auto";
+        }
+    </script>
 
 </body>
+
 </html>
