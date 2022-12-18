@@ -20,9 +20,7 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
     <link rel="stylesheet" href="../css/sections.css">
     <link rel="stylesheet" href="../css/with-class.css">
 </head>
-
-<body>
-    <div id="blur">
+<body id="scrll">
         <?php DisplayNavHeader(); ?>
 
         <div class="container">
@@ -33,7 +31,6 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
                 echo "<p>Welcome " . SelectUserName($_SESSION['user_id']) . "!<p>";
                 ?>
             </div>
-        </div>
 
         <div class="cardwclass">
             <div class="buttons">
@@ -45,7 +42,7 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
     </div>
 
     <!-- SHOW CLASSES OF THE USER -->
-    <div id="blur2">
+    <!-- <div id="blur2"> -->
         <div class="case">
             <?php
             $class_info = GetClass($_SESSION['user_id']);
@@ -83,8 +80,8 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
             }
             ?>
         </div>
-    </div>
-
+    <!-- </div> -->
+    <div id="blur"></div>
     <!-- POPUP -->
     <div class="center" id="center">
         <div class="form-popup" id="add-class-form">
@@ -121,7 +118,7 @@ $("#formJoinClass").submit(function(e){
             if(data > 0){
                 alert("Class joined successfully!");
                 // window.location.replace("../notes/note.php?class_id=" + data);
-                window.location.replace("../notes/note.php?class_id="+data);
+                window.location.replace("with-class.php");
             }
             else if(data == 0){
                 alert("Class doesn't exist!");
@@ -133,22 +130,21 @@ $("#formJoinClass").submit(function(e){
     });
 });
 </script>
+<script type="text/javascript">
+            function openAddClassForm() {
+                document.getElementById("add-class-form").style.display = "block";
+                document.getElementById('blur').style.filter = "blur(5px)";
+                document.getElementById('blur').style.display = "block";
+                document.getElementById('scrll').style.overflow = "hidden";
+            }
 
-    <script type="text/javascript">
-        function openAddClassForm() {
-            document.getElementById("add-class-form").style.display = "block";
-            document.getElementById('blur').style.filter = "blur(5px)";
-            document.getElementById('blur2').style.filter = "blur(5px)";
-            document.getElementById('center').style.position = "absolute";
-        }
-
-        function closeAddClassForm() {
-            document.getElementById("add-class-form").style.display = "none";
-            document.getElementById('blur').style.filter = "blur(0)";
-            document.getElementById('blur2').style.filter = "blur(0)";
-        }
-    </script>
-
+            function closeAddClassForm() {
+                document.getElementById("add-class-form").style.display = "none";
+                document.getElementById('blur').style.filter = "blur(0)";
+                document.getElementById('blur').style.display = "none";
+                document.getElementById('scrll').style.overflow = "auto";
+            }
+</script>
 
     <!-- 
     VIEW CLASSES
