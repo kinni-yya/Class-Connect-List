@@ -61,13 +61,13 @@ $class_info = GetClassRecord($_GET['class_id']);
             <div id="scheduled_time">
                 <label for="day"><b>DAY</b></label>
                 <select name="day[]">
-                    <option value="MON">MON</option>
-                    <option value="TUE">TUE</option>
-                    <option value="WED">WED</option>
-                    <option value="THU">THU</option>
-                    <option value="FRI">FRI</option>
-                    <option value="SAT">SAT</option>
-                    <option value="SUN">SUN</option>
+                    <option value="1">MON</option>
+                    <option value="2">TUE</option>
+                    <option value="3">WED</option>
+                    <option value="4">THU</option>
+                    <option value="5">FRI</option>
+                    <option value="6">SAT</option>
+                    <option value="7">SUN</option>
                 </select>
 
                 <label for="from"><b>FROM</b></label>
