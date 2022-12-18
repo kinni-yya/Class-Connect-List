@@ -30,65 +30,78 @@ $class_info = GetClassRecord($_GET['class_id']);
 
 </head>
 
-<body>
+<body id="scrll">
     <?php
     // HEADER
     DisplayNavHeader();
     ?>
+    <p class="subj">SUBJECTS</p>
     <div class="buttons">
         <button class="button" onclick="location.href='with-class.php'">GO BACK</button>
+        <button class="button" onclick="openAddClassForm()">ADD SUBJECT</button>
     </div>
 
-    <form action="manage-class-process.php" method="POST" class="form-container" id="addSubjectForm">
-        <div class="form-popup" id="add-subj-form">
-            <h1>ADD SUBJECT for
-                <?php
-                $class_name = $class_info['class_name'];
-                echo "<span class='class_name'>$class_name</span>";
-                ?></h1>
-            <input type="hidden" name="class_id" value="<?php echo $_GET['class_id']; ?>">
+    <!-- BLUR -->
+    <div id="blur" onclick="closeAddClassForm()"></div>
+    <!-- POPUP -->
+    <div id="popup">
+        <form action="manage-class-process.php" method="POST" class="form-container" id="addSubjectForm">
 
-            <label for="subject"><b>SUBJECT</b></label>
-            <input type="text" placeholder="e.g. English" name="subject_name" required><br>
+                <p class="addsubj-title">
+                    ADD SUBJECT for
+                    <?php
+                    $class_name = $class_info['class_name'];
+                    echo "<span class='class_name'>$class_name</span>";
+                    ?>
+                </p>
+            <div id="add-subj-form">   
+                <input type="hidden" name="class_id" value="<?php echo $_GET['class_id']; ?>">
 
-            <label for="subject"><b>Subject Details</b></label>
-            <input type="text" placeholder="e.g. EN 1001" name="subject_details"><br>
+                <label for="subject"><b>SUBJECT</b></label>
+                <input type="text" placeholder="e.g. English" name="subject_name" required><br><br>
 
-            <label for="subject"><b>PROFESSOR</b></label>
-            <input type="text" placeholder="e.g. Juan Dela Cruz" name="professor"><br>
-            <label for="subject"><b>MEETING TIME</b></label>
-        </div>
+                <label for="subject"><b>Subject Details</b></label>
+                <input type="text" placeholder="e.g. EN 1001" name="subject_details"><br><br>
 
-        <button onclick="addSubjectDate(event)">Add Meeting Time</button>
-        <button type="submit">Add Subject</button>
+                <label for="subject"><b>PROFESSOR</b></label>
+                <input type="text" placeholder="e.g. Juan Dela Cruz" name="professor"><br><br>
+            </div>
+            <label class="MT"><b>MEETING TIME</b></label>
+            <button onclick="addSubjectDate(event)">Add Meeting Time</button>
 
-        <div id="scheduled_time">
-            <label for="day">DAY</label>
-            <select name="day[]">
-                <option value="1">MON</option>
-                <option value="2">TUE</option>
-                <option value="3">WED</option>
-                <option value="4">THU</option>
-                <option value="5">FRI</option>
-                <option value="6">SAT</option>
-                <option value="7">SUN</option>
-            </select>
+            <div id="scheduled_time">
+                <label for="day">DAY</label>
+                <select name="day[]">
+                    <option value="1">MON</option>
+                    <option value="2">TUE</option>
+                    <option value="3">WED</option>
+                    <option value="4">THU</option>
+                    <option value="5">FRI</option>
+                    <option value="6">SAT</option>
+                    <option value="7">SUN</option>
+                </select>
 
-            <label for="from"><b>FROM</b></label>
-            <input type="time" id="time1" name="from_time[]" required>
+                <label for="from"><b>FROM</b></label>
+                <input type="time" id="time1" name="from_time[]" required>
 
-            <label for="to"><b>TO</b></label>
-            <input type="time" id="time2" name="to_time[]" required>
+                <label for="to"><b>TO</b></label>
+                <input type="time" id="time2" name="to_time[]" required>
 
-            <button onclick="removeSubjectDate(this)">Remove</button>
-            <br>
-        </div>
-
-        <div id="output"></div>
-    </form>
+                <button onclick="removeSubjectDate(this)">Remove</button>
+                <br>
+            </div>
+            <div id="output"></div>
+            <div class="submit">
+                <button type="submit">Add Subject</button>
+            </div>
+        </form>
+    </div>
     
     <!-- Table of all the subjects for the class -->
     <br>
+    <div class="classcase">
+        
+    </div>
     <h3>Class Subjects</h3>
     <table class="table table-hover">
         <thead>
@@ -117,8 +130,8 @@ $class_info = GetClassRecord($_GET['class_id']);
         </tbody>
     </table>
 
-    <!-- AJAX / jQuery CDN -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- AJAX / jQuery CDN -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <!-- Script for cloning or duplicating the input for the subject schedule -->
 <script type="text/javascript">
@@ -149,6 +162,24 @@ function RemoveSubject(e) {
         }
     });
 }
+</script>
+
+
+<!-- Popup JS -->
+<script type="text/javascript">
+    function openAddClassForm() {
+        document.getElementById("popup").style.display = "block";
+        document.getElementById("blur").style.display = "block";
+        document.getElementById("blur").style.filter = "blur(10px)";
+        document.getElementById("scrll").style.overflow = "hidden";
+    }
+
+    function closeAddClassForm() {
+        document.getElementById("popup").style.display = "none";
+        document.getElementById('blur').style.filter = "blur(0)";
+        document.getElementById('blur').style.display = "none";
+        document.getElementById('scrll').style.overflow = "auto";
+    }
 </script>
 
 </body>
