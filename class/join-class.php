@@ -38,6 +38,7 @@ OpenSession();
     <!-- AJAX / jQuery CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+<!-- Get the form value and send to the with-class-process for joining class -->
 <script type="text/javascript">
 $("#formJoinClass").submit(function(e){
     e.preventDefault();

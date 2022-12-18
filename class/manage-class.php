@@ -37,105 +37,119 @@ $class_info = GetClassRecord($_GET['class_id']);
     ?>
     <div class="buttons">
         <button class="button" onclick="location.href='with-class.php'">GO BACK</button>
-        <button class="open-button" onclick="openForm()">ADD SUBJECT</button>
     </div>
 
-    <form>
+    <form action="manage-class-process.php" method="POST" class="form-container" id="addSubjectForm">
         <div class="form-popup" id="add-subj-form">
-            <form action="manage-class-process.php" method="POST" class="form-container">
-                <h1>ADD SUBJECT for
-                    <?php
-                    $class_name = $class_info['class_name'];
-                    echo "<span class='class_name'>$class_name</span>";
-                    ?></h1>
-                <input type="hidden" name="class_id" value="<?php echo $_GET['class_id']; ?>">
+            <h1>ADD SUBJECT for
+                <?php
+                $class_name = $class_info['class_name'];
+                echo "<span class='class_name'>$class_name</span>";
+                ?></h1>
+            <input type="hidden" name="class_id" value="<?php echo $_GET['class_id']; ?>">
 
-                <label for="subject"><b>SUBJECT</b></label>
-                <input type="text" placeholder="e.g. English" name="subject_name" required><br>
+            <label for="subject"><b>SUBJECT</b></label>
+            <input type="text" placeholder="e.g. English" name="subject_name" required><br>
 
-                <label for="subject"><b>COURSE CODE</b></label>
-                <input type="text" placeholder="e.g. EN 1001" name="subject_details" required><br>
+            <label for="subject"><b>Subject Details</b></label>
+            <input type="text" placeholder="e.g. EN 1001" name="subject_details"><br>
 
-                <label for="subject"><b>PROFESSOR</b></label>
-                <input type="text" placeholder="e.g. Juan Dela Cruz" name="professor"><br>
-                <label for="subject"><b>MEETING TIME</b></label>
-
-            </form>
+            <label for="subject"><b>PROFESSOR</b></label>
+            <input type="text" placeholder="e.g. Juan Dela Cruz" name="professor"><br>
+            <label for="subject"><b>MEETING TIME</b></label>
         </div>
 
-        <form id="myForm">
-            <ul class="donate-now">
-                <li>
-                    <input type="radio" id="MON" name="button" value="MON" />
-                    <label for="MON">MON</label>
-                </li>
-                <li>
-                    <input type="radio" id="TUE" name="button" value="TUE" />
-                    <label for="TUE">TUE</label>
-                </li>
-                <li>
-                    <input type="radio" id="WED" name="button" value="WED" />
-                    <label for="WED">WED</label>
-                </li>
-                <li>
-                    <input type="radio" id="THU" name="button" value="THU" />
-                    <label for="THU">THU</label>
-                </li>
-                <li>
-                    <input type="radio" id="FRI" name="button" value="FRI" />
-                    <label for="FRI">FRI</label>
-                </li>
-                <li>
-                    <input type="radio" id="SAT" name="button" value="SAT" />
-                    <label for="SAT">SAT</label>
-                </li>
-                <li>
-                    <input type="radio" id="SUN" name="button" value="SUN" />
-                    <label for="SUN">SUN</label>
-                </li>
-            </ul>
-            <br><br><br>
+        <button onclick="addSubjectDate(event)">Add Meeting Time</button>
+        <button type="submit">Add Subject</button>
+
+        <div id="scheduled_time">
+            <label for="day">DAY</label>
+            <select name="day[]">
+                <option value="1">MON</option>
+                <option value="2">TUE</option>
+                <option value="3">WED</option>
+                <option value="4">THU</option>
+                <option value="5">FRI</option>
+                <option value="6">SAT</option>
+                <option value="7">SUN</option>
+            </select>
 
             <label for="from"><b>FROM</b></label>
-            <input type="time" id="time1" required>
+            <input type="time" id="time1" name="from_time[]" required>
 
-            <label for="subject"><b>TO</b></label>
-            <input type="time" id="time2" required>
+            <label for="to"><b>TO</b></label>
+            <input type="time" id="time2" name="to_time[]" required>
 
-            <br><button type="submit" onclick="appendValue(event)">Add Meeting Time</button>
+            <button onclick="removeSubjectDate(this)">Remove</button>
+            <br>
+        </div>
 
-        </form>
-
+        <div id="output"></div>
     </form>
-    <div id="output"></div>
-    <button>ADD SUBJECT</button>
+    
+    <!-- Table of all the subjects for the class -->
+    <br>
+    <h3>Class Subjects</h3>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Subject ID</th>
+                <th scope="col">Subject Name</th>
+                <th scope="col">Professor</th>
+                <th scope="col">Details</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php 
+            $result = SelectClassSubjectList($_GET['class_id']);
+            while($row = $result->fetch_assoc()){
+        ?>
+            <tr>
+                <th scope="row"><?php echo $row['subject_id'];?></th>
+                <td><?php echo $row['subject_name'];?></td>
+                <td><?php echo $row['professor'];?></td>
+                <td><?php echo $row['subject_details'];?></td>
+                <td><button>Edit</button> 
+                <button data-subject-id="<?php echo $row['subject_id']; ?>" onclick="RemoveSubject(this)">Delete</button></td>
+            </tr>
+        <?php } ?>
+        </tbody>
+    </table>
 
+    <!-- AJAX / jQuery CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-    <script>
-        function appendValue(event) {
-            event.preventDefault(); // prevent form submission and page refresh
-            var form = document.getElementById("myForm");
-            var time1 = form.time1.value;
-            var time2 = form.time2.value;
-            var selectedButton;
-            for (var i = 0; i < form.length; i++) {
-                if (form[i].type == "radio" && form[i].name == "button" && form[i].checked) {
-                    selectedButton = form[i].value;
-                    break;
-                }
-            }
-            var output = document.getElementById("output");
-            var div = document.createElement("div");
-            div.innerHTML = "Time 1: " + time1 + "<br>Time 2: " + time2 + "<br>Selected button: " + selectedButton;
-            var deleteButton = document.createElement("button");
-            deleteButton.innerHTML = "Delete";
-            deleteButton.onclick = function() {
-                div.parentNode.removeChild(div);
-            };
-            div.appendChild(deleteButton);
-            output.appendChild(div);
+<!-- Script for cloning or duplicating the input for the subject schedule -->
+<script type="text/javascript">
+    function addSubjectDate(e){
+        $('#scheduled_time').clone().prependTo('#output');
+    }
+
+    function removeSubjectDate(e){
+        $(e).parent().remove();
+    }
+</script>
+
+<!-- Delete the subject -->
+<script type="text/javascript">
+function RemoveSubject(e) {
+    var subject_id = $(e).attr("data-subject-id");
+
+    $.ajax({
+        type: 'POST',
+        url: 'manage-class-process.php',
+        data: {
+            "subject_id": subject_id,
+            "process_type": "delete"
+        },
+        success: function(data){
+            alert(data);
+            location.reload();
         }
-    </script>
-</body>
+    });
+}
+</script>
 
+</body>
 </html>

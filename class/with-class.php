@@ -88,7 +88,7 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
     <!-- POPUP -->
     <div class="center" id="center">
         <div class="form-popup" id="add-class-form">
-            <form action="with-class-process.php" method="POST" class="form-container">
+            <form id="formJoinClass" class="form-container">
                 <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
                 <button type="button" id="close" onclick="closeAddClassForm()">X</button>
 
@@ -103,6 +103,36 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
             </form>
         </div>
     </div>
+
+    <!-- AJAX / jQuery CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<!-- Get the form value and send to the with-class-process for joining class -->
+<script type="text/javascript">
+$("#formJoinClass").submit(function(e){
+    e.preventDefault();
+    var form = $(this);
+
+    $.ajax({
+        type: 'POST',
+        url: 'with-class-process.php',
+        data: form.serialize(),
+        success: function(data){
+            if(data > 0){
+                alert("Class joined successfully!");
+                // window.location.replace("../notes/note.php?class_id=" + data);
+                window.location.replace("../notes/note.php?class_id="+data);
+            }
+            else if(data == 0){
+                alert("Class doesn't exist!");
+            }
+            else{
+                alert(data);
+            }
+        }
+    });
+});
+</script>
 
     <script type="text/javascript">
         function openAddClassForm() {
@@ -136,4 +166,5 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
         - archive classes
 -->
 
+</body>
 </html>
