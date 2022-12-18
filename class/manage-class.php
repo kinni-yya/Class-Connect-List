@@ -18,16 +18,6 @@ $class_info = GetClassRecord($_GET['class_id']);
 
     <title>Manage Class</title>
 
-    <script type="text/javascript">
-        function openForm() {
-            document.getElementById("add-subj-form").style.display = "block";
-        }
-
-        function closeForm() {
-            document.getElementById("add-subj-form").style.display = "none";
-        }
-    </script>
-
 </head>
 
 <body id="scrll">
@@ -70,7 +60,7 @@ $class_info = GetClassRecord($_GET['class_id']);
             <button onclick="addSubjectDate(event)">Add Meeting Time</button>
 
             <div id="scheduled_time">
-                <label for="day">DAY</label>
+                <label for="day"><b>DAY</b></label>
                 <select name="day[]">
                     <option value="1">MON</option>
                     <option value="2">TUE</option>
@@ -87,7 +77,7 @@ $class_info = GetClassRecord($_GET['class_id']);
                 <label for="to"><b>TO</b></label>
                 <input type="time" id="time2" name="to_time[]" required>
 
-                <button onclick="removeSubjectDate(this)">Remove</button>
+                
                 <br>
             </div>
             <div id="output"></div>
@@ -100,35 +90,36 @@ $class_info = GetClassRecord($_GET['class_id']);
     <!-- Table of all the subjects for the class -->
     <br>
     <div class="classcase">
-        
-    </div>
-    <h3>Class Subjects</h3>
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th scope="col">Subject ID</th>
-                <th scope="col">Subject Name</th>
-                <th scope="col">Professor</th>
-                <th scope="col">Details</th>
-                <th scope="col">Action</th>
-            </tr>
-        </thead>
-        <tbody>
         <?php 
-            $result = SelectClassSubjectList($_GET['class_id']);
-            while($row = $result->fetch_assoc()){
-        ?>
-            <tr>
-                <th scope="row"><?php echo $row['subject_id'];?></th>
-                <td><?php echo $row['subject_name'];?></td>
-                <td><?php echo $row['professor'];?></td>
-                <td><?php echo $row['subject_details'];?></td>
-                <td><button>Edit</button> 
-                <button data-subject-id="<?php echo $row['subject_id']; ?>" onclick="RemoveSubject(this)">Delete</button></td>
-            </tr>
+        $result = SelectClassSubjectList($_GET['class_id']);
+        while($row = $result->fetch_assoc()){       ?>
+            <div class="classcard">
+                <div class="subjname">
+                    <div>
+                        <?php echo $row['subject_name'];?>
+                    </div>
+                    <div class="details">
+                        <?php echo $row['subject_details'];?>
+                    </div>
+                </div>
+                <div class="subjprof">
+                    <p><?php echo $row['professor'];?></p>
+                </div>
+                <div class="subjsched1">
+                    <p class="subjday">Day</p>
+                    <p>echo sched time dapat</p>
+                </div>
+                <div class="subjsched2">
+                    <p class="subjday">Day</p> 
+                    <p>echo sched dapat</p>
+                </div>
+                <div class="subjbuttons">
+                    <button>Edit</button> 
+                    <button data-subject-id="<?php echo $row['subject_id']; ?>" onclick="RemoveSubject(this)">Delete</button>
+                </div>
+            </div>
         <?php } ?>
-        </tbody>
-    </table>
+    </div>
 
 <!-- AJAX / jQuery CDN -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
