@@ -3,18 +3,21 @@
     padding: 0;
 }
 
+.create-form #c{
+    position: absolute;
+    margin-top: 15px;
+    padding: 5px;
+    text-align: center;
+    width: 40px;
+    height: 40px;
+}
+
 body{
     background: #EDEDED;
     height: 100vh;
 }
 
 .container-top{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    position: sticky;
-    top: 3vh;
-    margin-top: 3vh;
     margin-bottom: 6vh;
 }
 
@@ -60,6 +63,7 @@ p{
 
 .create-form{
     display: flex;
+    justify-content: flex-end;
     border-radius: 10px;
     box-shadow:  5px 5px 7px rgba(100, 104, 128, 0.6), -5px -5px 7px rgba(255, 255, 255, 0.8);
     outline: 1px solid rgb(68, 70, 106, 0.2);
