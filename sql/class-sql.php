@@ -211,9 +211,38 @@ function InsertMemberJoin($class_code, $user_id)
 function SelectClassSubjectList($class_id)
 {
 	$conn = OpenCon();
+	// $sql = "SELECT class.class_id, class.class_name, class.class_code, class.school_year, member.member_type
+	// 		FROM class
+	// 		JOIN member
+	// 		ON class.class_id = member.class_id
+	// 		WHERE member.user_id = '$user_id'";
 	$sql = "SELECT *
 			FROM subject
 			WHERE class_id = '$class_id'";
+	$result = $conn->query($sql);
+	$conn->close();
+	return $result;
+}
+
+function SelectClassSubjectSched($class_id, $subject_id)
+{
+	$conn = OpenCon();
+	$sql = "SELECT DISTINCT 
+			from_time, 
+			to_time, 
+			(CASE WHEN day = '1' THEN 'MON'
+             WHEN day = '2' THEN 'TUE'
+			 WHEN day = '3' THEN 'WED'
+			 WHEN day = '4' THEN 'THU'
+			 WHEN day = '5' THEN 'FRI'
+			 WHEN day = '6' THEN 'SAT'
+			 WHEN day = '7' THEN 'SUN'
+             ELSE day END) AS day
+			FROM subject
+			JOIN subject_schedule AS sched
+			WHERE sched.subject_id = '$subject_id'
+				AND sched.class_id = '$class_id'
+			ORDER BY day";
 	$result = $conn->query($sql);
 	$conn->close();
 	return $result;
@@ -248,7 +277,8 @@ function GetArchivedClass($user_id)
 }
 
 // Check if the class name and school year already exist
-function CheckClassExist($class_name, $school_year){
+function CheckClassExist($class_name, $school_year)
+{
 	$conn = OpenCon();
 	$sql = "SELECT *
 			FROM class
@@ -266,7 +296,8 @@ function CheckClassExist($class_name, $school_year){
 }
 
 // Insert the schedule of the subject to the subjectschedule table
-function InsertSubjectSchedule($subject_id, $from_time, $to_time, $day, $class_id){
+function InsertSubjectSchedule($subject_id, $from_time, $to_time, $day, $class_id)
+{
 	$conn = OpenCon();
 	$sql = "INSERT INTO subject_schedule (subject_id, from_time, to_time, day, class_id)
 			VALUES ('$subject_id', '$from_time', '$to_time', '$day', '$class_id')";
@@ -279,20 +310,21 @@ function InsertSubjectSchedule($subject_id, $from_time, $to_time, $day, $class_i
 }
 
 // Delete subject and the subject schedule with it
-function DeleteSubject($subject_id){
+function DeleteSubject($subject_id)
+{
 	$conn = OpenCon();
 	$sql = "DELETE FROM subject
 			WHERE subject_id = '$subject_id'";
 	if ($conn->query($sql) === TRUE) {
 		$sql = "DELETE FROM subject_schedule
 				WHERE subject_id = '$subject_id'";
-			if ($conn->query($sql) === TRUE) {
-				echo "Subject removed!";
-			} else {
-				echo "Error: " . $sql . "<br>" . $conn->error;
-			}
+		if ($conn->query($sql) === TRUE) {
+			echo "Subject removed!";
+		} else {
+			echo "Error: " . $sql . "<br>" . $conn->error;
+		}
 	} else {
-	  echo "Error: " . $sql . "<br>" . $conn->error;
+		echo "Error: " . $sql . "<br>" . $conn->error;
 	}
 	$conn->close();
 }
