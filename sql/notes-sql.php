@@ -67,7 +67,12 @@ function SelectDueRecord($class_id, $member_id){
 			WHERE class_id = '$class_id' AND due_date IS NOT NULL AND (subject_id NOT IN (
 				SELECT subject_id
 			    FROM unenroll
-			    WHERE member_id = '$member_id') OR subject_id IS NULL)  
+			    WHERE member_id = '$member_id') OR subject_id IS NULL) AND note_id NOT IN (
+				SELECT note.note_id
+				FROM note
+				JOIN archive_note
+				ON note.note_id = archive_note.note_id
+				WHERE class_id = '$class_id' AND member_id = '$member_id')
 			ORDER BY due_date ASC";
 	$result = $conn->query($sql);
 	$conn -> close();
@@ -82,7 +87,12 @@ function SelectAnnouncementRecord($class_id, $member_id){
 			WHERE class_id = '$class_id' AND due_date IS NULL AND (subject_id NOT IN (
 				SELECT subject_id
 			    FROM unenroll
-			    WHERE member_id = '$member_id') OR subject_id IS NULL)  
+			    WHERE member_id = '$member_id') OR subject_id IS NULL) AND note_id NOT IN (
+				SELECT note.note_id
+				FROM note
+				JOIN archive_note
+				ON note.note_id = archive_note.note_id
+				WHERE class_id = '$class_id' AND member_id = '$member_id')
 			ORDER BY post_date ASC";
 	$result = $conn->query($sql);
 	$conn -> close();
@@ -172,7 +182,8 @@ function SelectApprovalNote($class_id, $member_id){
 	$conn = OpenCon();
 	$sql = "SELECT *
 			FROM pending_note
-			WHERE class_id = '$class_id' AND member_id = '$member_id'";
+			WHERE class_id = '$class_id' AND member_id = '$member_id'
+			ORDER BY pending_note_id DESC";
 	$result = $conn->query($sql);
 	$conn -> close();
 	return $result;
@@ -312,5 +323,110 @@ function SelectNoteIdInHistory($note_id){
 	$row = $result->fetch_assoc();
 	$conn -> close();
 	return $row;
+}
+
+// Check if a subject is unenrolled using subject ID and member ID
+function SelectUnenrollbySubjectID($subject_id, $member_id){
+	$conn = OpenCon();
+	$sql = "SELECT *
+			FROM unenroll
+			WHERE subject_id = '$subject_id' AND member_id = '$member_id'";
+	$result = $conn->query($sql);
+	if ($result->num_rows > 0) {
+		$row = $result->fetch_assoc();
+		$conn -> close();
+		return $row;
+	} else {
+		$conn->close();
+		return FALSE;
+	}	
+}
+
+// Insert into unenroll table
+function InsertUnenroll($member_id, $subject_id){
+	$conn = OpenCon();
+	$sql = "INSERT INTO unenroll (member_id, subject_id)
+			VALUES ('$member_id', '$subject_id')";
+	if ($conn->query($sql) === TRUE) {
+	  echo "Subject unenrolled!";
+	} else {
+	  echo "Error: " . $sql . "<br>" . $conn->error;
+	}
+	$conn->close();
+}
+
+// Delete from unenroll table to enroll
+function DeleteUnenroll($unenroll_id){
+	$conn = OpenCon();
+	$sql = "DELETE FROM unenroll
+			WHERE unenroll_id = '$unenroll_id'";
+	if ($conn->query($sql) === TRUE) {
+	  echo "Subject enrolled!";
+	} else {
+	  echo "Error: " . $sql . "<br>" . $conn->error;
+	}
+	$conn->close();
+}
+
+// Change the member type
+function UpdateMember($member_id, $member_type){
+	$conn = OpenCon();
+	$sql = "UPDATE member
+			SET member_type = '".($member_type == "0" ? "1" : "0")."'
+			WHERE member_id = '$member_id'";
+	if ($conn->query($sql) === TRUE) {
+	  echo "Member type changed!";
+	} else {
+	  echo "Error: " . $sql . "<br>" . $conn->error;
+	}
+	$conn->close();
+}
+
+function DeleteMember($member_id){
+	$conn = OpenCon();
+	$sql = "DELETE FROM member
+			WHERE member_id = '$member_id'";
+	if ($conn->query($sql) === TRUE) {
+	  echo "Member removed!";
+	} else {
+	  echo "Error: " . $sql . "<br>" . $conn->error;
+	}
+	$conn->close();
+}
+
+// Count how many row are status pending by class
+function CountPendingNote($class_id){
+	$conn = OpenCon();
+	$sql = "SELECT COUNT(pending_note_id) AS 'pending_count'
+			FROM pending_note
+			WHERE class_id = '$class_id' AND status = '0'";
+	$result = $conn->query($sql);
+	$row = $result->fetch_assoc();
+	$conn -> close();
+	return $row['pending_count'];
+}
+
+// Count all the note due today by class
+function CountDueNoteToday($class_id, $member_id){
+	$conn = OpenCon();
+	$sql = "SET time_zone='+08:00';";
+	if($conn->query($sql) === TRUE){
+		$sql = "SELECT COUNT(note_id) AS 'due_count'
+				FROM note
+				WHERE class_id = '$class_id' AND due_date IS NOT NULL AND (subject_id NOT IN (
+				SELECT subject_id
+			    FROM unenroll
+			    WHERE member_id = '$member_id') OR subject_id IS NULL) AND note_id NOT IN (
+				SELECT note.note_id
+				FROM note
+				JOIN archive_note
+				ON note.note_id = archive_note.note_id
+				WHERE class_id = '$class_id' AND member_id = '$member_id') AND due_date = CURDATE()";
+		$result = $conn->query($sql);
+		$row = $result->fetch_assoc();
+		$conn -> close();
+		return $row['due_count'];
+	}
+	$conn -> close();
 }
 ?>

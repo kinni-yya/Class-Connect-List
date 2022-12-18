@@ -97,16 +97,6 @@ function GetClassId($class_code)
 	// return value
 	return $class_id['class_id'];
 }
-// 2 Types of using SQL row
-// 1 row expected:
-// $result = $conn->query($sql);
-// $row = $result->fetch_assoc();
-// 
-// many rows expected:
-// $result = $conn->query($sql);
-// while($row = $result->fetch_assoc()){
-// echo $row['column name']
-// }
 
 function GetSubject($class_id)
 {
@@ -120,6 +110,7 @@ function GetSubject($class_id)
 	return $row;
 }
 
+// Insert subject then return the subject id
 function InsertSubject($subject_name, $subject_details, $professor, $class_id, $conn)
 {
 	$sql = "INSERT INTO subject (subject_name, subject_details, professor, class_id)
@@ -131,11 +122,13 @@ function InsertSubject($subject_name, $subject_details, $professor, $class_id, $
 		($professor == null ? "NULL" : "'$professor'")
 		. ", '$class_id')";
 	if ($conn->query($sql) === TRUE) {
-		echo "Subject added successfully";
+		// The newly added id
+		return $conn->insert_id;
 	} else {
 		echo "Error: " . $sql . "<br>" . $conn->error;
 	}
 	$conn->close();
+	return 0;
 }
 
 // Check if the class code generated is unique
@@ -215,7 +208,7 @@ function InsertMemberJoin($class_code, $user_id)
 }
 
 // Select all the subject for a specific class
-function SelectClassSubjectList($class_id, $member_id)
+function SelectClassSubjectList($class_id)
 {
 	$conn = OpenCon();
 	$sql = "SELECT *
@@ -252,4 +245,54 @@ function GetArchivedClass($user_id)
 	$result = $conn->query($sql);
 	$conn->close();
 	return $result;
+}
+
+// Check if the class name and school year already exist
+function CheckClassExist($class_name, $school_year){
+	$conn = OpenCon();
+	$sql = "SELECT *
+			FROM class
+			WHERE class_name = '$class_name' AND school_year = '$school_year'";
+	$result = $conn->query($sql);
+	if ($result->num_rows > 0) {
+		// The class already exist
+		$conn->close();
+		return TRUE;
+	} else {
+		// Class have not been created yet
+		$conn->close();
+		return FALSE;
+	}
+}
+
+// Insert the schedule of the subject to the subjectschedule table
+function InsertSubjectSchedule($subject_id, $from_time, $to_time, $day, $class_id){
+	$conn = OpenCon();
+	$sql = "INSERT INTO subject_schedule (subject_id, from_time, to_time, day, class_id)
+			VALUES ('$subject_id', '$from_time', '$to_time', '$day', '$class_id')";
+	if ($conn->query($sql) === TRUE) {
+		echo "Subject schedule added!";
+	} else {
+		echo "Error: " . $sql . "<br>" . $conn->error;
+	}
+	$conn->close();
+}
+
+// Delete subject and the subject schedule with it
+function DeleteSubject($subject_id){
+	$conn = OpenCon();
+	$sql = "DELETE FROM subject
+			WHERE subject_id = '$subject_id'";
+	if ($conn->query($sql) === TRUE) {
+		$sql = "DELETE FROM subject_schedule
+				WHERE subject_id = '$subject_id'";
+			if ($conn->query($sql) === TRUE) {
+				echo "Subject removed!";
+			} else {
+				echo "Error: " . $sql . "<br>" . $conn->error;
+			}
+	} else {
+	  echo "Error: " . $sql . "<br>" . $conn->error;
+	}
+	$conn->close();
 }
