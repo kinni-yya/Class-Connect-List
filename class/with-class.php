@@ -39,6 +39,7 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
                 <button type="button" class="view" onclick="location.href='create-class.php'">CREATE NEW CLASS</button>
                 <button type="button" class="view" onclick="openAddClassForm()">JOIN CLASS</button>
                 <button type="button" class="view" onclick="location.href='archive-class.php'">ARCHIVED CLASSES</button>
+                <button type="button" class="view" onclick="location.href='#'">SEE ALL ANNOUNCEMENTS</button>
             </div>
         </div>
     </div>
