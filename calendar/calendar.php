@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calendar</title>
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <!-- Bootstrap CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- Calendar CSS -->
@@ -18,7 +18,7 @@
 
 <body>
     <div id="page-container">
-        <?php DisplayNavHeader();?>
+        <?php DisplayNavHeader(); ?>
     </div>
     <div class="container" id="page-container">
         <div class="row">
@@ -26,6 +26,7 @@
                 <div id="calendar"></div>
             </div>
             <div class="col-md-3">
+                <!-- CREATE EVENT FORM -->
                 <div class="cardt rounded-0 shadow">
                     <div class="card-header text-light">
                         <h5 class="card-title">Create New Event Form</h5>
@@ -69,8 +70,35 @@
                         </div>
                     </div>
                 </div>
+                <!-- CATEGORIES OF CALENDAR -->
+                <br>
+                <div class="cardt rounded-0 shadow">
+                    <div class="card-header text-light">
+                        <h5 class="card-title">Categories</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="container-fluid">
+                            <div class="form-group mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                                    <label class="form-check-label" for="flexCheckChecked">
+                                        Subject Schedule
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                                    <label class="form-check-label" for="flexCheckChecked">
+                                        Deadlines
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+
+    </div>
     </div>
 
     <!-- Event Details Modal -->
@@ -107,20 +135,20 @@
     </div>
     <!-- Event Details Modal -->
 
-<?php 
-// Call the open connection from dbconnect to establish the connection
-$conn = OpenCon();
-$schedules = $conn->query("SELECT * FROM `calendar`");
-$sched_res = [];
-foreach($schedules->fetch_all(MYSQLI_ASSOC) as $row){
-    $row['sdate'] = date("F d, Y h:i A",strtotime($row['start_datetime']));
-    $row['edate'] = date("F d, Y h:i A",strtotime($row['end_datetime']));
-    $sched_res[$row['id']] = $row;
-}
-?>
-<?php 
-if(isset($conn)) $conn->close();
-?>
+    <?php
+    // Call the open connection from dbconnect to establish the connection
+    $conn = OpenCon();
+    $schedules = $conn->query("SELECT * FROM `calendar`");
+    $sched_res = [];
+    foreach ($schedules->fetch_all(MYSQLI_ASSOC) as $row) {
+        $row['sdate'] = date("F d, Y h:i A", strtotime($row['start_datetime']));
+        $row['edate'] = date("F d, Y h:i A", strtotime($row['end_datetime']));
+        $sched_res[$row['id']] = $row;
+    }
+    ?>
+    <?php
+    if (isset($conn)) $conn->close();
+    ?>
     <!-- AJAX / jQuery CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- Bootstrap JS CDN -->
@@ -128,97 +156,103 @@ if(isset($conn)) $conn->close();
     <!-- Full calendar script -->
     <script src="https://unpkg.com/fullcalendar@5.10.1/main.js"></script>
 
-<script>
-    var scheds = $.parseJSON('<?= json_encode($sched_res) ?>')
-    var calendar;
-    var Calendar = FullCalendar.Calendar;
-    var events = [];
-    
-    $(function() {
-        if (!!scheds) {
-            Object.keys(scheds).map(k => {
-                var row = scheds[k]
-                events.push({ id: row.id, title: row.title, start: row.start_datetime, end: row.end_datetime });
-            })
-        }
-        
-        var date = new Date()
-        var d = date.getDate(),
-            m = date.getMonth(),
-            y = date.getFullYear()
+    <script>
+        var scheds = $.parseJSON('<?= json_encode($sched_res) ?>')
+        var calendar;
+        var Calendar = FullCalendar.Calendar;
+        var events = [];
 
-        calendar = new Calendar(document.getElementById('calendar'), {
-            headerToolbar: {
-                right: 'today prev,next',
-                left: 'dayGridMonth,dayGridWeek,list',
-                center: 'title',
-            },
-            
-            selectable: true,
-            themeSystem: 'bootstrap5',
-            //Random default events
-            events: events,
-            eventClick: function(info) {
-                var _details = $('#event-details-modal')
-                var id = info.event.id
+        $(function() {
+            if (!!scheds) {
+                Object.keys(scheds).map(k => {
+                    var row = scheds[k]
+                    events.push({
+                        id: row.id,
+                        title: row.title,
+                        start: row.start_datetime,
+                        end: row.end_datetime
+                    });
+                })
+            }
+
+            var date = new Date()
+            var d = date.getDate(),
+                m = date.getMonth(),
+                y = date.getFullYear()
+
+            calendar = new Calendar(document.getElementById('calendar'), {
+                headerToolbar: {
+                    right: 'today prev,next',
+                    left: 'dayGridMonth,dayGridWeek,list',
+                    center: 'title',
+                },
+
+                selectable: true,
+                themeSystem: 'bootstrap5',
+                //Random default events
+                events: events,
+                eventClick: function(info) {
+                    var _details = $('#event-details-modal')
+                    var id = info.event.id
+                    if (!!scheds[id]) {
+                        _details.find('#title').text(scheds[id].title)
+                        _details.find('#description').text(scheds[id].description)
+                        _details.find('#start').text(scheds[id].sdate)
+                        _details.find('#end').text(scheds[id].edate)
+                        _details.find('#edit,#delete').attr('data-id', id)
+                        _details.modal('show')
+                    } else {
+                        alert("Event is undefined");
+                    }
+                },
+                eventDidMount: function(info) {
+                    // Do Something after events mounted
+                },
+                editable: true
+            });
+
+            calendar.render();
+
+            // Form reset listener
+            $('#schedule-form').on('reset', function() {
+                $(this).find('input:hidden').val('')
+                $(this).find('input:visible').first().focus()
+            })
+
+            // Edit Button
+            $('#edit').click(function() {
+                var id = $(this).attr('data-id')
                 if (!!scheds[id]) {
-                    _details.find('#title').text(scheds[id].title)
-                    _details.find('#description').text(scheds[id].description)
-                    _details.find('#start').text(scheds[id].sdate)
-                    _details.find('#end').text(scheds[id].edate)
-                    _details.find('#edit,#delete').attr('data-id', id)
-                    _details.modal('show')
+                    var _form = $('#event-form')
+                    console.log(String(scheds[id].start_datetime), String(scheds[id].start_datetime).replace(" ", "\\t"))
+                    _form.find('[name="id"]').val(id)
+                    _form.find('[name="title"]').val(scheds[id].title)
+                    _form.find('[name="description"]').val(scheds[id].description)
+                    _form.find('[name="start_datetime"]').val(String(scheds[id].start_datetime).replace(" ", "T"))
+                    _form.find('[name="end_datetime"]').val(String(scheds[id].end_datetime).replace(" ", "T"))
+                    $('#event-details-modal').modal('hide')
+                    _form.find('[name="title"]').focus()
                 } else {
                     alert("Event is undefined");
                 }
-            },
-            eventDidMount: function(info) {
-                // Do Something after events mounted
-            },
-            editable: true
-        });
+            })
 
-        calendar.render();
-
-        // Form reset listener
-        $('#schedule-form').on('reset', function() {
-            $(this).find('input:hidden').val('')
-            $(this).find('input:visible').first().focus()
-        })
-
-        // Edit Button
-        $('#edit').click(function() {
-            var id = $(this).attr('data-id')
-            if (!!scheds[id]) {
-                var _form = $('#event-form')
-                console.log(String(scheds[id].start_datetime), String(scheds[id].start_datetime).replace(" ", "\\t"))
-                _form.find('[name="id"]').val(id)
-                _form.find('[name="title"]').val(scheds[id].title)
-                _form.find('[name="description"]').val(scheds[id].description)
-                _form.find('[name="start_datetime"]').val(String(scheds[id].start_datetime).replace(" ", "T"))
-                _form.find('[name="end_datetime"]').val(String(scheds[id].end_datetime).replace(" ", "T"))
-                $('#event-details-modal').modal('hide')
-                _form.find('[name="title"]').focus()
-            } else {
-                alert("Event is undefined");
-            }
-        })
-
-        // Delete Button / Deleting an Event
-        $('#delete').click(function() {
-            var id = $(this).attr('data-id')
-            if (!!scheds[id]) {
-                var _conf = confirm("Are you sure to delete this scheduled event?");
-                if (_conf === true) {
-                    location.href = "./delete-event.php?id=" + id;
+            // Delete Button / Deleting an Event
+            $('#delete').click(function() {
+                var id = $(this).attr('data-id')
+                if (!!scheds[id]) {
+                    var _conf = confirm("Are you sure to delete this scheduled event?");
+                    if (_conf === true) {
+                        location.href = "./delete-event.php?id=" + id;
+                    }
+                } else {
+                    alert("Event is undefined");
                 }
-            } else {
-                alert("Event is undefined");
-            }
+            })
         })
-    })
-</script>
+    </script>
 
 
 </body>
+
 </html>
