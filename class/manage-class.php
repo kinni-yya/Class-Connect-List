@@ -103,15 +103,17 @@ $class_info = GetClassRecord($_GET['class_id']);
                 <div class="subjprof">
                     <p><?php echo $subj_row['professor']; ?></p>
                 </div>
-                <?php
-                $sched = SelectClassSubjectSched($_GET['class_id'], $subj_row['subject_id']);
-                while ($sched_row = $sched->fetch_assoc()) {       ?>
-                    <div class="subjsched1">
-                        <!-- echo date("h:i A", strtotime($time)); -->
-                        <p class="subjday"><?php echo $sched_row['day']; ?></p>
-                        <p><?php echo date("h:i A", strtotime($sched_row['from_time'])) . " - " . date("h:i A", strtotime($sched_row['to_time'])); ?></p>
-                    </div>
+                <div class="scheds">
+                    <?php
+                    $sched = SelectClassSubjectSched($_GET['class_id'], $subj_row['subject_id']);
+                    while ($sched_row = $sched->fetch_assoc()) {       ?>
+                        <div class="subjsched1">
+                            <!-- echo date("h:i A", strtotime($time)); -->
+                            <p class="subjday"><?php echo $sched_row['day']; ?></p>
+                            <p><?php echo date("h:i A", strtotime($sched_row['from_time'])) . " - " . date("h:i A", strtotime($sched_row['to_time'])); ?></p>
+                        </div>
                 <?php } ?>
+                </div>
                 <div class="subjbuttons">
                     <button>Edit</button>
                     <button onclick="RemoveSubject(this)">Delete</button>

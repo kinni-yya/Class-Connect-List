@@ -200,7 +200,8 @@ input[type="time"]{
 }
 
 .subjprof p{
-  font-size: 17;
+  margin-top: 8px;
+  font-size: 18px;
   font-weight: bold;
 }
 
@@ -208,7 +209,11 @@ input[type="time"]{
   font-weight: bold;
 }
 
-.subjsched1, .subjsched2{
+.scheds{
+  height: 100px;
+}
+
+.subjsched1{
   margin: 10px;
   height: 40px;
 }
