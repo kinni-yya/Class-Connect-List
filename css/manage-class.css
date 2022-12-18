@@ -208,11 +208,8 @@ input[type="time"]{
   font-weight: bold;
 }
 
-.subjsched1{
+.subjsched1, .subjsched2{
   margin: 10px;
-}
-
-.subjsched2{
-  margin: 10px;
+  height: 40px;
 }
 
