@@ -49,14 +49,14 @@ function SynchTimeZone(){
 function DisplayNavHeader()
 {
     $output = "
-    <div class=\"container container-top\">
+    <div class=\"container-top\">
         <ul class=\"topnav\">
-			<li class=\"title\" style=\"flex-grow: 1\"><a href=\"../class/no-class.php\">CLASS CONNECT: LIST</a></li>
+			<li class=\"title\" style=\"flex-grow: 1\"><a href=\"/GitHub/Class-Connect-List/class/no-class.php\">CLASS CONNECT: LIST</a></li>
             <li><a href=\"../class/with-class.php\">CLASSES</a></li>
             <li><a href=\"../calendar/calendar.php\">CALENDAR</a></li>
             <li><a href=\"#\">RESOURCES</a></li>
             <li><a href=\"#\">MY LIST</a></li>
-            <li><a class=\"profile\" href=../logout.php>PROFILE</a></li>
+            <li><a class=\"profile\" href=../logout.php>LOGOUT</a></li>
         </ul>
     </div>
     ";
