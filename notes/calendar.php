@@ -62,14 +62,14 @@ $class_id = $_GET['class_id'];
 <!-- Add Event Modal -->
 <div class="modal fade" tabindex="-1" data-bs-backdrop="static" id="add-event-modal">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content rounded">
+        <div class="modal-content popup">
         <form id="add-event-form">
 
-            <div class="modal-header rounded 4">
+            <div class="modal-header rounded 4 part1">
                 <h5 class="modal-title" color="yellow">Add Event</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body part2">
                 
                 <div class="form-group mb-2">
                     <label for="title" class="form-label">Event Title:</label>
@@ -116,10 +116,10 @@ $class_id = $_GET['class_id'];
                 </div>
 
             </div>
-            <div class="modal-footer rounded-4">
+            <div class="modal-footer rounded-4 part3">
                 <div class="text-end">
-                    <button type="submit" class="btn btn-primary btn-sm rounded-0">Save</button>
-                    <button type="button" class="btn btn-secondary btn-sm rounded-0" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary btn-sm rounded-0 submitbtn">Save</button>
+                    <button type="button" class="btn btn-secondary btn-sm rounded-0 closebtn" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
 
