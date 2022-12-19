@@ -20,14 +20,10 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/manage-class.css">
     <link rel="stylesheet" href="../css/my-list.css">
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
 </head>
 
 <body id="scrll">
-    <?php
-    // HEADER
-    DisplayNavHeader();
-    ?>
+    <?php DisplayNavHeader(); ?>
 
     <p class="subj">MY LIST</p>
 
@@ -38,7 +34,7 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
     <!-- BLUR -->
     <div id="blur" onclick="closeUserNoteForm()"></div>
 
-    <!-- POPUP (ADD)-->
+    <!-- POPUP (ADD) -->
     <!-- ADD USER NOTE FORM -->
     <div id="addpopup" class="popup">
         <form id="formAddUserNote" class="form-container">
@@ -83,6 +79,8 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
     <div id="editpopup" class="popup">
         <form id="formEditUserNote" class="form-container">
             <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
+            <input type="hidden" name="note_id" id="note-id">
+
             <!-- <button type="button" id="close" onclick="closeUserNoteForm()">X</button> -->
 
             <p class="addsubj-title">
@@ -90,24 +88,22 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
             </p>
             <!-- Form to add Note -->
             <label>Note/Task Title</label>
-            <input type="text" class="form-control" name="note_title" placeholder="Title" required>
+            <input type="text" class="form-control" name="note_title" id="note-title" required>
             <label>Description</label>
-            <textarea class="form-control" name="description" style="height: 100px" placeholder="Note Description (optional)"></textarea>
-            <div  >
+            <textarea class="form-control" name="description" style="height: 100px" id="description"></textarea>
+            <div>
                 <label>Due date</label>
             </div>
-            <div  >
-                <input type="date" class="form-control" name="due_date">
+            <div>
+                <input type="date" class="form-control" name="due_date" id="due-date">
             </div>
-
-            <div  >
+            <div>
                 <label>Due Time</label>
             </div>
-            <div  >
-                <input type="time" class="form-control" name="due_time">
+            <div>
+                <input type="time" class="form-control" name="due_time" id="due-time">
             </div>
-
-            <div  >
+            <div>
                 <span class="form-text">Due date and/or time are optional!</span>
             </div>
             <!-- END Form to add Note -->
@@ -140,36 +136,16 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
                 </br>
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="buttonswclass">
-                        <button type="button" class="view" onclick="openEditUserNoteForm()">VIEW/EDIT</button>
-                        <!-- <button type="button" class="view" onclick="location.href='#'">EDIT</button> -->
+                        <!-- json_encode = converts a php associative array to a json array for javascript -->
+                        <button type="button" class="view" onclick="openEditUserNoteForm(<?php echo $rows['note_id']; ?>)">VIEW/EDIT</button>
+                        <?php //echo json_encode(SelectUserNoteRecord($rows['note_id'])) 
+                        ?>
                     </div>
                 </div>
             </div>
         <?php
         } ?>
     </div>
-    <!-- OLD MY LIST -->
-    <!-- <div class="create-container">
-        <h1 class="mb-2 fw-bold">My List</h1>
-        <a href="add-todo.php" class="mb-3 btn btn-outline-primary text-dark">Add To-Do</a>
-        <div id="row" class="row">
-            <div id="to-do" class="col-lg-3 col-md-6 mb-4">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h3 class="card-title">Title of To-Do</h3>
-                        <p class="card-text text-justify">Ipsum consectetur nostrud elit ea magna elit Lorem dolore elit proident.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                <a href="#" type="button" class="btn btn-sm btn-outline-secondary">View</a>
-                                <a href="#" type="button" class="btn btn-sm btn-outline-secondary">Edit</a>
-                            </div>
-                            <small class="text-muted">Dec. 25, 2022</small>
-                        </div>
-                    </div>  
-                </div>
-            </div>
-        </div>
-    </div> -->
 
     <!-- AJAX / jQuery CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -218,6 +194,37 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
                 }
             });
         });
+
+        function getUserNoteInfo(note_id) {
+            var note_record;
+            $.ajax({
+                type: 'POST',
+                url: 'edit-user-note-process.php',
+                dataType: 'json',
+                data: {
+                    edit_note: note_id
+                },
+                success: function(data) {
+                    note_record = data;
+                    document.getElementById('note-id').value = note_id;
+                    var title = document.getElementById('note-title');
+                    title.value = note_record.note_title;
+                    title.placeholder = note_record.note_title;
+
+                    var description = document.getElementById('description');
+                    description.value = note_record.description;
+                    description.placeholder = note_record.description;
+
+                    var due_date = document.getElementById('due-date');
+                    due_date.value = note_record.due_date;
+                    // due_date.placeholder = note_record.due_date;
+
+                    var due_time = document.getElementById('due-time');
+                    due_time.value = note_record.due_time;
+                    // due_time.placeholder = note_record.due_time;
+                },
+            });
+        }
     </script>
     <script type="text/javascript">
         function openAddUserNoteForm() {
@@ -234,15 +241,15 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
             document.getElementById('blur').style.display = "none";
             document.getElementById('scrll').style.overflow = "auto";
         }
-        
-        function openEditUserNoteForm() {
+
+        function openEditUserNoteForm(note_id) {
             document.getElementById("editpopup").style.display = "block";
             document.getElementById('blur').style.filter = "blur(5px)";
             document.getElementById('blur').style.display = "block";
             document.getElementById('scrll').style.overflow = "hidden";
+            getUserNoteInfo(note_id);
         }
     </script>
-
 </body>
 
 </html>
