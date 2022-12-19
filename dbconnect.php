@@ -65,6 +65,7 @@ function DisplayNavHeader()
 
 include 'sql/notes-sql.php';
 include 'sql/class-sql.php';
-include 'sql/user-sql.php'
+include 'sql/user-sql.php';
+include 'sql/calendar-sql.php';
 
 ?>
