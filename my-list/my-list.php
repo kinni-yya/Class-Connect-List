@@ -21,7 +21,6 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
     <link rel="stylesheet" href="../css/sections.css">
     <link rel="stylesheet" href="../css/with-class.css">
     <link rel="stylesheet" href="../css/my-list.css">
-
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
 </head>
 
@@ -64,7 +63,7 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
                 </br>
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="buttonswclass">
-                        <button type="button" class="view" onclick="location.href='#'">VIEW/EDIT</button>
+                        <button type="button" class="view" onclick="openEditUserNoteForm()">VIEW/EDIT</button>
                         <!-- <button type="button" class="view" onclick="location.href='#'">EDIT</button> -->
                     </div>
                 </div>
@@ -119,6 +118,54 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
             </form>
         </div>
     </div>
+
+    <!-- VIEW/EDIT USER NOTE FORM -->
+    <div id="blur" onclick="closeEditUserNoteForm()"></div>
+    <div class="center" id="center">
+        <div class="form-popup" id="edit-user-note-form">
+            <form id="formEditUserNote" class="form-container">
+                <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
+                <button type="button" id="close" onclick="closeEditUserNoteForm()">X</button>
+
+                <h1>ADD TO-DO</h1>
+                <!-- Form to add Note -->
+                <br>
+                <div class="form-group">
+                    <label>Note/Task Title</label>
+                    <input type="text" class="form-control" name="note_title" placeholder="Title" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Description</label><br>
+                    <textarea class="form-control" name="description" style="height: 300px" placeholder="Note Description (optional)"></textarea>
+                </div>
+                <br><br>
+                <div class="row">
+                    <div class="col-auto">
+                        <label class="col-form-label">Due date</label>
+                    </div>
+                    <div class="col-auto">
+                        <input type="date" class="form-control" name="due_date">
+                    </div>
+
+                    <div class="col-auto">
+                        <label class="col-form-label">Due Time</label>
+                    </div>
+                    <div class="col-auto">
+                        <input type="time" class="form-control" name="due_time">
+                    </div>
+
+                    <div class="col-auto">
+                        <span class="form-text">Due date and/or time are optional!</span>
+                    </div>
+                </div>
+                <!-- END Form to add Note -->
+                <br><button type="submit" class="btn">ADD</button>
+            </form>
+        </div>
+    </div>
+
+
     <!-- OLD MY LIST -->
     <!-- <div class="create-container">
         <h1 class="mb-2 fw-bold">My List</h1>
@@ -153,11 +200,32 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
 
             $.ajax({
                 type: 'POST',
-                url: 'my-list-process.php',
+                url: 'add-user-note-process.php',
                 data: form.serialize(),
                 success: function(data) {
                     if (data > 0) {
                         alert("Note added successfully!");
+                        // window.location.replace("../notes/note.php?class_id=" + data);
+                        window.location.replace("my-list.php");
+                    } else {
+                        alert(data);
+                    }
+                    alert(data);
+                    location.reload();
+                }
+            });
+        });
+        $("#formEditUserNote").submit(function(e) {
+            e.preventDefault();
+            var form = $(this);
+
+            $.ajax({
+                type: 'POST',
+                url: 'edit-user-note-process.php',
+                data: form.serialize(),
+                success: function(data) {
+                    if (data > 0) {
+                        alert("Note edited successfully!");
                         // window.location.replace("../notes/note.php?class_id=" + data);
                         window.location.replace("my-list.php");
                     } else {
@@ -179,6 +247,20 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
 
         function closeAddUserNoteForm() {
             document.getElementById("add-class-form").style.display = "none";
+            document.getElementById('blur').style.filter = "blur(0)";
+            document.getElementById('blur').style.display = "none";
+            document.getElementById('scrll').style.overflow = "auto";
+        }
+        
+        function openEditUserNoteForm() {
+            document.getElementById("edit-user-note-form").style.display = "block";
+            document.getElementById('blur').style.filter = "blur(5px)";
+            document.getElementById('blur').style.display = "block";
+            document.getElementById('scrll').style.overflow = "hidden";
+        }
+
+        function closeEditUserNoteForm() {
+            document.getElementById("edit-user-note-form").style.display = "none";
             document.getElementById('blur').style.filter = "blur(0)";
             document.getElementById('blur').style.display = "none";
             document.getElementById('scrll').style.overflow = "auto";
