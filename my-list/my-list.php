@@ -127,7 +127,7 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
                 <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
                 <button type="button" id="close" onclick="closeEditUserNoteForm()">X</button>
 
-                <h1>ADD TO-DO</h1>
+                <h1>EDIT TO-DO</h1>
                 <!-- Form to add Note -->
                 <br>
                 <div class="form-group">
