@@ -92,6 +92,12 @@ OpenSession(); ?>
                                         Deadlines
                                     </label>
                                 </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                                    <label class="form-check-label" for="flexCheckChecked">
+                                        My List
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
