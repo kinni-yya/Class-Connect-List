@@ -18,6 +18,7 @@ function OpenSession(){
 function OpenCon(){
 	$dbhost = "localhost";
 	$dbuser = "root";
+	$dbpass = "MySQLroot";
 	$db = "list";
 	// Create the SQL connection
 	$conn = new mysqli($dbhost, $dbuser, $dbpass,$db) or die("Connect failed: %s\n". $conn -> error);
@@ -66,6 +67,5 @@ include 'sql/notes-sql.php';
 include 'sql/class-sql.php';
 include 'sql/user-sql.php';
 include 'sql/calendar-sql.php';
-
 include 'sql/my-list-sql.php';
 ?>
