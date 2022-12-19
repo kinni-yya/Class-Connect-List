@@ -85,9 +85,78 @@ ul .active{
   color: black;
 }
 #calendar button{
-  background-color: #009087;
+  background-color: #009087 !important;
 }
 .fc-daygrid-event{
   cursor: pointer;
 }
 /* END CALENDAR */
+
+.popup{
+  border-radius: 10px !important;
+}
+
+.part1{
+  background-color: #009087;
+  color: white;
+}
+
+.btn-close{
+  background-color: #EDEDED !important;
+}
+
+.part2{
+  background-color: #EDEDED !important;
+}
+
+
+.part2 input{
+  border: none;
+  height: 40px;
+  font-size: 17px !important;
+  border-radius: 10px;
+  background: #ededed;
+  box-shadow: inset 4px 4px 5px rgba(100, 104, 128, 0.6),
+    inset -6px -6px 9px rgba(255, 255, 255, 1);
+}
+
+.part2 textarea {
+  border: none;
+  font-size: 20px;
+  border-radius: 10px;
+  background: #ededed !important;
+  box-shadow: inset 4px 4px 5px rgba(100, 104, 128, 0.6),
+    inset -6px -6px 9px rgba(255, 255, 255, 1);
+}
+
+.part2 select {
+  border: none;
+  font-size: 17px;
+  border-radius: 10px;
+  background: transparent !important;
+  box-shadow: inset 4px 4px 5px rgba(100, 104, 128, 0.6),
+    inset -6px -6px 9px rgba(255, 255, 255, 1);
+}
+
+.part2 input:focus{
+  border: none !important;
+  background-color: transparent !important;
+  outline: 1px solid rgb(68, 70, 106, 0.3) !important;
+}
+
+.part3{
+  background-color: #EDEDED !important;
+}
+
+.container-top{
+  z-index: 2 !important;
+}
+
+.submitbtn{
+  background-color: #009087 !important;
+  border: none !important;
+}
+
+.closebtn{
+  border: none !important;
+}
