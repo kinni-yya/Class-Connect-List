@@ -77,7 +77,7 @@ body{
     background-color: rgba(0, 144, 135, 1);
 }
 
-@media (max-width: 1171px){
+@media (max-width: 1180px){
     .container .topnav{
         justify-content: center;
     }

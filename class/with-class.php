@@ -56,7 +56,7 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
          */
         while ($rows = $class_info->fetch_assoc()) {    ?>
             <div class="card">
-                <i class="fa-solid fa-box-archive" onclick="location.href='#'"></i>
+                <i class="fa-solid fa-box-archive" onclick="openArchivePopup()"></i>
                 <div class="cname">
                     <p><?php echo $rows['class_name']; ?></p>
                 </div>
@@ -86,7 +86,7 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
     </div>
 
     <div id="blur" onclick="closeAddClassForm()"></div>
-    <!-- POPUP -->
+    <!-- POPUP (join)-->
     <div class="center" id="center">
         <div class="form-popup" id="add-class-form">
             <form id="formJoinClass" class="form-container">
@@ -104,6 +104,19 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
             </form>
         </div>
     </div>
+    <!-- END POPUP (join)-->
+
+    <!-- POPUP (archive)-->
+
+    <div id="archive-popup">
+        <p class="prompt">Are you sure to archive this class?</p>
+        <div class="archive-popup-btns">
+            <button type="submit" onclick="#">YES</button>
+            <button onclick="closeAddClassForm()">NO</button>
+        </div>
+    </div>
+
+    <!-- END POPUP (archive)-->
 
     <!-- AJAX / jQuery CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -142,9 +155,17 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
 
         function closeAddClassForm() {
             document.getElementById("add-class-form").style.display = "none";
+            document.getElementById("archive-popup").style.display = "none";
             document.getElementById('blur').style.filter = "blur(0)";
             document.getElementById('blur').style.display = "none";
             document.getElementById('scrll').style.overflow = "auto";
+        }
+
+        function openArchivePopup() {
+            document.getElementById("archive-popup").style.display = "block";
+            document.getElementById('blur').style.filter = "blur(5px)";
+            document.getElementById('blur').style.display = "block";
+            document.getElementById('scrll').style.overflow = "hidden";
         }
     </script>
 

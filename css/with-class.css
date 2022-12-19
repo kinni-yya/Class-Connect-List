@@ -225,3 +225,58 @@ input:focus{
     margin: 20px;
   }
 }
+
+#archive-popup{
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #EDEDED;
+  padding: 25px;
+  z-index: 2;
+
+  outline: 1px solid rgb(68, 70, 106, 0.3);
+  border-radius: 10px;
+  box-shadow:  7px 7px 7px rgba(100, 104, 128, 0.6),
+                -7px -7px 7px rgba(255, 255, 255, 0.9);
+}
+
+.prompt{
+  font-size: 20px;
+  margin-bottom: 25px;
+}
+
+.archive-popup-btns{
+  display: flex;
+  margin: 10px;
+  justify-content: center
+}
+
+.archive-popup-btns button{
+  font-weight: bold;
+  color: #009087;
+  border: none;
+  padding: 10px;
+  margin-inline: 17px;
+  border-radius: 10px;
+  box-shadow:  7px 7px 7px rgba(100, 104, 128, 0.6),
+                -7px -7px 7px rgba(255, 255, 255, 0.9);
+}
+
+.archive-popup-btns button:first-child{
+  color: #EDEDED;
+  background: #009087;
+}
+
+.archive-popup-btns button:hover:first-child{
+  transition: .3s ;
+  color: #009087;
+  background: #EDEDED;
+}
+
+.archive-popup-btns button:hover:last-child{
+  transition: .3s ;
+  color: #EDEDED;
+  background: #009087;
+}
