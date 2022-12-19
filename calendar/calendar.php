@@ -15,13 +15,12 @@ OpenSession(); ?>
     <!-- Calendar CSS -->
     <link rel="stylesheet" href="../css/calendar.css">
     <link rel="stylesheet" href="../css/navbar.css">
-    <link rel="stylesheet" href="https://unpkg.com/fullcalendar@5.10.1/main.min.css">
+    <link rel="stylesheet" href="../css/fullcalendar.css">
 </head>
 
 <body>
-    <div id="page-container">
-        <?php DisplayNavHeader(); ?>
-    </div>
+    <?php DisplayNavHeader(); ?>
+    
     <div class="container" id="page-container">
         <div class="row">
             <div class="col-md-9">
