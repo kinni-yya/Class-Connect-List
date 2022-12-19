@@ -60,14 +60,14 @@ $class_info = GetClassRecord($_GET['class_id']);
 			<?php // Count how many notes are due for today
 			$due_count = CountDueNoteToday($_GET['class_id'], $member_id);?>
 		  <li class="nav-item">
-		    <a class="nav-link text-success" id="due-navlink" href="#" onclick="window.location.href='note.php?class_id=<?php echo $_GET['class_id']; ?>&tab=due';">Dues <span class="badge rounded-pill bg-danger"><?php echo $due_count; ?></span></a>
+		    <a class="nav-link text-success" id="due-navlink" href="#" onclick="window.location.href='note.php?class_id=<?php echo $_GET['class_id']; ?>&tab=due';">Dues <?php if($due_count > 0) echo "<span class=\"badge rounded-pill bg-danger\">".$due_count."</span>"; ?></a>
 		  </li>
 		  <li class="nav-item">
 		    <a class="nav-link text-success" id="announcement-navlink" href="#" onclick="window.location.href='note.php?class_id=<?php echo $_GET['class_id']; ?>&tab=announcement';">Announcement</a>
 		  </li>
-		  <li class="nav-item">
+		  <!-- <li class="nav-item">
 		    <a class="nav-link text-success" id="all-navlink" href="#" onclick="window.location.href='note.php?class_id=<?php echo $_GET['class_id']; ?>&tab=all';">All</a>
-		  </li>
+		  </li> -->
 		  <li class="nav-item">
 		    <a class="nav-link text-success" id="archive-navlink" href="#" onclick="window.location.href='note.php?class_id=<?php echo $_GET['class_id']; ?>&tab=archive';">Archive</a>
 		  </li>
@@ -82,7 +82,8 @@ $class_info = GetClassRecord($_GET['class_id']);
 		  // Count how many pending items are open
 		  $pending_count = CountPendingNote($_GET['class_id']);
 		  echo '<li class="nav-item">';
-		  echo  '<a class="nav-link text-success" id="pending-navlink" href="#" onclick="window.location.href=\'note.php?class_id='.$_GET['class_id'].'&tab=pending\'" disabled>Pending Notes <span class="badge rounded-pill bg-danger">'.$pending_count.'</span></a>';
+		  echo  '<a class="nav-link text-success" id="pending-navlink" href="#" onclick="window.location.href=\'note.php?class_id='.$_GET['class_id'].'&tab=pending\'" disabled>Pending Notes '.($pending_count > 0 ? '
+<span class="badge rounded-pill bg-danger">'.$pending_count.'</span>' : '').'</a>';
 		  echo '</li>';
 		  }
 		  else if($access == 0){
@@ -311,10 +312,10 @@ $("#formAddNote").submit(function(e){
 		$("#note-section").load("due.php?class_id=<?php echo $_GET['class_id']; ?>");
 		$("#due-navlink").addClass("active");
 	}
-	if (tab_selected == "all") {
-		$("#note-section").load("all.php?class_id=<?php echo $_GET['class_id']; ?>");
-		$("#all-navlink").addClass("active");
-	}
+	// if (tab_selected == "all") {
+	// 	$("#note-section").load("all.php?class_id=<?php echo $_GET['class_id']; ?>");
+	// 	$("#all-navlink").addClass("active");
+	// }
 	if (tab_selected == "archive") {
 		$("#note-section").load("archive.php?class_id=<?php echo $_GET['class_id']; ?>");
 		$("#archive-navlink").addClass("active");
