@@ -382,6 +382,7 @@ function UpdateMember($member_id, $member_type){
 	$conn->close();
 }
 
+// Deletes a member from the member table
 function DeleteMember($member_id){
 	$conn = OpenCon();
 	$sql = "DELETE FROM member
@@ -429,4 +430,6 @@ function CountDueNoteToday($class_id, $member_id){
 	}
 	$conn -> close();
 }
+
+
 ?>
