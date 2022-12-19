@@ -33,6 +33,7 @@ $class_info = GetClassRecord($_GET['class_id']);
 
     <!-- BLUR -->
     <div id="blur" onclick="closeAddClassForm()"></div>
+    
     <!-- POPUP -->
     <div id="popup">
         <form action="manage-class-process.php" method="POST" class="form-container" id="addSubjectForm">

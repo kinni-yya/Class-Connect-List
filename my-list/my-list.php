@@ -18,34 +18,111 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My List - Class Connect List</title>
     <link rel="stylesheet" href="../css/navbar.css">
-    <link rel="stylesheet" href="../css/sections.css">
-    <link rel="stylesheet" href="../css/with-class.css">
+    <link rel="stylesheet" href="../css/manage-class.css">
     <link rel="stylesheet" href="../css/my-list.css">
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
 </head>
 
 <body id="scrll">
-    <?php DisplayNavHeader(); ?>
-    <!-- MY LIST HEADER -->
-    <div class="container">
-        <div class="website-content">
-            <p>My List</p>
-        </div>
-        <div class="cardwclass">
-            <div class="buttons">
-                <button type="button" class="view" onclick="openAddUserNoteForm()">ADD TO-DO</button>
-            </div>
-        </div>
+    <?php
+    // HEADER
+    DisplayNavHeader();
+    ?>
+
+    <p class="subj">MY LIST</p>
+
+    <div class="buttons">
+        <button class="button" onclick="openAddUserNoteForm()">ADD TO-DO</button>
     </div>
+
+    <!-- BLUR -->
+    <div id="blur" onclick="closeUserNoteForm()"></div>
+
+    <!-- POPUP (ADD)-->
+    <!-- ADD USER NOTE FORM -->
+    <div id="addpopup" class="popup">
+        <form id="formAddUserNote" class="form-container">
+            <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
+            <!-- <button type="button" id="close" onclick="closeAddUserNoteForm()">X</button> -->
+
+            <p class="addsubj-title">
+                ADD TO-DO
+            </p>
+            <!-- Form to add Note -->
+            <label>Note/Task Title</label>
+            <input type="text" class="form-control" name="note_title" placeholder="Title" required>
+
+            <label>Description</label>
+            <textarea class="form-control" name="description" style="height: 100px" placeholder="Note Description (optional)"></textarea>
+            <div>
+                <label>Due date</label>
+            </div>
+            <div>
+                <input type="date" class="form-control" name="due_date">
+            </div>
+
+            <div>
+                <label>Due Time</label>
+            </div>
+            <div>
+                <input type="time" class="form-control" name="due_time">
+            </div>
+
+            <div>
+                <br>
+                <span class="form-text">Due date and/or time are optional!</span>
+            </div>
+            <!-- END Form to add Note -->
+            <br><button type="submit" class="btn">ADD</button>
+        </form>
+    </div>
+    <!-- END POPUP (ADD)-->
+
+    <!-- POPUP (VIEW/EDIT)-->
+    <!-- VIEW/EDIT USER NOTE FORM -->
+    <div id="editpopup" class="popup">
+        <form id="formEditUserNote" class="form-container">
+            <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
+            <!-- <button type="button" id="close" onclick="closeUserNoteForm()">X</button> -->
+
+            <p class="addsubj-title">
+                EDIT TO-DO
+            </p>
+            <!-- Form to add Note -->
+            <label>Note/Task Title</label>
+            <input type="text" class="form-control" name="note_title" placeholder="Title" required>
+            <label>Description</label>
+            <textarea class="form-control" name="description" style="height: 100px" placeholder="Note Description (optional)"></textarea>
+            <div  >
+                <label>Due date</label>
+            </div>
+            <div  >
+                <input type="date" class="form-control" name="due_date">
+            </div>
+
+            <div  >
+                <label>Due Time</label>
+            </div>
+            <div  >
+                <input type="time" class="form-control" name="due_time">
+            </div>
+
+            <div  >
+                <span class="form-text">Due date and/or time are optional!</span>
+            </div>
+            <!-- END Form to add Note -->
+            <br><button type="submit" class="btn">EDIT</button>
+        </form>
+    </div>
+
 
     <!-- DISPLAY TO-DOs -->
 
-    <div class="case">
-        <?php
-        $user_note_info = GetUserNote($_SESSION['user_id']);
+    <div class="listcase">
+        <?php $user_note_info = GetUserNote($_SESSION['user_id']);
 
         while ($rows = $user_note_info->fetch_assoc()) {    ?>
-            <div class="card">
+            <div class="listcard">
                 <i class="fa-solid fa-box-archive" onclick="location.href='#'"></i>
                 <div class="cname">
                     <p><?php echo $rows['note_title']; ?></p>
@@ -69,103 +146,8 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
                 </div>
             </div>
         <?php
-        }
-        ?>
+        } ?>
     </div>
-
-    <!-- ADD USER NOTE FORM -->
-    <div id="blur" onclick="closeAddUserNoteForm()"></div>
-    <div class="center" id="center">
-        <div class="form-popup" id="add-class-form">
-            <form id="formAddUserNote" class="form-container">
-                <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
-                <button type="button" id="close" onclick="closeAddUserNoteForm()">X</button>
-
-                <h1>ADD TO-DO</h1>
-                <!-- Form to add Note -->
-                <br>
-                <div class="form-group">
-                    <label>Note/Task Title</label>
-                    <input type="text" class="form-control" name="note_title" placeholder="Title" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Description</label><br>
-                    <textarea class="form-control" name="description" style="height: 300px" placeholder="Note Description (optional)"></textarea>
-                </div>
-                <br><br>
-                <div class="row">
-                    <div class="col-auto">
-                        <label class="col-form-label">Due date</label>
-                    </div>
-                    <div class="col-auto">
-                        <input type="date" class="form-control" name="due_date">
-                    </div>
-
-                    <div class="col-auto">
-                        <label class="col-form-label">Due Time</label>
-                    </div>
-                    <div class="col-auto">
-                        <input type="time" class="form-control" name="due_time">
-                    </div>
-
-                    <div class="col-auto">
-                        <span class="form-text">Due date and/or time are optional!</span>
-                    </div>
-                </div>
-                <!-- END Form to add Note -->
-                <br><button type="submit" class="btn">ADD</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- VIEW/EDIT USER NOTE FORM -->
-    <div id="blur" onclick="closeEditUserNoteForm()"></div>
-    <div class="center" id="center">
-        <div class="form-popup" id="edit-user-note-form">
-            <form id="formEditUserNote" class="form-container">
-                <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
-                <button type="button" id="close" onclick="closeEditUserNoteForm()">X</button>
-
-                <h1>EDIT TO-DO</h1>
-                <!-- Form to add Note -->
-                <br>
-                <div class="form-group">
-                    <label>Note/Task Title</label>
-                    <input type="text" class="form-control" name="note_title" placeholder="Title" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Description</label><br>
-                    <textarea class="form-control" name="description" style="height: 300px" placeholder="Note Description (optional)"></textarea>
-                </div>
-                <br><br>
-                <div class="row">
-                    <div class="col-auto">
-                        <label class="col-form-label">Due date</label>
-                    </div>
-                    <div class="col-auto">
-                        <input type="date" class="form-control" name="due_date">
-                    </div>
-
-                    <div class="col-auto">
-                        <label class="col-form-label">Due Time</label>
-                    </div>
-                    <div class="col-auto">
-                        <input type="time" class="form-control" name="due_time">
-                    </div>
-
-                    <div class="col-auto">
-                        <span class="form-text">Due date and/or time are optional!</span>
-                    </div>
-                </div>
-                <!-- END Form to add Note -->
-                <br><button type="submit" class="btn">ADD</button>
-            </form>
-        </div>
-    </div>
-
-
     <!-- OLD MY LIST -->
     <!-- <div class="create-container">
         <h1 class="mb-2 fw-bold">My List</h1>
@@ -239,31 +221,25 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
     </script>
     <script type="text/javascript">
         function openAddUserNoteForm() {
-            document.getElementById("add-class-form").style.display = "block";
+            document.getElementById("addpopup").style.display = "block";
             document.getElementById('blur').style.filter = "blur(5px)";
             document.getElementById('blur').style.display = "block";
             document.getElementById('scrll').style.overflow = "hidden";
         }
 
-        function closeAddUserNoteForm() {
-            document.getElementById("add-class-form").style.display = "none";
+        function closeUserNoteForm() {
+            document.getElementById("addpopup").style.display = "none";
+            document.getElementById("editpopup").style.display = "none";
             document.getElementById('blur').style.filter = "blur(0)";
             document.getElementById('blur').style.display = "none";
             document.getElementById('scrll').style.overflow = "auto";
         }
         
         function openEditUserNoteForm() {
-            document.getElementById("edit-user-note-form").style.display = "block";
+            document.getElementById("editpopup").style.display = "block";
             document.getElementById('blur').style.filter = "blur(5px)";
             document.getElementById('blur').style.display = "block";
             document.getElementById('scrll').style.overflow = "hidden";
-        }
-
-        function closeEditUserNoteForm() {
-            document.getElementById("edit-user-note-form").style.display = "none";
-            document.getElementById('blur').style.filter = "blur(0)";
-            document.getElementById('blur').style.display = "none";
-            document.getElementById('scrll').style.overflow = "auto";
         }
     </script>
 
