@@ -33,11 +33,12 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
             echo "<p>Welcome " . SelectUserName($_SESSION['user_id']) . "!<p>";
             ?>
         </div>
-
-        <div class="cardwclass">
+        <div class="classbtns">
             <div class="buttons">
                 <button type="button" class="view" onclick="location.href='create-class.php'">CREATE NEW CLASS</button>
                 <button type="button" class="view" onclick="openAddClassForm()">JOIN CLASS</button>
+            </div>
+            <div class="buttons">
                 <button type="button" class="view" onclick="location.href='archive-class.php'">ARCHIVED CLASSES</button>
                 <button type="button" class="view" onclick="location.href='#'">SEE ALL ANNOUNCEMENTS</button>
             </div>
