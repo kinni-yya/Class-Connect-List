@@ -18,7 +18,7 @@ function OpenSession(){
 function OpenCon(){
 	$dbhost = "localhost";
 	$dbuser = "root";
-	$dbpass = "MySQLroot";
+	$dbpass = "";
 	$db = "list";
 	// Create the SQL connection
 	$conn = new mysqli($dbhost, $dbuser, $dbpass,$db) or die("Connect failed: %s\n". $conn -> error);
@@ -55,7 +55,7 @@ function DisplayNavHeader()
             <li><a href=\"../class/with-class.php\">CLASSES</a></li>
             <li><a href=\"../calendar/calendar.php\">CALENDAR</a></li>
             <li><a href=\"#\">RESOURCES</a></li>
-            <li><a href=\"#\">MY LIST</a></li>
+            <li><a href=\"../my-list/my-list.php\">MY LIST</a></li>
             <li><a class=\"profile\" href=../logout.php>LOGOUT</a></li>
         </ul>
     </div>
