@@ -92,6 +92,8 @@ ul .active{
 }
 /* END CALENDAR */
 
+
+/* ADD EVENT POPUP */
 .popup{
   border-radius: 10px !important;
 }
@@ -160,3 +162,5 @@ ul .active{
 .closebtn{
   border: none !important;
 }
+
+/* END OF ADD EVENT POPUP */
