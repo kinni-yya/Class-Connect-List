@@ -78,3 +78,16 @@ ul .active{
   overflow: hidden;
 }
 /* END Note Box */
+
+/* CALENDAR */
+#calendar a{
+  text-decoration: none;
+  color: black;
+}
+#calendar button{
+  background-color: #009087;
+}
+.fc-daygrid-event{
+  cursor: pointer;
+}
+/* END CALENDAR */
