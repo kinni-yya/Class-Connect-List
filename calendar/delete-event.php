@@ -7,7 +7,7 @@ if(!isset($_GET['id'])){
     exit;
 }
 
-$delete = $conn->query("DELETE FROM `calendar` where id = '{$_GET['id']}'");
+$delete = $conn->query("DELETE FROM `calendar` where event_id = '{$_GET['id']}'");
 if($delete){
     echo "<script> alert('Event deleted successfully.'); location.replace('./calendar.php') </script>";
 }else{

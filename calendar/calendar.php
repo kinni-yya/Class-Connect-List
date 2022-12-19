@@ -1,4 +1,6 @@
-<?php require_once('../dbconnect.php') ?>
+<?php 
+require_once('../dbconnect.php');
+OpenSession(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,7 +39,7 @@
                                 <input type="hidden" name="id" value="">
                                 <div class="form-group mb-2">
                                     <label for="title" class="control-label">Event Title:</label>
-                                    <input type="text" class="" name="title" id="title" required>
+                                    <input type="text" class="" name="event_title" id="event_title" required>
                                 </div>
                                 <div class="form-group mb-2">
                                     <label for="description" class="control-label">Event Description:</label>
@@ -135,20 +137,18 @@
     </div>
     <!-- Event Details Modal -->
 
-    <?php
-    // Call the open connection from dbconnect to establish the connection
-    $conn = OpenCon();
-    $schedules = $conn->query("SELECT * FROM `calendar`");
-    $sched_res = [];
-    foreach ($schedules->fetch_all(MYSQLI_ASSOC) as $row) {
-        $row['sdate'] = date("F d, Y h:i A", strtotime($row['start_datetime']));
-        $row['edate'] = date("F d, Y h:i A", strtotime($row['end_datetime']));
-        $sched_res[$row['id']] = $row;
-    }
-    ?>
-    <?php
-    if (isset($conn)) $conn->close();
-    ?>
+<?php 
+
+// Show only the calendar per class and exlude the subjects the user is unenrolled
+$schedules = SelectCalendarRecord($_SESSION['user_id']);
+
+$sched_res = [];
+foreach($schedules->fetch_all(MYSQLI_ASSOC) as $row){
+    $row['sdate'] = date("F d, Y h:i A",strtotime($row['start_datetime']));
+    $row['edate'] = date("F d, Y h:i A",strtotime($row['end_datetime']));
+    $sched_res[$row['calendar_id']] = $row;
+}
+?>
     <!-- AJAX / jQuery CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- Bootstrap JS CDN -->
@@ -167,8 +167,8 @@
                 Object.keys(scheds).map(k => {
                     var row = scheds[k]
                     events.push({
-                        id: row.id,
-                        title: row.title,
+                        id: row.event_id,
+                        title: row.event_title,
                         start: row.start_datetime,
                         end: row.end_datetime
                     });
@@ -195,7 +195,7 @@
                     var _details = $('#event-details-modal')
                     var id = info.event.id
                     if (!!scheds[id]) {
-                        _details.find('#title').text(scheds[id].title)
+                        _details.find('#title').text(scheds[id].event_title)
                         _details.find('#description').text(scheds[id].description)
                         _details.find('#start').text(scheds[id].sdate)
                         _details.find('#end').text(scheds[id].edate)
@@ -226,12 +226,12 @@
                     var _form = $('#event-form')
                     console.log(String(scheds[id].start_datetime), String(scheds[id].start_datetime).replace(" ", "\\t"))
                     _form.find('[name="id"]').val(id)
-                    _form.find('[name="title"]').val(scheds[id].title)
+                    _form.find('[name="event_title"]').val(scheds[id].event_title)
                     _form.find('[name="description"]').val(scheds[id].description)
                     _form.find('[name="start_datetime"]').val(String(scheds[id].start_datetime).replace(" ", "T"))
                     _form.find('[name="end_datetime"]').val(String(scheds[id].end_datetime).replace(" ", "T"))
                     $('#event-details-modal').modal('hide')
-                    _form.find('[name="title"]').focus()
+                    _form.find('[name="event_title"]').focus()
                 } else {
                     alert("Event is undefined");
                 }
