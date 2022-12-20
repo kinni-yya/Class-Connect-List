@@ -72,8 +72,6 @@ while($row = $select_due_result->fetch_assoc()) {
 			&emsp;<button class="btn btn-outline-info">Add to My List</button>
 			&emsp;<button class="btn btn-outline-secondary" onclick="CloseDisplayNote(this)">Close</button>
 		</div>
-		
-
 	</div>
 </div>
 <br>
