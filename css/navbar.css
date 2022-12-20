@@ -33,6 +33,7 @@ body{
     background-color: #EDEDED;
     font-family: Urbanist;
     width: 96.8%;
+    padding-left: 0;
 }
 
 .topnav li{
