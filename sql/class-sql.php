@@ -74,7 +74,10 @@ function GetClass($user_id)
 			FROM class
 			JOIN member
 			ON class.class_id = member.class_id
-			WHERE member.user_id = '$user_id'";
+			WHERE member.user_id = '$user_id' AND class.class_id NOT IN (
+				SELECT class_id
+				FROM archive_class
+				WHERE user_id = '$user_id')";
 	// why query() = simple queries (e.g., select, update, delete, insert)
 	// multiquery() = ex. select sa loob ng WHERE/SELECT; so far si jim lang gumagamit 
 	$result = $conn->query($sql);
@@ -266,7 +269,7 @@ function GetArchivedClass($user_id)
 {
 	$conn = OpenCon();
 
-	$sql = "SELECT class.class_id, class.class_name, class.class_code, class.school_year
+	$sql = "SELECT class.class_id, class.class_name, class.class_code, class.school_year, archive_class.archive_class_id
 			FROM class
 			JOIN archive_class
 			ON class.class_id = archive_class.class_id
@@ -324,6 +327,34 @@ function DeleteSubject($subject_id)
 			echo "Error: " . $sql . "<br>" . $conn->error;
 		}
 	} else {
+		echo "Error: " . $sql . "<br>" . $conn->error;
+	}
+	$conn->close();
+}
+
+// Archive a class
+function InputArchiveClass($class_id, $user_id){
+	$conn = OpenCon();
+	$sql = "INSERT INTO archive_class (class_id, user_id)
+			VALUES ('$class_id', '$user_id')";
+	if ($conn->query($sql) === TRUE) {
+		echo "Class archived";
+	}
+	else {
+		echo "Error: " . $sql . "<br>" . $conn->error;
+	}
+	$conn->close();
+}
+
+// Restore an archived class
+function DeleteArchiveClass($archive_class_id){
+	$conn = OpenCon();
+	$sql = "DELETE FROM archive_class
+			WHERE archive_class_id = '$archive_class_id'";
+	if ($conn->query($sql) === TRUE) {
+		echo "Class restored";
+	}
+	else {
 		echo "Error: " . $sql . "<br>" . $conn->error;
 	}
 	$conn->close();
