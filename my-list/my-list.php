@@ -20,6 +20,8 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/manage-class.css">
     <link rel="stylesheet" href="../css/my-list.css">
+    <script src="https://kit.fontawesome.com/c11ce9a287.js" crossorigin="anonymous"></script>
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
 </head>
 
 <body id="scrll">
@@ -120,27 +122,29 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
         while ($rows = $user_note_info->fetch_assoc()) {    ?>
             <div class="listcard">
                 <i class="fa-solid fa-box-archive" onclick="location.href='#'"></i>
-                <div class="cname">
+                <div class="notetitle">
                     <p><?php echo $rows['note_title']; ?></p>
                 </div>
-                <p>Post Date: <span><?php echo $rows['post_date']; ?></span></p></br>
-                <p><?php
-                    $description = $rows['description'];
-                    // Split the text into an array of words
-                    $words = explode(' ', $description);
-                    // Limit the array to the first 20 words
-                    $limitedWords = array_slice($words, 0, 20);
-                    // Join the words back into a string and echo the result
-                    echo implode(' ', $limitedWords) . "...";
-                    ?></p>
-                </br>
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="buttonswclass">
-                        <!-- json_encode = converts a php associative array to a json array for javascript -->
-                        <button type="button" class="view" onclick="openEditUserNoteForm(<?php echo $rows['note_id']; ?>)">VIEW/EDIT</button>
-                        <?php //echo json_encode(SelectUserNoteRecord($rows['note_id'])) 
+                <p>Post Date: <span><?php echo $rows['post_date']; ?></span></p>
+                <p style="color:#D53F3A">Due Date: <span><?php echo $rows['due_date']; ?></span></p></br>
+                <div class="notedetails">
+                    <p><?php
+                        $description = $rows['description'];
+                        // Split the text into an array of words
+                        $words = explode(' ', $description);
+                        // Limit the array to the first 20 words
+                        $limitedWords = array_slice($words, 0, 20);
+                        // Join the words back into a string and echo the result
+                        echo implode(' ', $limitedWords) . "...";
                         ?>
-                    </div>
+                    </p>
+                </div>
+                </br>
+                <div class="subjbuttons">
+                    <button type="button" class="view" onclick="openEditUserNoteForm()">VIEW/EDIT</button>
+
+                    <!-- <button type="button" class="view" onclick="#">DONE</button> -->
+                    <!-- <button type="button" class="view" onclick="location.href='#'">EDIT</button> -->
                 </div>
             </div>
         <?php
