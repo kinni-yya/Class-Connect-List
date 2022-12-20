@@ -23,56 +23,13 @@ OpenSession(); ?>
     
     <div class="container" id="page-container">
         <div class="row">
+
             <div class="col-md-9">
                 <div id="calendar"></div>
             </div>
+
             <div class="col-md-3">
-                <!-- CREATE EVENT FORM -->
-                <div class="cardt rounded-0 shadow">
-                    <div class="card-header text-light">
-                        <h5 class="card-title">Create New Event Form</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="container-fluid">
-                            <form action="save-event.php" method="post" id="event-form">
-                                <input type="hidden" name="id" value="">
-                                <div class="form-group mb-2">
-                                    <label for="title" class="control-label">Event Title:</label>
-                                    <input type="text" class="" name="event_title" id="event_title" required>
-                                </div>
-                                <div class="form-group mb-2">
-                                    <label for="description" class="control-label">Event Description:</label>
-                                    <textarea rows="3" class="" name="description" id="description"></textarea>
-                                </div>
-                                <div class="form-group mb-2">
-                                    <label for="event_type" class="control-label">Event Type:</label>
-                                    <select class="" aria-label=".form-select-sm" name="event_type" id="event_type">
-                                        <option selected disabled></option>
-                                        <option value="0">With Due Date</option>
-                                        <option value="1">Subject Schedule</option>
-                                        <option value="2">General Announcement</option>
-                                    </select>
-                                </div>
-                                <div class="form-group mb-2">
-                                    <label for="start_datetime" class="control-label">Event Start:</label>
-                                    <input type="datetime-local" class="cal" name="start_datetime" id="start_datetime" required>
-                                </div>
-                                <div class="form-group mb-2">
-                                    <label for="end_datetime" class="control-label">Event Due:</label>
-                                    <input type="datetime-local" class="" name="end_datetime" id="end_datetime">
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <div class="text-center">
-                            <button class="savebtn" type="submit" form="event-form"><i class="fa fa-save"></i> Save</button>
-                            <button class="savebtn2" type="reset" form="event-form"><i class="fa fa-reset"></i> Cancel</button>
-                        </div>
-                    </div>
-                </div>
                 <!-- CATEGORIES OF CALENDAR -->
-                <br>
                 <div class="cardt rounded-0 shadow">
                     <div class="card-header text-light">
                         <h5 class="card-title">Categories</h5>
@@ -103,9 +60,8 @@ OpenSession(); ?>
                     </div>
                 </div>
             </div>
-        </div>
 
-    </div>
+        </div>
     </div>
 
     <!-- Event Details Modal -->
@@ -132,8 +88,9 @@ OpenSession(); ?>
                 </div>
                 <div class="modal-footer rounded-4">
                     <div class="text-end">
+                        <!-- Delete commented for now -->
                         <button type="button" class="btn btn-primary btn-sm rounded-0" id="edit" data-id="">Edit</button>
-                        <button type="button" class="btn btn-danger btn-sm rounded-0" id="delete" data-id="">Delete</button>
+                        <!-- <button type="button" class="btn btn-danger btn-sm rounded-0" id="delete" data-id="">Delete</button> -->
                         <button type="button" class="btn btn-secondary btn-sm rounded-0" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
@@ -142,8 +99,114 @@ OpenSession(); ?>
     </div>
     <!-- Event Details Modal -->
 
-<?php 
+    <!-- Add Event Modal -->
+    <div class="modal fade" tabindex="-1" data-bs-backdrop="static" id="add-event-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content popup">
+            <form id="add-event-form">
 
+                <div class="modal-header rounded 4 part1">
+                    <h5 class="modal-title" color="yellow">Add Event</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body part2">
+                    
+                    <div class="form-group mb-2">
+                        <label for="title" class="form-label">Event Title:</label>
+                        <input type="text" name="event_title" id="event_title" class="form-control" required>
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <label for="description" class="form-label">Event Description:</label>
+                        <textarea rows="3" name="description" id="description" class="form-control"></textarea>
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <label for="start_datetime" class="form-label">Event Start:</label>
+                        <input type="datetime-local" name="start_datetime" id="start_datetime" class="form-control" required>
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <label for="end_datetime" class="form-label">Event Due:</label>
+                        <input type="datetime-local" name="end_datetime" id="end_datetime" class="form-control" required>
+                    </div>
+
+                    <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
+
+                </div>
+                <div class="modal-footer rounded-4 part3">
+                    <div class="text-end">
+                        <!-- Save button for add commented for now since it is not working -->
+                        <!-- <button type="submit" class="btn btn-primary btn-sm rounded-0 submitbtn">Save</button> -->
+                        <button type="button" class="btn btn-secondary btn-sm rounded-0 closebtn" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </form>
+            </div>
+        </div>
+    </div>
+    <!-- Event Details Modal -->
+
+    <!-- Edit Event Modal -->
+    <div class="modal fade" tabindex="-1" data-bs-backdrop="static" id="edit-event-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded">
+            <form id="edit-event-form">
+
+                <div class="modal-header rounded 4">
+                    <h5 class="modal-title" color="yellow">Edit Event</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <input type="hidden" name="event_id">
+                    
+                    <div class="form-group mb-2">
+                        <label for="title" class="form-label">Event Title:</label>
+                        <input type="text" name="event_title" id="event_title" class="form-control" required>
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <label for="description" class="form-label">Event Description:</label>
+                        <textarea rows="3" name="description" id="description" class="form-control"></textarea>
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <label for="start_datetime" class="form-label">Event Start:</label>
+                        <input type="datetime-local" name="start_datetime" id="start_datetime" class="form-control" required>
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <label for="end_datetime" class="form-label">Event Due:</label>
+                        <input type="datetime-local" name="end_datetime" id="end_datetime" class="form-control" required>
+                    </div>
+
+                    <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
+
+                </div>
+                <div class="modal-footer rounded-4">
+                    <div class="text-end">
+                        <!-- Save edit button commented for now since it is not working -->
+                        <!-- <button type="submit" class="btn btn-primary btn-sm rounded-0">Save</button> -->
+                        <button type="button" class="btn btn-secondary btn-sm rounded-0" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </form>
+            </div>
+        </div>
+    </div>
+    <!-- Event Details Modal -->
+
+    <!-- AJAX / jQuery CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Bootstrap JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <!-- Full calendar script -->
+    <script src="https://unpkg.com/fullcalendar@5.10.1/main.js"></script>
+
+<?php 
 // Show only the calendar per class and exlude the subjects the user is unenrolled
 $schedules = SelectCalendarRecord($_SESSION['user_id']);
 
@@ -154,99 +217,141 @@ foreach($schedules->fetch_all(MYSQLI_ASSOC) as $row){
     $sched_res[$row['calendar_id']] = $row;
 }
 ?>
-    <!-- AJAX / jQuery CDN -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <!-- Bootstrap JS CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <!-- Full calendar script -->
-    <script src="https://unpkg.com/fullcalendar@5.10.1/main.js"></script>
+<script>
+    var scheds = $.parseJSON('<?= json_encode($sched_res) ?>')
+    var calendar;
+    var Calendar = FullCalendar.Calendar;
+    var events = [];
 
-    <script>
-        var scheds = $.parseJSON('<?= json_encode($sched_res) ?>')
-        var calendar;
-        var Calendar = FullCalendar.Calendar;
-        var events = [];
+    $(function() {
+        if (!!scheds) {
+            Object.keys(scheds).map(k => {
+                var row = scheds[k]
+                events.push({
+                    id: row.calendar_id,
+                    title: row.event_title,
+                    start: row.start_datetime,
+                    end: row.end_datetime
+                });
+            })
+        }
 
-        $(function() {
-            if (!!scheds) {
-                Object.keys(scheds).map(k => {
-                    var row = scheds[k]
-                    events.push({
-                        id: row.calendar_id,
-                        title: row.event_title,
-                        start: row.start_datetime,
-                        end: row.end_datetime
-                    });
-                })
+        var date = new Date()
+        var d = date.getDate(),
+            m = date.getMonth(),
+            y = date.getFullYear()
+
+        calendar = new Calendar(document.getElementById('calendar'), {
+            customButtons: {
+                addEvent: {
+                    text: 'Add Event',
+                    click: function(){
+                        $('#add-event-modal').modal('show');
+                    }
+                }
+            },
+            headerToolbar: {
+                right: 'addEvent today prev,next',
+                left: 'dayGridMonth,timeGridWeek,listWeek',
+                center: 'title',
+            },
+            selectable: true,
+            themeSystem: 'standard',
+            //Random default events
+            events: events,
+            eventClick: function(info) {
+                var _details = $('#event-details-modal')
+                var calendar_id = info.event.id
+                if (!!scheds[calendar_id]) {
+                    _details.find('#title').text(scheds[calendar_id].event_title)
+                    _details.find('#description').text(scheds[calendar_id].description)
+                    _details.find('#start').text(scheds[calendar_id].sdate)
+                    _details.find('#end').text(scheds[calendar_id].edate)
+                    _details.find('#edit,#delete').attr('data-id', calendar_id)
+                    _details.modal('show')
+                } else {
+                    alert("Event is undefined");
+                }
             }
+        });
 
-            var date = new Date()
-            var d = date.getDate(),
-                m = date.getMonth(),
-                y = date.getFullYear()
+        calendar.render();
 
-            calendar = new Calendar(document.getElementById('calendar'), {
-                headerToolbar: {
-                    right: 'today prev,next',
-                    left: 'dayGridMonth,dayGridWeek,list',
-                    center: 'title',
-                },
+        // Edit Button
+        $('#edit').click(function() {
+            var calendar_id = $(this).attr('data-id');
+            if (!!scheds[calendar_id]) {
+                var _form = $('#edit-event-modal');
+                _form.find('[name="event_id"]').val(scheds[calendar_id].event_id);
+                _form.find('[name="event_title"]').val(scheds[calendar_id].event_title);
+                _form.find('[name="description"]').val(scheds[calendar_id].description);
+                _form.find('[name="start_datetime"]').val(String(scheds[calendar_id].start_datetime).replace(" ", "T"));
+                _form.find('[name="end_datetime"]').val(String(scheds[calendar_id].end_datetime).replace(" ", "T"));
+                $('#event-details-modal').modal('hide');
+                $('#edit-event-modal').modal('show');
+                _form.find('[name="event_title"]').focus();
+            } else {
+                alert("Event is undefined");
+            }
+        });
 
-                selectable: true,
-                themeSystem: 'bootstrap5',
-                //Random default events
-                events: events,
-                eventClick: function(info) {
-                    var _details = $('#event-details-modal')
-                    var calendar_id = info.event.id
-                    if (!!scheds[calendar_id]) {
-                        _details.find('#title').text(scheds[calendar_id].event_title)
-                        _details.find('#description').text(scheds[calendar_id].description)
-                        _details.find('#start').text(scheds[calendar_id].sdate)
-                        _details.find('#end').text(scheds[calendar_id].edate)
-                        _details.find('#edit,#delete').attr('data-id', calendar_id)
-                        _details.modal('show')
-                    } else {
-                        alert("Event is undefined");
-                    }
+        // Delete Button / Deleting an Event
+        $('#delete').click(function() {
+            var calendar_id = $(this).attr('data-id');
+            if (!!scheds[calendar_id]) {
+                var _conf = confirm("Are you sure to delete this scheduled event?");
+                if (_conf === true) {
+                    $.ajax({
+                        type: 'POST',
+                        url: 'calendar_process.php',
+                        data: {
+                            "calendar_id": calendar_id
+                        },
+                        success: function(data){
+                            alert(data);
+                            location.reload();
+                        }
+                    });
                 }
-            });
+            } else {
+                alert("Event is undefined");
+            }
+        });
+    });
+</script>
 
-            calendar.render();
+<!-- Add and Edit calendar event-->
+<script type="text/javascript">
+$("#add-event-form").submit(function(e){
+    e.preventDefault();
+    var form = $(this);
 
-            // Edit Button
-            $('#edit').click(function() {
-                var calendar_id = $(this).attr('data-id')
-                if (!!scheds[calendar_id]) {
-                    var _form = $('#event-form')
-                    _form.find('[name="id"]').val(scheds[calendar_id].event_id)
-                    _form.find('[name="event_title"]').val(scheds[calendar_id].event_title)
-                    _form.find('[name="description"]').val(scheds[calendar_id].description)
-                    _form.find('[name="start_datetime"]').val(String(scheds[calendar_id].start_datetime).replace(" ", "T"))
-                    _form.find('[name="end_datetime"]').val(String(scheds[calendar_id].end_datetime).replace(" ", "T"))
-                    $('#event-details-modal').modal('hide')
-                    _form.find('[name="event_title"]').focus()
-                } else {
-                    alert("Event is undefined");
-                }
-            })
+    $.ajax({
+        type: 'POST',
+        url: 'calendar_process.php',
+        data: form.serialize(),
+        success: function(data){
+            alert(data);
+            location.reload();
+        }
+    });
+});
 
-            // Delete Button / Deleting an Event
-            $('#delete').click(function() {
-                var calendar_id = $(this).attr('data-id')
-                if (!!scheds[calendar_id]) {
-                    var _conf = confirm("Are you sure to delete this scheduled event?");
-                    if (_conf === true) {
-                        location.href = "./delete-event.php?id=" + calendar_id;
-                    }
-                } else {
-                    alert("Event is undefined");
-                }
-            })
-        })
-    </script>
+$("#edit-event-form").submit(function(e){
+    e.preventDefault();
+    var form = $(this);
 
+    $.ajax({
+        type: 'POST',
+        url: 'calendar_process.php',
+        data: form.serialize(),
+        success: function(data){
+            alert(data);
+            location.reload();
+        }
+    });
+});
+</script>
 
 </body>
-
 </html>
