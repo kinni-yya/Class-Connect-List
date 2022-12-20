@@ -48,7 +48,7 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
                     </form>
                     </br>
                     <div class="unarchive-btn">
-                        <button type="button" class="view">UNARCHIVE CLASS</button>
+                        <button type="button" class="view" data-id="<?php echo $rows['archive_class_id']; ?>" onClick="RestoreClass(this)">UNARCHIVE CLASS</button>
                     </div>
                 </div>
             <?php
@@ -56,6 +56,26 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
             ?>
         </div>
 
-</body>
+    <!-- AJAX / jQuery CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+<script type="text/javascript">
+function RestoreClass(e){
+    var archive_class_id = $(e).attr("data-id");
+
+    $.ajax({
+        type: 'POST',
+        url: 'archive-class-process.php',
+        data: {
+            "archive_class_id": archive_class_id
+        },
+        success: function(data){
+            alert(data);
+            location.reload();
+        }
+    });
+}
+</script>
+
+</body>
 </html>

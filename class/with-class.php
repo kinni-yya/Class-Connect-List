@@ -49,14 +49,9 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
     <div class="case">
         <?php
         $class_info = GetClass($_SESSION['user_id']);
-        /**
-         * 1. WHAT IS "$class_info->fetch_assoc())"
-         *       = convert class_info (aka results GetClass()) into a dictionary/array
-         * 2. LOOP TILL END OF DATA (kailangan si $rows kasi doon naka store yung naconvert)
-         */
         while ($rows = $class_info->fetch_assoc()) {    ?>
             <div class="card">
-                <i class="fa-solid fa-box-archive" onclick="openArchivePopup()"></i>
+                <i class="fa-solid fa-box-archive" data-id="<?php echo $rows['class_id']; ?>" onclick="openArchivePopup(this)"></i>
                 <div class="cname">
                     <p><?php echo $rows['class_name']; ?></p>
                 </div>
@@ -111,7 +106,7 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
     <div id="archive-popup">
         <p class="prompt">Are you sure to archive this class?</p>
         <div class="archive-popup-btns">
-            <button type="submit" onclick="#">YES</button>
+            <button type="submit" onclick="ArchiveClass(this)" id="popup_yes">YES</button>
             <button onclick="closeAddClassForm()">NO</button>
         </div>
     </div>
@@ -159,32 +154,36 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
             document.getElementById('blur').style.filter = "blur(0)";
             document.getElementById('blur').style.display = "none";
             document.getElementById('scrll').style.overflow = "auto";
+            $("#popup_yes").removeAttr("data-id");
         }
 
-        function openArchivePopup() {
+        function openArchivePopup(e) {
+            var class_id = $(e).attr("data-id");
             document.getElementById("archive-popup").style.display = "block";
             document.getElementById('blur').style.filter = "blur(5px)";
             document.getElementById('blur').style.display = "block";
             document.getElementById('scrll').style.overflow = "hidden";
+            $("#popup_yes").attr("data-id", class_id);
         }
     </script>
 
-    <!-- 
-    VIEW CLASSES
-    1. CLICK VIEW BUTTON 
-    2. GO TO NOTE.PHP (noting class_id)
+    <script type="text/javascript">
+        function ArchiveClass(e){
+            var class_id = $(e).attr("data-id");
 
-    MANAGE CLASSES
-    OFFICER
-	    - addClassForm and remove subj, 
-	    - edit the class name, 
-	    - change member access, 
-	    - remove member
-    MEMBER 
-        - access class and see corresponding subjects
-        - archive classes
--->
-
+            $.ajax({
+                type: 'POST',
+                url: 'archive-class-process.php',
+                data: {
+                    "class_id": class_id
+                },
+                success: function(data){
+                    alert(data);
+                    location.reload();
+                }
+            });
+        }
+    </script>
 </body>
 
 </html>
