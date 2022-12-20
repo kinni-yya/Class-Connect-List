@@ -33,7 +33,7 @@ $class_info = GetClassRecord($_GET['class_id']);
 
     <!-- BLUR -->
     <div id="blur" onclick="closeAddClassForm()"></div>
-    
+
     <!-- POPUP -->
     <div id="popup">
         <form action="manage-class-process.php" method="POST" class="form-container" id="addSubjectForm">
@@ -86,7 +86,6 @@ $class_info = GetClassRecord($_GET['class_id']);
         </form>
     </div>
 
-    <!-- Table of all the subjects for the class -->
     <br>
     <div class="classcase">
         <?php
