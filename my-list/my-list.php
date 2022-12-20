@@ -141,7 +141,7 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
                 </div>
                 </br>
                 <div class="subjbuttons">
-                    <button type="button" class="view" onclick="openEditUserNoteForm()">VIEW/EDIT</button>
+                    <button type="button" class="view" onclick="openEditUserNoteForm(<?php echo $rows['note_id']; ?>)">VIEW/EDIT</button>
 
                     <!-- <button type="button" class="view" onclick="#">DONE</button> -->
                     <!-- <button type="button" class="view" onclick="location.href='#'">EDIT</button> -->
