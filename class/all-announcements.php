@@ -38,6 +38,9 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
 			<li class="nav-item">
 				<a class="nav-link text-success" id="announcement-navlink" href="#" onclick="">Announcement</a>
 			</li>
+            <li class="nav-item">
+				<a class="nav-link text-success" id="announcement-navlink" href="#" onclick="">Archive</a>
+			</li>
 			<!-- <li class="nav-item">
 				<a class="nav-link text-success" id="all-navlink" href="#" onclick="window.location.href='note.php?class_id=<?php echo $_GET['class_id']; ?>&tab=all';">All</a>
 			</li> -->
