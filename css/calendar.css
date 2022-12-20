@@ -170,3 +170,6 @@ input[type="checkbox"] + label {
   border-color: none;
 }
 
+.container-top{
+  z-index: 2 !important;
+}
