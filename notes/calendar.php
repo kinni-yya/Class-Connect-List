@@ -82,15 +82,6 @@ $class_id = $_GET['class_id'];
                 </div>
 
                 <div class="form-group mb-2">
-                    <label for="event_type" class="form-label">Event Type:</label>
-                    <select aria-label=".form-select-sm" name="event_type" id="event_type" class="form-select">
-                        <option value="0" selected>With Due Date</option>
-                        <option value="1">Subject Schedule</option>
-                        <option value="2">General Announcement</option>
-                    </select>
-                </div>
-
-                <div class="form-group mb-2">
                     <label for="start_datetime" class="form-label">Event Start:</label>
                     <input type="datetime-local" name="start_datetime" id="start_datetime" class="form-control" required>
                 </div>
@@ -151,15 +142,6 @@ $class_id = $_GET['class_id'];
                 <div class="form-group mb-2">
                     <label for="description" class="form-label">Event Description:</label>
                     <textarea rows="3" name="description" id="description" class="form-control"></textarea>
-                </div>
-
-                <div class="form-group mb-2">
-                    <label for="event_type" class="form-label">Event Type:</label>
-                    <select aria-label=".form-select-sm" name="event_type" id="event_type" class="form-select">
-                        <option value="0" selected>With Due Date</option>
-                        <option value="1">Subject Schedule</option>
-                        <option value="2">General Announcement</option>
-                    </select>
                 </div>
 
                 <div class="form-group mb-2">
@@ -278,7 +260,6 @@ foreach($schedules->fetch_all(MYSQLI_ASSOC) as $row){
                 _form.find('[name="event_id"]').val(event_id);
                 _form.find('[name="event_title"]').val(scheds[event_id].event_title);
                 _form.find('[name="description"]').val(scheds[event_id].description);
-                _form.find('[name="event_type"]').val(scheds[event_id].event_type).change();
                 _form.find('[name="start_datetime"]').val(String(scheds[event_id].start_datetime).replace(" ", "T"));
                 _form.find('[name="end_datetime"]').val(String(scheds[event_id].end_datetime).replace(" ", "T"));
                 _form.find('[name="subject_id"]').val(scheds[event_id].subject_id).change();
