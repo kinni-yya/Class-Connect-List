@@ -88,9 +88,8 @@ OpenSession(); ?>
                 </div>
                 <div class="modal-footer rounded-4">
                     <div class="text-end">
-                        <!-- Delete commented for now -->
                         <button type="button" class="btn btn-primary btn-sm rounded-0" id="edit" data-id="">Edit</button>
-                        <!-- <button type="button" class="btn btn-danger btn-sm rounded-0" id="delete" data-id="">Delete</button> -->
+                        <button type="button" class="btn btn-danger btn-sm rounded-0" id="delete" data-id="">Delete</button>
                         <button type="button" class="btn btn-secondary btn-sm rounded-0" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
@@ -117,18 +116,18 @@ OpenSession(); ?>
                     </div>
 
                     <div class="form-group mb-2">
-                        <label for="description" class="form-label">Event Description:</label>
-                        <textarea rows="3" name="description" id="description" class="form-control"></textarea>
+                        <label for="event_details" class="form-label">Event Details:</label>
+                        <textarea rows="3" name="event_details" id="event_details" class="form-control"></textarea>
                     </div>
 
                     <div class="form-group mb-2">
-                        <label for="start_datetime" class="form-label">Event Start:</label>
-                        <input type="datetime-local" name="start_datetime" id="start_datetime" class="form-control" required>
+                        <label for="event_from_date" class="form-label">Event Start:</label>
+                        <input type="datetime-local" name="event_from_date" id="event_from_date" class="form-control" required>
                     </div>
 
                     <div class="form-group mb-2">
-                        <label for="end_datetime" class="form-label">Event Due:</label>
-                        <input type="datetime-local" name="end_datetime" id="end_datetime" class="form-control" required>
+                        <label for="event_to_date" class="form-label">Event Due:</label>
+                        <input type="datetime-local" name="event_to_date" id="event_to_date" class="form-control" required>
                     </div>
 
                     <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
@@ -136,8 +135,7 @@ OpenSession(); ?>
                 </div>
                 <div class="modal-footer rounded-4 part3">
                     <div class="text-end">
-                        <!-- Save button for add commented for now since it is not working -->
-                        <!-- <button type="submit" class="btn btn-primary btn-sm rounded-0 submitbtn">Save</button> -->
+                        <button type="submit" class="btn btn-primary btn-sm rounded-0 submitbtn">Save</button>
                         <button type="button" class="btn btn-secondary btn-sm rounded-0 closebtn" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
@@ -168,18 +166,18 @@ OpenSession(); ?>
                     </div>
 
                     <div class="form-group mb-2">
-                        <label for="description" class="form-label">Event Description:</label>
-                        <textarea rows="3" name="description" id="description" class="form-control"></textarea>
+                        <label for="event_details" class="form-label">Event Details:</label>
+                        <textarea rows="3" name="event_details" id="event_details" class="form-control"></textarea>
                     </div>
 
                     <div class="form-group mb-2">
-                        <label for="start_datetime" class="form-label">Event Start:</label>
-                        <input type="datetime-local" name="start_datetime" id="start_datetime" class="form-control" required>
+                        <label for="event_from_date" class="form-label">Event Start:</label>
+                        <input type="datetime-local" name="event_from_date" id="event_from_date" class="form-control" required>
                     </div>
 
                     <div class="form-group mb-2">
-                        <label for="end_datetime" class="form-label">Event Due:</label>
-                        <input type="datetime-local" name="end_datetime" id="end_datetime" class="form-control" required>
+                        <label for="event_to_date" class="form-label">Event Due:</label>
+                        <input type="datetime-local" name="event_to_date" id="event_to_date" class="form-control" required>
                     </div>
 
                     <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
@@ -187,8 +185,7 @@ OpenSession(); ?>
                 </div>
                 <div class="modal-footer rounded-4">
                     <div class="text-end">
-                        <!-- Save edit button commented for now since it is not working -->
-                        <!-- <button type="submit" class="btn btn-primary btn-sm rounded-0">Save</button> -->
+                        <button type="submit" class="btn btn-primary btn-sm rounded-0">Save</button>
                         <button type="button" class="btn btn-secondary btn-sm rounded-0" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
@@ -268,6 +265,13 @@ foreach($schedules->fetch_all(MYSQLI_ASSOC) as $row){
                     _details.find('#start').text(scheds[calendar_id].sdate)
                     _details.find('#end').text(scheds[calendar_id].edate)
                     _details.find('#edit,#delete').attr('data-id', calendar_id)
+                    // Check if the event has a class id, if it does then it can't be edited or deleted
+                    if(scheds[calendar_id].class_id == null){
+                        _details.find('#edit,#delete').attr('disabled', false);
+                    }
+                    else{
+                        _details.find('#edit,#delete').attr('disabled', true);
+                    }
                     _details.modal('show')
                 } else {
                     alert("Event is undefined");
@@ -284,9 +288,9 @@ foreach($schedules->fetch_all(MYSQLI_ASSOC) as $row){
                 var _form = $('#edit-event-modal');
                 _form.find('[name="event_id"]').val(scheds[calendar_id].event_id);
                 _form.find('[name="event_title"]').val(scheds[calendar_id].event_title);
-                _form.find('[name="description"]').val(scheds[calendar_id].description);
-                _form.find('[name="start_datetime"]').val(String(scheds[calendar_id].start_datetime).replace(" ", "T"));
-                _form.find('[name="end_datetime"]').val(String(scheds[calendar_id].end_datetime).replace(" ", "T"));
+                _form.find('[name="event_details"]').val(scheds[calendar_id].description);
+                _form.find('[name="event_from_date"]').val(String(scheds[calendar_id].start_datetime).replace(" ", "T"));
+                _form.find('[name="event_to_date"]').val(String(scheds[calendar_id].end_datetime).replace(" ", "T"));
                 $('#event-details-modal').modal('hide');
                 $('#edit-event-modal').modal('show');
                 _form.find('[name="event_title"]').focus();
@@ -299,13 +303,13 @@ foreach($schedules->fetch_all(MYSQLI_ASSOC) as $row){
         $('#delete').click(function() {
             var calendar_id = $(this).attr('data-id');
             if (!!scheds[calendar_id]) {
-                var _conf = confirm("Are you sure to delete this scheduled event?");
+                var _conf = confirm("Are you sure you want to delete this scheduled event?");
                 if (_conf === true) {
                     $.ajax({
                         type: 'POST',
                         url: 'calendar_process.php',
                         data: {
-                            "calendar_id": calendar_id
+                            "event_id": scheds[calendar_id].event_id
                         },
                         success: function(data){
                             alert(data);
