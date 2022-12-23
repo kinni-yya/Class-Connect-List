@@ -149,6 +149,7 @@ while($row = $select_due_result->fetch_assoc()) {
 
 				<div class="form-group">
 					<input type="hidden" name="note_id" value="<?php echo $row['note_id'];?>">
+					<input type="hidden" name="class_id" value="<?php echo $_GET['class_id'];?>">
 				</div>
 			<!-- END Form to edit Note -->
       		</div>

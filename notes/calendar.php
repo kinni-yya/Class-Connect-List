@@ -109,7 +109,10 @@ $class_id = $_GET['class_id'];
             </div>
             <div class="modal-footer rounded-4 part3">
                 <div class="text-end">
-                    <button type="submit" class="btn btn-primary btn-sm rounded-0 submitbtn">Save</button>
+                    <?php if($access == 1){
+                        // Can't save the add event if you do not have full access
+                        echo "<button type=\"submit\" class=\"btn btn-primary btn-sm rounded-0 submitbtn\">Save</button>";
+                    } ?>
                     <button type="button" class="btn btn-secondary btn-sm rounded-0 closebtn" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>

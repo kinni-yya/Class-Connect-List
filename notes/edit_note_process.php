@@ -34,7 +34,7 @@ if(isset($_POST['due_time']) && !empty($_POST['due_time']) && isset($_POST['due_
 
 if(isset($_POST['note_title'])){
 	// Send the parameters to UpdateNote() function to update a record in the note table
-	$edit_note_message = UpdateNote($_POST['note_id'], $subject_id, $due_date, $due_time, $_POST['note_title'], $description, $conn);
+	$edit_note_message = UpdateNote($_POST['note_id'], $subject_id, $due_date, $due_time, $_POST['note_title'], $description, $_POST['class_id'], $conn);
 }
 
 echo $edit_note_message;
