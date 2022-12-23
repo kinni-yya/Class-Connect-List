@@ -4,7 +4,7 @@ OpenSession();
 
 // Check if the user is in a class
 if (checkClassJoin($_SESSION['user_id']) == FALSE) {
-    header("location: no-class.php");
+    header("location: ../class/no-class.php");
 }
 ?>
 
