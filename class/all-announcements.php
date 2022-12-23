@@ -1,10 +1,11 @@
 <?php
 include "../dbconnect.php";
+// Check if session exist
 OpenSession();
 
 // Check if the user is in a class
 if (checkClassJoin($_SESSION['user_id']) == FALSE) {
-    header("location: no-class.php");
+    header("location: ../class/no-class.php");
 }
 
 if(!isset($_GET['tab']) && empty($_SESSION['tab'])){
@@ -32,6 +33,7 @@ if(!isset($_GET['tab']) && empty($_SESSION['tab'])){
     <?php DisplayNavHeader(); ?>
 
     	<div class="container">
+    		<h1>All Class Notes</h1>
 		<div class="row">
 			<ul class="nav nav-tabs col-10">
 				<li class="nav-item">

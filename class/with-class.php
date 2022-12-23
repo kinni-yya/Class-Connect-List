@@ -40,7 +40,7 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
             </div>
             <div class="buttons">
                 <button type="button" class="view" onclick="location.href='archive-class.php'">ARCHIVED CLASSES</button>
-                <button type="button" class="view" onclick="location.href='../notes/all-announcements.php'">SEE ALL ANNOUNCEMENTS</button>
+                <button type="button" class="view" onclick="location.href='../class/all-announcements.php'">SEE ALL ANNOUNCEMENTS</button>
             </div>
         </div>
     </div>

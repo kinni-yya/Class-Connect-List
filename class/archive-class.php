@@ -48,7 +48,7 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
                     </form>
                     </br>
                     <div class="unarchive-btn">
-                        <button type="button" class="view" data-id="<?php echo $rows['archive_class_id']; ?>" onClick="RestoreClass(this)">UNARCHIVE CLASS</button>
+                        <button type="button" class="view" data-id="<?php echo $rows['archive_class_id']; ?>" onClick="RestoreClass(this)">RESTORE CLASS</button>
                     </div>
                 </div>
             <?php
