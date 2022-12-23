@@ -18,7 +18,7 @@ function OpenSession(){
 function OpenCon(){
 	$dbhost = "localhost";
 	$dbuser = "root";
-	$dbpass = "";
+	$dbpass = "MySQLroot";
 	$db = "list";
 	// Create the SQL connection
 	$conn = new mysqli($dbhost, $dbuser, $dbpass,$db) or die("Connect failed: %s\n". $conn -> error);
@@ -51,7 +51,7 @@ function DisplayNavHeader()
     $output = "
     <div class=\"container-top\">
         <ul class=\"topnav\">
-			<li class=\"title\" style=\"flex-grow: 1\"><a href=\"/GitHub/Class-Connect-List/class/no-class.php\">CLASS CONNECT: LIST</a></li>
+			<li class=\"title\" style=\"flex-grow: 1\"><a href=\"../class/no-class.php\">CLASS CONNECT: LIST</a></li>
             <li><a href=\"../class/with-class.php\">CLASSES</a></li>
             <li><a href=\"../calendar/calendar.php\">CALENDAR</a></li>
             <li><a href=\"#\">RESOURCES</a></li>
