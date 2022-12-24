@@ -233,19 +233,19 @@ function SelectClassSubjectSched($class_id, $subject_id)
 	$sql = "SELECT DISTINCT 
 			from_time, 
 			to_time, 
-			(CASE WHEN day = '1' THEN 'MON'
-             WHEN day = '2' THEN 'TUE'
-			 WHEN day = '3' THEN 'WED'
-			 WHEN day = '4' THEN 'THU'
-			 WHEN day = '5' THEN 'FRI'
-			 WHEN day = '6' THEN 'SAT'
-			 WHEN day = '7' THEN 'SUN'
-             ELSE day END) AS day
+			(CASE WHEN DAYOFWEEK(start_date) = '2' THEN 'MON'
+             WHEN DAYOFWEEK(start_date) = '3' THEN 'TUE'
+			 WHEN DAYOFWEEK(start_date) = '4' THEN 'WED'
+			 WHEN DAYOFWEEK(start_date) = '5' THEN 'THU'
+			 WHEN DAYOFWEEK(start_date) = '6' THEN 'FRI'
+			 WHEN DAYOFWEEK(start_date) = '7' THEN 'SAT'
+			 WHEN DAYOFWEEK(start_date) = '1' THEN 'SUN'
+             ELSE DAYOFWEEK(start_date) END) AS day
 			FROM subject
 			JOIN subject_schedule AS sched
 			WHERE sched.subject_id = '$subject_id'
 				AND sched.class_id = '$class_id'
-			ORDER BY day";
+			ORDER BY DAYOFWEEK(start_date)";
 	$result = $conn->query($sql);
 	$conn->close();
 	return $result;
@@ -299,11 +299,11 @@ function CheckClassExist($class_name, $school_year)
 }
 
 // Insert the schedule of the subject to the subjectschedule table
-function InsertSubjectSchedule($subject_id, $from_time, $to_time, $day, $class_id)
+function InsertSubjectSchedule($subject_id, $from_time, $to_time, $start_date, $occurrence, $class_id)
 {
 	$conn = OpenCon();
-	$sql = "INSERT INTO subject_schedule (subject_id, from_time, to_time, day, class_id)
-			VALUES ('$subject_id', '$from_time', '$to_time', '$day', '$class_id')";
+	$sql = "INSERT INTO subject_schedule (subject_id, from_time, to_time, start_date, occurrence, class_id)
+			VALUES ('$subject_id', '$from_time', '$to_time', '$start_date', '$occurrence', '$class_id')";
 	if ($conn->query($sql) === TRUE) {
 		echo "Subject schedule added!";
 	} else {
@@ -330,6 +330,72 @@ function DeleteSubject($subject_id)
 		echo "Error: " . $sql . "<br>" . $conn->error;
 	}
 	$conn->close();
+}
+
+// Select the information of a subject for edit purpose
+function SelectSubjectRecord($subject_id){
+	$conn = OpenCon();
+	$sql = "SELECT *
+			FROM subject
+			WHERE subject_id = '$subject_id'";
+	$result = $conn->query($sql);
+	$row = $result->fetch_assoc();
+	$conn->close();
+	return $row;
+}
+// Select the information of a subject schedule for edit purpose
+function SelectSubjectScheduleRecord($subject_id){
+	$conn = OpenCon();
+	$sql = "SELECT *
+			FROM subject_schedule
+			WHERE subject_id = '$subject_id'";
+	$result = $conn->query($sql);
+	$conn->close();
+	return $result;
+}
+
+// Delete from the subhect schedule table
+function DeleteSubjectSchedule($subject_schedule_id){
+	$conn = OpenCon();
+	$sql = "DELETE FROM subject_schedule
+			WHERE subject_schedule_id = '$subject_schedule_id'";
+	if($conn->query($sql) === TRUE){
+		$conn->close();
+		// return true to indicate that the delete was successful
+		return TRUE;
+	} else {
+		echo "Error: " . $sql . "<br>" . $conn->error;
+		$conn->close();
+	}
+}
+
+// Update the Subject
+function UpdateSubject($subject_id, $subject_name, $subject_details, $professor, $class_id, $conn){
+	$sql = "UPDATE subject
+			SET subject_name = '$subject_name', subject_details = ".($subject_details == null ? "NULL" : "'$subject_details'").", professor = ".($professor == null ? "NULL" : "'$professor'").", class_id = '$class_id' 
+			WHERE subject_id = '$subject_id'";
+	if($conn->query($sql) === TRUE){
+		$conn->close();
+		// return true to indicate that the update was successful
+		return TRUE;
+	} else {
+		echo "Error: " . $sql . "<br>" . $conn->error;
+		$conn->close();
+	}
+}
+
+// Update the subject schedule
+function UpdateSubjectSchedule($subject_schedule_id, $subject_id, $from_time, $to_time, $start_date, $occurrence, $class_id){
+	$conn = OpenCon();
+	$sql = "UPDATE subject_schedule
+			SET subject_id = '$subject_id', from_time = '$from_time', to_time = '$to_time', start_date = '$start_date', occurrence = '$occurrence', class_id = '$class_id'
+			WHERE subject_schedule_id = '$subject_schedule_id'";
+	if($conn->query($sql) === TRUE){
+		$conn->close();
+	} else {
+		echo "Error: " . $sql . "<br>" . $conn->error;
+		$conn->close();
+	}
 }
 
 // Archive a class
@@ -359,3 +425,4 @@ function DeleteArchiveClass($archive_class_id){
 	}
 	$conn->close();
 }
+
