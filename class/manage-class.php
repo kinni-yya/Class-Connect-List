@@ -119,7 +119,7 @@ $class_info = GetClassRecord($_GET['class_id']);
                 <!-- Prepend new meeting form generated here -->
                 <div id="output"></div>
 
-                <p>The day of week will come from the start date and the weekly occurence is how many times it will reoccurr</p>
+                <p>The day of week will come from the start date and the weekly occurence is how many times it will reoccur.</p>
 
                 <div class="submit">
                     <button type="submit">Save Subject</button>
@@ -177,7 +177,7 @@ $class_info = GetClassRecord($_GET['class_id']);
             <!-- Prepend new meeting form generated here -->
             <div id="output"></div>
 
-            <p>The day of week will come from the start date and the weekly occurence is how many times it will reoccurr</p>
+            <p>The day of week will come from the start date and the weekly occurence is how many times it will reoccur.</p>
 
             <div class="submit">
                 <button type="submit">Add Subject</button>
