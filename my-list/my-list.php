@@ -172,7 +172,6 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
                     } else {
                         alert(data);
                     }
-                    alert(data);
                     location.reload();
                 }
             });
@@ -193,7 +192,6 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
                     } else {
                         alert(data);
                     }
-                    alert(data);
                     location.reload();
                 }
             });
