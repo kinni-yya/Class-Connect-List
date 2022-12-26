@@ -4,14 +4,6 @@ include '../dbconnect.php';
 // Check if session exist
 OpenSession();
 
-//Get the access attribute from Database, if 0 regular if 1 full
-// $member_info = MemberInfo($_SESSION['user_id'], 25);
-// $result = $member_info->fetch_assoc();
-$member_id = 38;
-$access = 0;
-// Get the class_id from URL parameter
-$class_id = 25;
-// Select all note table records without due date
 $select_announcement_result = SelectAllAnnouncementRecord($_SESSION['user_id']);
 while ($row = $select_announcement_result->fetch_assoc()) {
 
