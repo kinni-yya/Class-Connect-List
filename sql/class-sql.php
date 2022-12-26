@@ -333,7 +333,8 @@ function DeleteSubject($subject_id)
 }
 
 // Select the information of a subject for edit purpose
-function SelectSubjectRecord($subject_id){
+function SelectSubjectRecord($subject_id)
+{
 	$conn = OpenCon();
 	$sql = "SELECT *
 			FROM subject
@@ -344,7 +345,8 @@ function SelectSubjectRecord($subject_id){
 	return $row;
 }
 // Select the information of a subject schedule for edit purpose
-function SelectSubjectScheduleRecord($subject_id){
+function SelectSubjectScheduleRecord($subject_id)
+{
 	$conn = OpenCon();
 	$sql = "SELECT *
 			FROM subject_schedule
@@ -355,11 +357,12 @@ function SelectSubjectScheduleRecord($subject_id){
 }
 
 // Delete from the subhect schedule table
-function DeleteSubjectSchedule($subject_schedule_id){
+function DeleteSubjectSchedule($subject_schedule_id)
+{
 	$conn = OpenCon();
 	$sql = "DELETE FROM subject_schedule
 			WHERE subject_schedule_id = '$subject_schedule_id'";
-	if($conn->query($sql) === TRUE){
+	if ($conn->query($sql) === TRUE) {
 		$conn->close();
 		// return true to indicate that the delete was successful
 		return TRUE;
@@ -370,11 +373,12 @@ function DeleteSubjectSchedule($subject_schedule_id){
 }
 
 // Update the Subject
-function UpdateSubject($subject_id, $subject_name, $subject_details, $professor, $class_id, $conn){
+function UpdateSubject($subject_id, $subject_name, $subject_details, $professor, $class_id, $conn)
+{
 	$sql = "UPDATE subject
-			SET subject_name = '$subject_name', subject_details = ".($subject_details == null ? "NULL" : "'$subject_details'").", professor = ".($professor == null ? "NULL" : "'$professor'").", class_id = '$class_id' 
+			SET subject_name = '$subject_name', subject_details = " . ($subject_details == null ? "NULL" : "'$subject_details'") . ", professor = " . ($professor == null ? "NULL" : "'$professor'") . ", class_id = '$class_id' 
 			WHERE subject_id = '$subject_id'";
-	if($conn->query($sql) === TRUE){
+	if ($conn->query($sql) === TRUE) {
 		$conn->close();
 		// return true to indicate that the update was successful
 		return TRUE;
@@ -385,12 +389,13 @@ function UpdateSubject($subject_id, $subject_name, $subject_details, $professor,
 }
 
 // Update the subject schedule
-function UpdateSubjectSchedule($subject_schedule_id, $subject_id, $from_time, $to_time, $start_date, $occurrence, $class_id){
+function UpdateSubjectSchedule($subject_schedule_id, $subject_id, $from_time, $to_time, $start_date, $occurrence, $class_id)
+{
 	$conn = OpenCon();
 	$sql = "UPDATE subject_schedule
 			SET subject_id = '$subject_id', from_time = '$from_time', to_time = '$to_time', start_date = '$start_date', occurrence = '$occurrence', class_id = '$class_id'
 			WHERE subject_schedule_id = '$subject_schedule_id'";
-	if($conn->query($sql) === TRUE){
+	if ($conn->query($sql) === TRUE) {
 		$conn->close();
 	} else {
 		echo "Error: " . $sql . "<br>" . $conn->error;
@@ -399,30 +404,68 @@ function UpdateSubjectSchedule($subject_schedule_id, $subject_id, $from_time, $t
 }
 
 // Archive a class
-function InputArchiveClass($class_id, $user_id){
+function InputArchiveClass($class_id, $user_id)
+{
 	$conn = OpenCon();
 	$sql = "INSERT INTO archive_class (class_id, user_id)
 			VALUES ('$class_id', '$user_id')";
 	if ($conn->query($sql) === TRUE) {
 		echo "Class archived";
-	}
-	else {
+	} else {
 		echo "Error: " . $sql . "<br>" . $conn->error;
 	}
 	$conn->close();
 }
 
 // Restore an archived class
-function DeleteArchiveClass($archive_class_id){
+function DeleteArchiveClass($archive_class_id)
+{
 	$conn = OpenCon();
 	$sql = "DELETE FROM archive_class
 			WHERE archive_class_id = '$archive_class_id'";
 	if ($conn->query($sql) === TRUE) {
 		echo "Class restored";
-	}
-	else {
+	} else {
 		echo "Error: " . $sql . "<br>" . $conn->error;
 	}
 	$conn->close();
 }
 
+// Select records from the note table where due date is null
+// and are published from all enrolled classes of the user
+function SelectAllAnnouncementRecord($user_id)
+{
+	$conn = OpenCon();
+	$sql = "WITH matched_member_id AS (
+				SELECT member_id
+				FROM member
+				WHERE user_id = '$user_id'
+			), enrolled_classes AS (
+				SELECT class_id
+				FROM member
+				WHERE user_id = '$user_id'
+			), unenrolled_subjects AS (
+				SELECT subject_id
+				FROM unenroll
+				WHERE member_id IN (SELECT * FROM matched_member_id)
+			), archived_classes AS (
+				SELECT note.note_id
+				FROM note
+				JOIN archive_note
+				ON note.note_id = archive_note.note_id
+				WHERE 
+					class_id IN (SELECT class_id FROM enrolled_classes) 
+					AND member_id IN (SELECT * FROM matched_member_id))
+			
+			SELECT *
+			FROM note
+			WHERE 
+				due_date IS NULL
+				AND class_id IN (SELECT * FROM enrolled_classes)
+				AND subject_id NOT IN (SELECT * FROM unenrolled_subjects)
+				AND note_id NOT IN (SELECT * FROM archived_classes)
+			ORDER BY post_date ASC";
+	$result = $conn->query($sql);
+	$conn->close();
+	return $result;
+}
