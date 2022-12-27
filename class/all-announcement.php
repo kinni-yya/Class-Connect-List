@@ -40,13 +40,6 @@ while ($row = $select_announcement_result->fetch_assoc()) {
             </div>
 
             <div class="container d-flex justify-content-end">
-                <?php
-                if ($access == 0) {
-                    echo "<button class=\"btn btn-outline-primary\" data-bs-toggle=\"modal\" data-bs-target=\"#SuggestEditModal" . $row['note_id'] . "\">Suggest Correction</button>";
-                } else if ($access == 1) {
-                    echo "<button class=\"btn btn-outline-primary\" data-bs-toggle=\"modal\" data-bs-target=\"#EditModal" . $row['note_id'] . "\">Edit</button>";
-                }
-                ?>
                 &emsp;<button class="btn btn-outline-success" data-id="<?php echo $row['note_id']; ?>" onclick="CompleteTask(this)">Complete</button>
                 &emsp;<button class="btn btn-outline-info">Add to My List</button>
                 &emsp;<button class="btn btn-outline-secondary" onclick="CloseDisplayNote(this)">Close</button>
