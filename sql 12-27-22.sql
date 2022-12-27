@@ -27,17 +27,8 @@ CREATE TABLE `archive_class` (
   `class_id` int NOT NULL,
   `user_id` int NOT NULL,
   PRIMARY KEY (`archive_class_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `archive_class`
---
-
-LOCK TABLES `archive_class` WRITE;
-/*!40000 ALTER TABLE `archive_class` DISABLE KEYS */;
-/*!40000 ALTER TABLE `archive_class` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `archive_note`
@@ -51,17 +42,8 @@ CREATE TABLE `archive_note` (
   `note_id` int NOT NULL,
   `member_id` int NOT NULL,
   PRIMARY KEY (`archive_note_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `archive_note`
---
-
-LOCK TABLES `archive_note` WRITE;
-/*!40000 ALTER TABLE `archive_note` DISABLE KEYS */;
-/*!40000 ALTER TABLE `archive_note` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `calendar`
@@ -71,26 +53,16 @@ DROP TABLE IF EXISTS `calendar`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `calendar` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `title` varchar(500) NOT NULL,
+  `event_id` int NOT NULL AUTO_INCREMENT,
+  `event_title` varchar(500) NOT NULL,
   `description` varchar(5000) DEFAULT NULL,
   `start_datetime` datetime NOT NULL,
   `end_datetime` datetime NOT NULL,
-  `event_type` int NOT NULL,
   `class_id` int NOT NULL,
   `subject_id` int DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  PRIMARY KEY (`event_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `calendar`
---
-
-LOCK TABLES `calendar` WRITE;
-/*!40000 ALTER TABLE `calendar` DISABLE KEYS */;
-/*!40000 ALTER TABLE `calendar` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `class`
@@ -106,17 +78,8 @@ CREATE TABLE `class` (
   `creator_id` int NOT NULL,
   `school_year` date NOT NULL,
   PRIMARY KEY (`class_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `class`
---
-
-LOCK TABLES `class` WRITE;
-/*!40000 ALTER TABLE `class` DISABLE KEYS */;
-/*!40000 ALTER TABLE `class` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `duplicate_note`
@@ -130,17 +93,8 @@ CREATE TABLE `duplicate_note` (
   `note_id` int NOT NULL,
   `user_id` int NOT NULL,
   PRIMARY KEY (`duplicate_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `duplicate_note`
---
-
-LOCK TABLES `duplicate_note` WRITE;
-/*!40000 ALTER TABLE `duplicate_note` DISABLE KEYS */;
-/*!40000 ALTER TABLE `duplicate_note` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `member`
@@ -155,17 +109,8 @@ CREATE TABLE `member` (
   `class_id` int NOT NULL,
   `user_id` int NOT NULL,
   PRIMARY KEY (`member_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `member`
---
-
-LOCK TABLES `member` WRITE;
-/*!40000 ALTER TABLE `member` DISABLE KEYS */;
-/*!40000 ALTER TABLE `member` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `note`
@@ -184,17 +129,23 @@ CREATE TABLE `note` (
   `note_title` varchar(500) NOT NULL,
   `description` varchar(5000) DEFAULT NULL,
   PRIMARY KEY (`note_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `note`
+-- Table structure for table `note_calendar`
 --
 
-LOCK TABLES `note` WRITE;
-/*!40000 ALTER TABLE `note` DISABLE KEYS */;
-/*!40000 ALTER TABLE `note` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `note_calendar`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `note_calendar` (
+  `note_calendar_id` int NOT NULL AUTO_INCREMENT,
+  `note_id` int DEFAULT NULL,
+  `event_id` int DEFAULT NULL,
+  PRIMARY KEY (`note_calendar_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `note_history`
@@ -214,17 +165,8 @@ CREATE TABLE `note_history` (
   `prev_description` varchar(5000) DEFAULT NULL,
   `change_date` datetime NOT NULL,
   PRIMARY KEY (`history_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `note_history`
---
-
-LOCK TABLES `note_history` WRITE;
-/*!40000 ALTER TABLE `note_history` DISABLE KEYS */;
-/*!40000 ALTER TABLE `note_history` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `pending_note`
@@ -247,17 +189,8 @@ CREATE TABLE `pending_note` (
   `member_id` int NOT NULL,
   `class_id` int NOT NULL,
   PRIMARY KEY (`pending_note_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pending_note`
---
-
-LOCK TABLES `pending_note` WRITE;
-/*!40000 ALTER TABLE `pending_note` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pending_note` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `subject`
@@ -270,20 +203,11 @@ CREATE TABLE `subject` (
   `subject_id` int NOT NULL AUTO_INCREMENT,
   `subject_name` varchar(150) NOT NULL,
   `subject_details` varchar(2000) DEFAULT NULL,
-  `professor` varchar(200) NOT NULL,
+  `professor` varchar(200) DEFAULT NULL,
   `class_id` int NOT NULL,
   PRIMARY KEY (`subject_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `subject`
---
-
-LOCK TABLES `subject` WRITE;
-/*!40000 ALTER TABLE `subject` DISABLE KEYS */;
-/*!40000 ALTER TABLE `subject` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `subject_schedule`
@@ -295,21 +219,14 @@ DROP TABLE IF EXISTS `subject_schedule`;
 CREATE TABLE `subject_schedule` (
   `subject_schedule_id` int NOT NULL AUTO_INCREMENT,
   `subject_id` int NOT NULL,
-  `from_time` datetime NOT NULL,
-  `to_time` datetime NOT NULL,
-  `day` varchar(15) NOT NULL,
+  `from_time` time NOT NULL,
+  `to_time` time NOT NULL,
+  `start_date` date NOT NULL,
+  `occurence` int DEFAULT NULL,
+  `class_id` int NOT NULL,
   PRIMARY KEY (`subject_schedule_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `subject_schedule`
---
-
-LOCK TABLES `subject_schedule` WRITE;
-/*!40000 ALTER TABLE `subject_schedule` DISABLE KEYS */;
-/*!40000 ALTER TABLE `subject_schedule` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `unenroll`
@@ -324,17 +241,8 @@ CREATE TABLE `unenroll` (
   `subject_id` int NOT NULL,
   PRIMARY KEY (`unenroll_id`),
   KEY `class_subjects_idx` (`subject_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `unenroll`
---
-
-LOCK TABLES `unenroll` WRITE;
-/*!40000 ALTER TABLE `unenroll` DISABLE KEYS */;
-/*!40000 ALTER TABLE `unenroll` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `user`
@@ -352,17 +260,8 @@ CREATE TABLE `user` (
   `m_name` varchar(50) DEFAULT NULL,
   `l_name` varchar(100) NOT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `user`
---
-
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `user_calendar`
@@ -379,17 +278,8 @@ CREATE TABLE `user_calendar` (
   `event_to_date` datetime NOT NULL,
   `user_id` int DEFAULT NULL,
   PRIMARY KEY (`event_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `user_calendar`
---
-
-LOCK TABLES `user_calendar` WRITE;
-/*!40000 ALTER TABLE `user_calendar` DISABLE KEYS */;
-/*!40000 ALTER TABLE `user_calendar` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `user_note`
@@ -407,17 +297,8 @@ CREATE TABLE `user_note` (
   `note_title` varchar(500) NOT NULL,
   `description` varchar(5000) DEFAULT NULL,
   PRIMARY KEY (`note_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `user_note`
---
-
-LOCK TABLES `user_note` WRITE;
-/*!40000 ALTER TABLE `user_note` DISABLE KEYS */;
-/*!40000 ALTER TABLE `user_note` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -428,4 +309,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-15 16:02:33
+-- Dump completed on 2022-12-27 13:10:28
