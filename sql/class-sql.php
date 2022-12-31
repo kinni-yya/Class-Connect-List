@@ -433,7 +433,7 @@ function DeleteArchiveClass($archive_class_id)
 
 // Select records from the note table where due date is null
 // and are published from all enrolled classes of the user
-function SelectAllAnnouncementRecord($user_id)
+function SelectAllAnnouncementRecord($user_id, $selected_process)
 {
 	$conn = OpenCon();
 	$sql = "WITH matched_member_id AS (
@@ -465,19 +465,25 @@ function SelectAllAnnouncementRecord($user_id)
 			SELECT *
 			FROM note
 			WHERE
-				-- announcements don't have due dates
-				due_date IS NULL
 				-- announcements from enrolled classes should be displayed
-				AND class_id IN (SELECT class_id FROM enrolled_classes)
+				class_id IN (SELECT class_id FROM enrolled_classes)
 				-- announcements from archived classes should NOT be displayed
 				AND class_id NOT IN (SELECT class_id FROM archived_classes)
 				-- archived/completed announcements should NOT be displayed
 				AND note_id NOT IN (SELECT archived_notes.note_id FROM archived_notes)
 				-- announcements from unenrolled subjects should NOT be displayed
 				-- announcements that don't fall under any subjects will be displayed (i.e. General Note)
-				AND (subject_id NOT IN (SELECT subject_id FROM unenrolled_subjects) OR subject_id IS NULL)
-			ORDER BY post_date ASC";
-	$result = $conn->query($sql);
+				AND (subject_id NOT IN (SELECT subject_id FROM unenrolled_subjects) OR subject_id IS NULL)";
+
+			if ($selected_process == "due") {
+				$process = "AND due_date IS NOT NULL
+							ORDER BY due_date ASC";
+			} elseif ($selected_process == "announcement") {
+				$process = "AND due_date IS NULL
+							ORDER BY post_date ASC";
+			}
+			
+	$result = $conn->query($sql . $process);
 	$conn->close();
 	return $result;
 }
