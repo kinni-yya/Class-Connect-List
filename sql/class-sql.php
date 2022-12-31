@@ -444,26 +444,38 @@ function SelectAllAnnouncementRecord($user_id)
 				SELECT class_id
 				FROM member
 				WHERE user_id = '$user_id'
-			), unenrolled_subjects AS (
-				SELECT subject_id
-				FROM unenroll
-				WHERE member_id IN (SELECT * FROM matched_member_id)
 			), archived_classes AS (
-				SELECT note.note_id
+				SELECT class_id
+				FROM archive_class
+				WHERE user_id = '$user_id'
+			), archived_notes AS (
+				SELECT note.note_id AS note_id
 				FROM note
 				JOIN archive_note
 				ON note.note_id = archive_note.note_id
 				WHERE 
 					class_id IN (SELECT class_id FROM enrolled_classes) 
-					AND member_id IN (SELECT * FROM matched_member_id))
+					AND member_id IN (SELECT member_id FROM matched_member_id)
+			), unenrolled_subjects AS (
+				SELECT subject_id
+				FROM unenroll
+				WHERE member_id IN (SELECT member_id FROM matched_member_id)
+			)
 			
 			SELECT *
 			FROM note
-			WHERE 
+			WHERE
+				-- announcements don't have due dates
 				due_date IS NULL
-				AND class_id IN (SELECT * FROM enrolled_classes)
-				AND subject_id NOT IN (SELECT * FROM unenrolled_subjects)
-				AND note_id NOT IN (SELECT * FROM archived_classes)
+				-- announcements from enrolled classes should be displayed
+				AND class_id IN (SELECT class_id FROM enrolled_classes)
+				-- announcements from archived classes should NOT be displayed
+				AND class_id NOT IN (SELECT class_id FROM archived_classes)
+				-- archived/completed announcements should NOT be displayed
+				AND note_id NOT IN (SELECT archived_notes.note_id FROM archived_notes)
+				-- announcements from unenrolled subjects should NOT be displayed
+				-- announcements that don't fall under any subjects will be displayed (i.e. General Note)
+				AND (subject_id NOT IN (SELECT subject_id FROM unenrolled_subjects) OR subject_id IS NULL)
 			ORDER BY post_date ASC";
 	$result = $conn->query($sql);
 	$conn->close();
