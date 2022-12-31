@@ -4,7 +4,7 @@ include '../dbconnect.php';
 // Check if session exist
 OpenSession();
 
-$select_announcement_result = SelectAllAnnouncementRecord($_SESSION['user_id']);
+$select_announcement_result = SelectAllAnnouncementRecord($_SESSION['user_id'], "announcement");
 while ($row = $select_announcement_result->fetch_assoc()) {
 
 ?>
