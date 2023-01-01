@@ -78,8 +78,9 @@ if (!isset($_GET['tab']) && empty($_SESSION['tab'])) {
 			$("#archive-navlink").addClass("active");
 		}
 	</script>
-	<!-- Make the note show their full details -->
+
 	<script type="text/javascript">
+		// Make the note show their full details
 		function DisplayNoteDetails(e) {
 			// Get the note-box div parent element
 			var note_box = e.closest(".note-box");
@@ -96,6 +97,51 @@ if (!isset($_GET['tab']) && empty($_SESSION['tab'])) {
 			var note_detail = e.closest(".note-detail");
 			// Remove the show class
 			note_detail.classList.remove('show');
+		}
+
+		// Archive and Restore tasks
+		function CompleteTask(e) {
+			// get the value of the data-id attribute
+			var jsonString = e.getAttribute('data-id');
+			// parse the JSON string
+			var data = JSON.parse(jsonString);
+			// destructure the "data" object and store the values in separate variables
+			var {
+				note_id,
+				class_id,
+				user_id
+			} = data;
+
+			$.ajax({
+				type: 'POST',
+				url: 'all-archive-process.php',
+				data: {
+					"note_id": note_id,
+					"class_id": class_id,
+					"user_id": user_id
+				},
+				success: function(data) {
+					alert(data);
+					location.reload();
+				}
+			});
+		}
+
+		function RestoreTask(e) {
+			// Get the data-id attribute value from the onclick
+			var archive_note_id = $(e).attr("data-id");
+
+			$.ajax({
+				type: 'POST',
+				url: 'all-archive-process.php',
+				data: {
+					"archive_note_id": archive_note_id
+				},
+				success: function(data) {
+					alert(data);
+					location.reload();
+				}
+			});
 		}
 	</script>
 

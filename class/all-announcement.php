@@ -40,7 +40,14 @@ while ($row = $select_announcement_result->fetch_assoc()) {
             </div>
 
             <div class="container d-flex justify-content-end">
-                &emsp;<button class="btn btn-outline-success" data-id="<?php echo $row['note_id']; ?>" onclick="CompleteTask(this)">Complete</button>
+                &emsp;<button class="btn btn-outline-success" data-id='<?php echo json_encode(
+					array(
+						"note_id" => $row['note_id'],
+						"class_id" => $row['class_id'],
+						"user_id" => $_SESSION['user_id']
+					),
+					JSON_HEX_QUOT
+				); ?>' onclick="CompleteTask(this)">Complete</button>
                 &emsp;<button class="btn btn-outline-info">Add to My List</button>
                 &emsp;<button class="btn btn-outline-secondary" onclick="CloseDisplayNote(this)">Close</button>
             </div>

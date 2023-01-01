@@ -465,25 +465,84 @@ function SelectAllAnnouncementRecord($user_id, $selected_process)
 			SELECT *
 			FROM note
 			WHERE
-				-- announcements from enrolled classes should be displayed
+				-- notes from enrolled classes should be displayed
 				class_id IN (SELECT class_id FROM enrolled_classes)
-				-- announcements from archived classes should NOT be displayed
+				-- notes from archived classes should NOT be displayed
 				AND class_id NOT IN (SELECT class_id FROM archived_classes)
-				-- archived/completed announcements should NOT be displayed
+				-- archived/completed notes should NOT be displayed
 				AND note_id NOT IN (SELECT archived_notes.note_id FROM archived_notes)
-				-- announcements from unenrolled subjects should NOT be displayed
-				-- announcements that don't fall under any subjects will be displayed (i.e. General Note)
+				-- notes from unenrolled subjects should NOT be displayed
+				-- notes that don't fall under any subjects will be displayed (i.e. General Note)
 				AND (subject_id NOT IN (SELECT subject_id FROM unenrolled_subjects) OR subject_id IS NULL)";
 
-			if ($selected_process == "due") {
-				$process = "AND due_date IS NOT NULL
+	if ($selected_process == "due") {
+		$process = "AND due_date IS NOT NULL
 							ORDER BY due_date ASC";
-			} elseif ($selected_process == "announcement") {
-				$process = "AND due_date IS NULL
+	} elseif ($selected_process == "announcement") {
+		$process = "AND due_date IS NULL
 							ORDER BY post_date ASC";
-			}
-			
+	}
+
 	$result = $conn->query($sql . $process);
 	$conn->close();
 	return $result;
+}
+
+function SelectAllArchiveNote($user_id)
+{
+	$conn = OpenCon();
+	$sql = "WITH matched_member_id AS (
+				SELECT member_id
+				FROM member
+				WHERE user_id = '$user_id'
+			), enrolled_classes AS (
+				SELECT class_id
+				FROM member
+				WHERE user_id = '$user_id'
+			), archived_notes AS (
+				SELECT note_id 
+				FROM archive_note 
+				WHERE member_id IN (SELECT member_id FROM matched_member_id)
+			)
+
+			SELECT archive_note.archive_note_id, note.*
+			FROM note
+			JOIN archive_note 
+			ON note.note_id = archive_note.note_id
+			WHERE class_id IN (SELECT class_id FROM enrolled_classes)
+				AND member_id IN (SELECT member_id FROM matched_member_id)
+				AND note.note_id IN (SELECT note_id FROM archived_notes)
+			ORDER BY post_date ASC";
+	$result = $conn->query($sql);
+	$conn->close();
+	return $result;
+}
+
+function ArchiveNoteFromAll($note_id, $class_id, $user_id, $conn)
+{
+	$sql = "INSERT INTO archive_note (note_id, member_id)
+			VALUES ('$note_id', 
+					(	SELECT member_id
+						FROM member
+						WHERE class_id = '$class_id'
+							AND user_id = '$user_id'))";
+	if ($conn->query($sql) === TRUE) {
+		echo "Note archived successfully";
+	} else {
+		echo "Error: " . $sql . "<br>" . $conn->error;
+	}
+	$conn->close();
+}
+
+function RestoreArchiveNoteFromAll($archive_note_id, $conn)
+{
+	$sql = "DELETE FROM archive_note
+	WHERE archive_note_id = '$archive_note_id'";
+
+	if ($conn->query($sql) === TRUE) {
+		echo "Note restored successfully";
+	} else {
+		echo "Error: " . $sql . "<br>" . $conn->error;
+	}
+	$conn->close();
 }
