@@ -25,9 +25,8 @@ if(isset($_POST['due_time']) && !empty($_POST['due_time']) && isset($_POST['due_
 }
 
 if(isset($_POST['note_title'])){
-	// Send the parameters to InsertUserNote() function to insert to the note table
-	$add_note_message = InsertUserNote($_POST['user_id'], $due_date, $due_time, $_POST['note_title'], $description, $conn);
+	// Send the parameters to InsertMyListNote() function to insert to the note table
+	$add_note_message = InsertMyListNote($_POST['user_id'], $due_date, $due_time, $_POST['note_title'], $description, $conn);
 }
 
 echo $add_note_message;
-?>

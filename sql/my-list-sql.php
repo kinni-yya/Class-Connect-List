@@ -10,7 +10,7 @@ function GetUserNote($user_id)
     return $result;
 }
 
-function InsertUserNote($user_id, $due_date, $due_time, $note_title, $description, $conn)
+function InsertMyListNote($user_id, $due_date, $due_time, $note_title, $description, $conn)
 {
     $offset = SynchTimeZone();
     // Change the timezone first then proceed with the query, this is a multi_query instead of a query
