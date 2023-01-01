@@ -143,6 +143,34 @@ if (!isset($_GET['tab']) && empty($_SESSION['tab'])) {
 				}
 			});
 		}
+
+		function AddMyListNote(e) {
+			var jsonString = e.getAttribute('data-id');
+			var data = JSON.parse(jsonString);
+			var {
+				user_id,
+				due_date,
+				due_time,
+				note_title,
+				description,
+			} = data;
+
+			$.ajax({
+				type: 'POST',
+				url: '../my-list/add-user-note-process.php',
+				data: {
+					"user_id": user_id,
+					"due_date": due_date,
+					"due_time": due_time,
+					"note_title": note_title,
+					"description": description,
+				},
+				success: function(data) {
+					alert(data);
+					location.reload();
+				}
+			});
+		}
 	</script>
 
 </body>

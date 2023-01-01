@@ -59,7 +59,14 @@ while($row = $select_announcement_result->fetch_assoc()) {
 			}
 			 ?>
 			&emsp;<button class="btn btn-outline-success" data-id="<?php echo $row['note_id']; ?>" onclick="CompleteTask(this)">Complete</button>
-			&emsp;<button class="btn btn-outline-info">Add to My List</button>
+			&emsp;<button class="btn btn-outline-info" data-id='<?php echo json_encode(
+                    array(
+                        'user_id' => $_SESSION['user_id'],
+                        'due_date' => $row['due_date'],
+                        'due_time' => $row['due_time'],
+                        'note_title' => $row['note_title'],
+                        'description' => $row['description']
+                ))?>' onclick="AddMyListNote(this)">Add to My List</button>
 			&emsp;<button class="btn btn-outline-secondary" onclick="CloseDisplayNote(this)">Close</button>
 		</div>
 		
