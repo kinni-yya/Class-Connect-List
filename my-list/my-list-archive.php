@@ -48,20 +48,23 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
                 <?php } ?>
 
                 <div class="notedetails">
-                    <p><?php
+                    <p>
+                        <?php
                         $description = $rows['description'];
-                        // Split the text into an array of words
-                        $words = explode(' ', $description);
-                        // Limit the array to the first 20 words
-                        $limitedWords = array_slice($words, 0, 20);
-                        // Join the words back into a string and echo the result
-                        echo implode(' ', $limitedWords) .   "...";
+                        if (!empty($description)) {
+                            // Split the text into an array of words
+                            $words = explode(' ', $description);
+                            // Limit the array to the first 20 words
+                            $limitedWords = array_slice($words, 0, 20);
+                            // Join the words back into a string and echo the result
+                            echo implode(' ', $limitedWords) . "...";
+                        }
                         ?>
                     </p>
                 </div>
                 </br>
                 <div class="subjbuttons">
-                <button type="button" class="view" data-id="<?php echo $rows['archive_user_note_id']; ?>" onClick="RestoreUserNote(this)">RESTORE NOTE</button>
+                    <button type="button" class="view" data-id="<?php echo $rows['archive_user_note_id']; ?>" onClick="RestoreUserNote(this)">RESTORE NOTE</button>
                 </div>
             </div>
         <?php } ?>
