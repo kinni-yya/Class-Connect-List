@@ -54,14 +54,17 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
                 <?php } ?>
 
                 <div class="notedetails">
-                    <p><?php
+                    <p>
+                        <?php
                         $description = $rows['description'];
-                        // Split the text into an array of words
-                        $words = explode(' ', $description);
-                        // Limit the array to the first 20 words
-                        $limitedWords = array_slice($words, 0, 20);
-                        // Join the words back into a string and echo the result
-                        echo implode(' ', $limitedWords) . "...";
+                        if (!empty($description)) {
+                            // Split the text into an array of words
+                            $words = explode(' ', $description);
+                            // Limit the array to the first 20 words
+                            $limitedWords = array_slice($words, 0, 20);
+                            // Join the words back into a string and echo the result
+                            echo implode(' ', $limitedWords) . "...";
+                        }
                         ?>
                     </p>
                 </div>
@@ -200,7 +203,7 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
                     var title = document.getElementById('note-title');
                     title.value = note_record.note_title;
                     title.placeholder = note_record.note_title;
-                    
+
                     var description = document.getElementById('description');
                     description.value = note_record.description;
                     description.placeholder = note_record.description;
@@ -224,10 +227,12 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
 
         function closeUserNoteForm() {
             document.getElementById("addpopup").style.display = "none";
+            document.getElementById("archive-popup").style.display = "none";
             document.getElementById("editpopup").style.display = "none";
             document.getElementById('blur').style.filter = "blur(0)";
             document.getElementById('blur').style.display = "none";
             document.getElementById('scrll').style.overflow = "auto";
+            $("#popup_yes").removeAttr("data-id");
         }
 
         function openEditUserNoteForm(note_id) {
