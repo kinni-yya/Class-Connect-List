@@ -4,7 +4,23 @@ function GetUserNote($user_id)
     $conn = OpenCon();
     $sql = "SELECT *
 			FROM user_note
-			WHERE user_id = '$user_id'";
+			WHERE user_id = '$user_id'
+            AND note_id NOT IN (SELECT note_id FROM archive_user_note)
+            ORDER BY note_id DESC";
+    $result = $conn->query($sql);
+    $conn->close();
+    return $result;
+}
+
+function GetUserNoteArchive($user_id)
+{
+    $conn = OpenCon();
+    $sql = "SELECT *
+			FROM user_note AS user 
+            JOIN archive_user_note AS archive
+            ON user.note_id = archive.note_id
+			WHERE user.user_id = '$user_id'
+            ORDER BY archive.archive_user_note_id DESC";
     $result = $conn->query($sql);
     $conn->close();
     return $result;
@@ -51,8 +67,30 @@ function UpdateUserNote($note_id, $user_id, $due_date, $due_time, $note_title, $
                 due_time = " . ($due_time == null ? "NULL" : "'$due_time'") . ", 
                 note_title = '$note_title', description = '$description'
 			WHERE note_id = '$note_id'";
-    if ($conn->multi_query($sql) === TRUE) {
-        echo "Note updated successfully";
+    if ($conn->multi_query($sql) !== TRUE) {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+    $conn->close();
+}
+
+function ArchiveUserNote($note_id, $user_id, $conn)
+{
+    $sql = "INSERT INTO archive_user_note (note_id, user_id)
+    VALUES ('$note_id',  $user_id)";
+    if ($conn->query($sql) === TRUE) {
+        echo "Note archived successfully";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+    $conn->close();
+}
+
+function RestoreArchiveUserNote($archive_user_note_id, $conn)
+{
+    $sql = "DELETE FROM archive_user_note
+    WHERE archive_user_note_id = '$archive_user_note_id'";
+    if ($conn->query($sql) === TRUE) {
+        echo "Note restored successfully";
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
