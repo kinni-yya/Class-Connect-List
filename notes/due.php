@@ -35,11 +35,9 @@ while($row = $select_due_result->fetch_assoc()) {
 		<div class="col-2 align-self-center">
 			<!-- Spent date -->
 			<span class="note-due"><?php 
+				// Compute how many day before due date
 				$difference = (strtotime($row['due_date']) - strtotime(date("Y-m-d"))) / (24*60*60);
-				if($difference < 0 ){
-					echo "<span class=\"note-due\" style=\"color: red;\">".abs($difference)." day\\s late ".date('h:i A',strtotime($row['due_time']))."</span>";
-				}
-				else if($difference == 0){
+				if($difference == 0){
 					echo "<span class=\"note-due\" style=\"color: orange;\">Today ".date('h:i A',strtotime($row['due_time']))."</span>";
 				}
 				else if ($difference > 0) {

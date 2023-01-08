@@ -58,19 +58,21 @@ $class_info = GetClassRecord($_GET['class_id']);
 		<h1><?php echo $class_info['class_name']; ?></h1>
 		<div class="row">
 			<ul class="nav nav-tabs col-10">
-				<?php // Count how many notes are due for today
-				$due_count = CountDueNoteToday($_GET['class_id'], $member_id); ?>
 				<li class="nav-item">
+					<?php // Count how many notes are due for today
+					$due_count = CountDueNoteToday($_GET['class_id'], $member_id); ?>
 					<a class="nav-link text-success" id="due-navlink" href="#" onclick="window.location.href='note.php?class_id=<?php echo $_GET['class_id']; ?>&tab=due';">Dues <?php if ($due_count > 0) echo "<span class=\"badge rounded-pill bg-danger\">" . $due_count . "</span>"; ?></a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link text-success" id="announcement-navlink" href="#" onclick="window.location.href='note.php?class_id=<?php echo $_GET['class_id']; ?>&tab=announcement';">Announcement</a>
 				</li>
-				<!-- <li class="nav-item">
-		    <a class="nav-link text-success" id="all-navlink" href="#" onclick="window.location.href='note.php?class_id=<?php echo $_GET['class_id']; ?>&tab=all';">All</a>
-		  </li> -->
 				<li class="nav-item">
 					<a class="nav-link text-success" id="archive-navlink" href="#" onclick="window.location.href='note.php?class_id=<?php echo $_GET['class_id']; ?>&tab=archive';">Archive</a>
+				</li>
+				<li class="nav-item">
+					<?php // Count how many notes are late for the due
+					$late_due_count = CountLateDueNote($_GET['class_id'], $member_id); ?>
+					<a class="nav-link text-success" id="late-navlink" href="#" onclick="window.location.href='note.php?class_id=<?php echo $_GET['class_id']; ?>&tab=late';">Late <?php if ($late_due_count > 0) echo "<span class=\"badge rounded-pill bg-danger\">" . $late_due_count . "</span>"; ?></a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link text-success" id="calendar-navlink" href="#" onclick="window.location.href='note.php?class_id=<?php echo $_GET['class_id']; ?>&tab=calendar';">Calendar</a>
@@ -318,6 +320,10 @@ $class_info = GetClassRecord($_GET['class_id']);
 		if (tab_selected == "archive") {
 			$("#note-section").load("archive.php?class_id=<?php echo $_GET['class_id']; ?>");
 			$("#archive-navlink").addClass("active");
+		}
+		if (tab_selected == "late") {
+			$("#note-section").load("late.php?class_id=<?php echo $_GET['class_id']; ?>");
+			$("#late-navlink").addClass("active");
 		}
 		if (tab_selected == "calendar") {
 			$("#note-section").load("calendar.php?class_id=<?php echo $_GET['class_id']; ?>");
