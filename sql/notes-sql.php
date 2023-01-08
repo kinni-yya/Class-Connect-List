@@ -18,7 +18,7 @@ function InsertNote($class_id, $subject_id, $due_date, $due_time, $note_title, $
 		if($due_date != null){
 			// If due time is null then set it as 08 AM
 			if($due_time == null){
-				$due_time = "08:00:00";
+				$due_time = "07:30:00";
 			}
 			$start_datetime = date('Y-m-d H:i:s', strtotime("$due_date $due_time"));
 			$end_datetime = date('Y-m-d H:i:s', strtotime($start_datetime . "+30 minutes"));
@@ -47,7 +47,7 @@ function UpdateNote($note_id, $subject_id, $due_date, $due_time, $note_title, $d
 		if($due_date != null){
 			// If due time is null then set it as 08 AM
 			if($due_time == null){
-				$due_time = "08:00:00";
+				$due_time = "07:30:00";
 			}
 			$start_datetime = date('Y-m-d H:i:s', strtotime("$due_date $due_time"));
 			$end_datetime = date('Y-m-d H:i:s', strtotime($start_datetime . "+30 minutes"));
@@ -78,6 +78,8 @@ function UpdateNote($note_id, $subject_id, $due_date, $due_time, $note_title, $d
 // Select records from the note table where due date have values
 function SelectDueRecord($class_id, $member_id){
 	$conn = OpenCon();
+	// Set Time Zone query
+	$conn->query("SET time_zone='+08:00'");
 	$sql = "SELECT *
 			FROM note
 			WHERE class_id = '$class_id' AND due_date IS NOT NULL AND (subject_id NOT IN (
@@ -88,7 +90,7 @@ function SelectDueRecord($class_id, $member_id){
 				FROM note
 				JOIN archive_note
 				ON note.note_id = archive_note.note_id
-				WHERE class_id = '$class_id' AND member_id = '$member_id')
+				WHERE class_id = '$class_id' AND member_id = '$member_id') AND DATEDIFF(CURDATE(), due_date) < '1'
 			ORDER BY due_date ASC";
 	$result = $conn->query($sql);
 	$conn -> close();
@@ -98,6 +100,8 @@ function SelectDueRecord($class_id, $member_id){
 // Select records from the note table where due date is null
 function SelectAnnouncementRecord($class_id, $member_id){
 	$conn = OpenCon();
+	// Set Time Zone query
+	$conn->query("SET time_zone='+08:00'");
 	$sql = "SELECT *
 			FROM note
 			WHERE class_id = '$class_id' AND due_date IS NULL AND (subject_id NOT IN (
@@ -110,6 +114,28 @@ function SelectAnnouncementRecord($class_id, $member_id){
 				ON note.note_id = archive_note.note_id
 				WHERE class_id = '$class_id' AND member_id = '$member_id')
 			ORDER BY post_date ASC";
+	$result = $conn->query($sql);
+	$conn -> close();
+	return $result;
+}
+
+// Select all the note that are late
+function SelectLateDueRecord($class_id, $member_id){
+	$conn = OpenCon();
+	// Set Time Zone query
+	$conn->query("SET time_zone='+08:00'");
+	$sql = "SELECT *
+			FROM note
+			WHERE class_id = '$class_id' AND due_date IS NOT NULL AND (subject_id NOT IN (
+				SELECT subject_id
+			    FROM unenroll
+			    WHERE member_id = '$member_id') OR subject_id IS NULL) AND note_id NOT IN (
+				SELECT note.note_id
+				FROM note
+				JOIN archive_note
+				ON note.note_id = archive_note.note_id
+				WHERE class_id = '$class_id' AND member_id = '$member_id') AND DATEDIFF(CURDATE(), due_date) >= '1'
+			ORDER BY due_date ASC";
 	$result = $conn->query($sql);
 	$conn -> close();
 	return $result;
@@ -462,6 +488,30 @@ function CountDueNoteToday($class_id, $member_id){
 		$row = $result->fetch_assoc();
 		$conn -> close();
 		return $row['due_count'];
+	}
+	$conn -> close();
+}
+
+// Count all the late note due today by class
+function CountLateDueNote($class_id, $member_id){
+	$conn = OpenCon();
+	$sql = "SET time_zone='+08:00';";
+	if($conn->query($sql) === TRUE){
+		$sql = "SELECT COUNT(note_id) AS 'late_due_count'
+				FROM note
+				WHERE class_id = '$class_id' AND due_date IS NOT NULL AND (subject_id NOT IN (
+				SELECT subject_id
+			    FROM unenroll
+			    WHERE member_id = '$member_id') OR subject_id IS NULL) AND note_id NOT IN (
+				SELECT note.note_id
+				FROM note
+				JOIN archive_note
+				ON note.note_id = archive_note.note_id
+				WHERE class_id = '$class_id' AND member_id = '$member_id') AND DATEDIFF(CURDATE(), due_date) >= '1'";
+		$result = $conn->query($sql);
+		$row = $result->fetch_assoc();
+		$conn -> close();
+		return $row['late_due_count'];
 	}
 	$conn -> close();
 }

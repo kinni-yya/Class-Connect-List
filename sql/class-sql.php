@@ -244,8 +244,7 @@ function SelectClassSubjectSched($class_id, $subject_id)
 			FROM subject
 			JOIN subject_schedule AS sched
 			WHERE sched.subject_id = '$subject_id'
-				AND sched.class_id = '$class_id'
-			ORDER BY DAYOFWEEK(start_date)";
+				AND sched.class_id = '$class_id'";
 	$result = $conn->query($sql);
 	$conn->close();
 	return $result;
@@ -476,11 +475,14 @@ function SelectAllAnnouncementRecord($user_id, $selected_process)
 				AND (subject_id NOT IN (SELECT subject_id FROM unenrolled_subjects) OR subject_id IS NULL)";
 
 	if ($selected_process == "due") {
-		$process = "AND due_date IS NOT NULL
+		$process = "AND due_date IS NOT NULL AND DATEDIFF(CURDATE(), due_date) < '1'
 							ORDER BY due_date ASC";
 	} elseif ($selected_process == "announcement") {
 		$process = "AND due_date IS NULL
 							ORDER BY post_date ASC";
+	} elseif ($selected_process == "late") {
+		$process = "AND due_date IS NOT NULL AND DATEDIFF(CURDATE(), due_date) >= '1'
+							ORDER BY due_date ASC";
 	}
 
 	$result = $conn->query($sql . $process);
@@ -545,4 +547,108 @@ function RestoreArchiveNoteFromAll($archive_note_id, $conn)
 		echo "Error: " . $sql . "<br>" . $conn->error;
 	}
 	$conn->close();
+}
+
+// Count all the note due today by the user
+function CountAllDueNote($user_id)
+{
+	$conn = OpenCon();
+	// Set the time zone
+	$conn->query("SET time_zone='+08:00'");
+	$sql = "WITH matched_member_id AS (
+				SELECT member_id
+				FROM member
+				WHERE user_id = '$user_id'
+			), enrolled_classes AS (
+				SELECT class_id
+				FROM member
+				WHERE user_id = '$user_id'
+			), archived_classes AS (
+				SELECT class_id
+				FROM archive_class
+				WHERE user_id = '$user_id'
+			), archived_notes AS (
+				SELECT note.note_id AS note_id
+				FROM note
+				JOIN archive_note
+				ON note.note_id = archive_note.note_id
+				WHERE 
+					class_id IN (SELECT class_id FROM enrolled_classes) 
+					AND member_id IN (SELECT member_id FROM matched_member_id)
+			), unenrolled_subjects AS (
+				SELECT subject_id
+				FROM unenroll
+				WHERE member_id IN (SELECT member_id FROM matched_member_id)
+			)
+			
+			SELECT COUNT(note_id) AS 'due_count'
+			FROM note
+			WHERE
+				-- notes from enrolled classes should be displayed
+				class_id IN (SELECT class_id FROM enrolled_classes)
+				-- notes from archived classes should NOT be displayed
+				AND class_id NOT IN (SELECT class_id FROM archived_classes)
+				-- archived/completed notes should NOT be displayed
+				AND note_id NOT IN (SELECT archived_notes.note_id FROM archived_notes)
+				-- notes from unenrolled subjects should NOT be displayed
+				-- notes that don't fall under any subjects will be displayed (i.e. General Note)
+				AND (subject_id NOT IN (SELECT subject_id FROM unenrolled_subjects) OR subject_id IS NULL)
+				-- due date must be the current date to get the today
+				AND due_date = CURDATE()";
+	$result = $conn->query($sql);
+	$row = $result->fetch_assoc();
+	$conn -> close();
+	return $row['due_count'];
+}
+
+// Count all LATE the note due today by the user
+function CountAllLateDueNote($user_id)
+{
+	$conn = OpenCon();
+	// Set the time zone
+	$conn->query("SET time_zone='+08:00'");
+	$sql = "WITH matched_member_id AS (
+				SELECT member_id
+				FROM member
+				WHERE user_id = '$user_id'
+			), enrolled_classes AS (
+				SELECT class_id
+				FROM member
+				WHERE user_id = '$user_id'
+			), archived_classes AS (
+				SELECT class_id
+				FROM archive_class
+				WHERE user_id = '$user_id'
+			), archived_notes AS (
+				SELECT note.note_id AS note_id
+				FROM note
+				JOIN archive_note
+				ON note.note_id = archive_note.note_id
+				WHERE 
+					class_id IN (SELECT class_id FROM enrolled_classes) 
+					AND member_id IN (SELECT member_id FROM matched_member_id)
+			), unenrolled_subjects AS (
+				SELECT subject_id
+				FROM unenroll
+				WHERE member_id IN (SELECT member_id FROM matched_member_id)
+			)
+			
+			SELECT COUNT(note_id) AS 'late_due_count'
+			FROM note
+			WHERE
+				-- notes from enrolled classes should be displayed
+				class_id IN (SELECT class_id FROM enrolled_classes)
+				-- notes from archived classes should NOT be displayed
+				AND class_id NOT IN (SELECT class_id FROM archived_classes)
+				-- archived/completed notes should NOT be displayed
+				AND note_id NOT IN (SELECT archived_notes.note_id FROM archived_notes)
+				-- notes from unenrolled subjects should NOT be displayed
+				-- notes that don't fall under any subjects will be displayed (i.e. General Note)
+				AND (subject_id NOT IN (SELECT subject_id FROM unenrolled_subjects) OR subject_id IS NULL)
+				-- due date must be the current date to get the today
+				AND due_date = CURDATE()";
+	$result = $conn->query($sql);
+	$row = $result->fetch_assoc();
+	$conn -> close();
+	return $row['late_due_count'];
 }
