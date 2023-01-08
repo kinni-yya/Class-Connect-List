@@ -41,13 +41,20 @@ if (!isset($_GET['tab']) && empty($_SESSION['tab'])) {
 		<div class="row">
 			<ul class="nav nav-tabs col-10">
 				<li class="nav-item">
-					<a class="nav-link text-success" id="due-navlink" href="#" onclick="window.location.href='see-all-announcements.php?tab=due';">Dues </a>
+					<?php // Count how many notes are due for today
+					$due_count = CountAllDueNote($_SESSION['user_id']); ?>
+					<a class="nav-link text-success" id="due-navlink" href="#" onclick="window.location.href='see-all-announcements.php?tab=due';">Dues <?php if ($due_count > 0) echo "<span class=\"badge rounded-pill bg-danger\">" . $due_count . "</span>"; ?></a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link text-success" id="announcement-navlink" href="#" onclick="window.location.href='see-all-announcements.php?tab=announcement';">Announcement</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link text-success" id="archive-navlink" href="#" onclick="window.location.href='see-all-announcements.php?tab=archive';">Archive</a>
+				</li>
+				<li class="nav-item">
+					<?php // Count how many notes are late for the due
+					$late_due_count = CountAllLateDueNote($_SESSION['user_id']); ?>
+					<a class="nav-link text-success" id="late-navlink" href="#" onclick="window.location.href='see-all-announcements.php?tab=late';">Late <?php if ($late_due_count > 0) echo "<span class=\"badge rounded-pill bg-danger\">" . $late_due_count . "</span>"; ?></a>
 				</li>
 			</ul>
 		</div>
@@ -76,6 +83,10 @@ if (!isset($_GET['tab']) && empty($_SESSION['tab'])) {
 		if (tab_selected == "archive") {
 			$("#note-section").load("all-archive.php");
 			$("#archive-navlink").addClass("active");
+		}
+		if (tab_selected == "late") {
+			$("#note-section").load("all-late.php");
+			$("#late-navlink").addClass("active");
 		}
 	</script>
 
