@@ -50,9 +50,14 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
                 <p>Post Date: <span><?php echo $rows['post_date']; ?></span></p>
 
                 <?php if (isset($rows['due_date'])) { ?>
-                    <p style="color:#D53F3A">Due Date: <span><?php echo $rows['due_date']; ?></span></p></br>
-                <?php } ?>
+                    <p>Due Date: <span><?php echo $rows['due_date']; ?></span></p>
+                <?php }
+                    if (isset($rows['due_time'])){
+                        echo "<p>Due Time: <span>".date('h:i A',strtotime($rows['due_time']))."</span></p>";
+                    }
+                 ?>
 
+                </br>
                 <div class="notedetails">
                     <p>
                         <?php
@@ -71,6 +76,7 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
                 </br>
                 <div class="subjbuttons">
                     <button type="button" class="view" onclick="openEditUserNoteForm(<?php echo $rows['note_id']; ?>)">VIEW/EDIT</button>
+                    <button type="button" class="view" onclick="DeleteUserNote(<?php echo $rows['note_id']; ?>)">DELETE</button>
                 </div>
             </div>
         <?php
@@ -120,7 +126,9 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
             <div><input type="time" class="form-control" name="due_time" id="due-time"></div>
             <div><span class="form-text">Due date and/or time are optional!</span></div>
 
-            <br><button type="submit" class="btn">DONE</button>
+            <br>
+            <button type="submit" class="btn">SAVE</button>
+            <button type="button" class="btn" onclick="closeEditUserNoteForm()">CLOSE</button>
         </form>
     </div>
 
@@ -243,6 +251,13 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
             getUserNoteInfo(note_id);
         }
 
+        function closeEditUserNoteForm() {
+            document.getElementById("editpopup").style.display = "none";
+            document.getElementById('blur').style.filter = "blur(0)";
+            document.getElementById('blur').style.display = "none";
+            document.getElementById('scrll').style.overflow = "auto";
+        }
+
         function openArchivePopup(e) {
             var note_id = $(e).attr("data-id");
             document.getElementById("archive-popup").style.display = "block";
@@ -252,6 +267,25 @@ if (checkClassJoin($_SESSION['user_id']) == FALSE) {
             $("#popup_yes").attr("data-id", note_id);
         }
     </script>
-</body>
 
+
+<script type="text/javascript">
+    // Delete a user note
+    function DeleteUserNote(note_id){
+        $.ajax({
+            type: 'POST',
+            url: 'delete-user-note-process.php',
+            data: {
+                "note_id": note_id
+            },
+            success: function(data) {
+                alert(data)
+                location.reload();
+            }
+        });
+    }
+</script>
+
+
+</body>
 </html>
