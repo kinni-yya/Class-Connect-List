@@ -75,11 +75,26 @@ function SelectCalendarRecord($user_id){
 					WHERE member_id = member.member_id) OR subject_id IS NULL) AND calendar.class_id NOT IN(
 					SELECT class_id
 					FROM archive_class
-					WHERE user_id = '$user_id'))
+					WHERE user_id = '$user_id')
+				)
 				UNION ALL
 				(SELECT (@c_id := @c_id + 1) AS 'calendar_id', user_calendar.*, NULL as 'class_id'
 				FROM user_calendar
-				WHERE user_id = '$user_id')";
+				WHERE user_id = '$user_id'
+				)
+				UNION ALL
+				(SELECT (@c_id := @c_id + 1) AS 'calendar_id', subject_calendar.event_id, subject_calendar.event_title, subject_calendar.event_details, subject_calendar.event_from_date, subject_calendar.event_to_date, member.user_id, subject_calendar.class_id
+				FROM subject_calendar
+				JOIN member
+				ON subject_calendar.class_id = member.class_id
+				WHERE user_id = '$user_id' AND (subject_id NOT IN (
+					SELECT subject_id
+					FROM unenroll
+					WHERE member_id = member.member_id) OR subject_id IS NULL) AND subject_calendar.class_id NOT IN(
+					SELECT class_id
+					FROM archive_class
+					WHERE user_id = '$user_id')
+				)";
 		$result = $conn->query($sql);
 	    $conn->close();
 	    return $result;
