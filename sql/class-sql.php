@@ -131,7 +131,54 @@ function InsertSubject($subject_name, $subject_details, $professor, $class_id, $
 		echo "Error: " . $sql . "<br>" . $conn->error;
 	}
 	$conn->close();
-	return 0;
+}
+
+// Insert the schedule of the subject to the subjectschedule table
+function InsertSubjectSchedule($subject_id, $from_time, $to_time, $start_date, $occurrence, $class_id)
+{
+	$conn = OpenCon();
+	$sql = "INSERT INTO subject_schedule (subject_id, from_time, to_time, start_date, occurrence, class_id)
+			VALUES ('$subject_id', '$from_time', '$to_time', '$start_date', '$occurrence', '$class_id')";
+	if ($conn->query($sql) === TRUE) {
+		return $conn->insert_id;
+	} else {
+		echo "Error: " . $sql . "<br>" . $conn->error;
+	}
+	$conn->close();
+}
+
+// Insert the dates of the subject schedule
+function InsertSubjectCalendar($event_title, $event_details, $event_from_date, $event_to_date, $subject_id, $class_id, $subject_schedule_id){
+	$conn = OpenCon();
+	$sql = "INSERT INTO subject_calendar (event_title, event_details, event_from_date, event_to_date, subject_id, class_id, subject_schedule_id)
+			VALUES('$event_title', ".($event_details == null ? "NULL" : "'$event_details'").", '$event_from_date', '$event_to_date', '$subject_id', '$class_id', '$subject_schedule_id')";
+	if ($conn->query($sql) === TRUE) {
+	} else {
+		echo "Error: " . $sql . "<br>" . $conn->error;
+	}
+	$conn->close();
+}
+
+function DeleteSubjectCalendar($subject_schedule_id){
+	$conn = OpenCon();
+	$sql = "DELETE FROM subject_calendar
+			WHERE subject_schedule_id = '$subject_schedule_id'";
+	if ($conn->query($sql) === TRUE) {
+	} else {
+		echo "Error: " . $sql . "<br>" . $conn->error;
+	}
+	$conn->close();
+}
+
+function DeleteSubjectCalendarSubjectID($subject_id){
+	$conn = OpenCon();
+	$sql = "DELETE FROM subject_calendar
+			WHERE subject_id = '$subject_id'";
+	if ($conn->query($sql) === TRUE) {
+	} else {
+		echo "Error: " . $sql . "<br>" . $conn->error;
+	}
+	$conn->close();
 }
 
 // Check if the class code generated is unique
@@ -295,20 +342,6 @@ function CheckClassExist($class_name, $school_year)
 		$conn->close();
 		return FALSE;
 	}
-}
-
-// Insert the schedule of the subject to the subjectschedule table
-function InsertSubjectSchedule($subject_id, $from_time, $to_time, $start_date, $occurrence, $class_id)
-{
-	$conn = OpenCon();
-	$sql = "INSERT INTO subject_schedule (subject_id, from_time, to_time, start_date, occurrence, class_id)
-			VALUES ('$subject_id', '$from_time', '$to_time', '$start_date', '$occurrence', '$class_id')";
-	if ($conn->query($sql) === TRUE) {
-		echo "Subject schedule added!";
-	} else {
-		echo "Error: " . $sql . "<br>" . $conn->error;
-	}
-	$conn->close();
 }
 
 // Delete subject and the subject schedule with it
