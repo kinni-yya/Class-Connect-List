@@ -5,6 +5,7 @@ OpenSession();
 // Delete the subject from the table
 if($_POST['process_type'] == "delete"){
 	$delete_subject_message = DeleteSubject($_POST['subject_id']);
+	DeleteSubjectCalendarSubjectID($_POST['subject_id']);
 	echo $delete_subject_message;
 }
 
@@ -42,7 +43,18 @@ if($_POST['process_type'] == "insert"){
 	// Insert the schedule for the subject using the returned subject id
 	if($subject_id > 0){
 		for ($i=0; $i < sizeof($_POST['start_date']); $i++) { 
-			InsertSubjectSchedule($subject_id, $_POST['from_time'][$i], $_POST['to_time'][$i], $_POST['start_date'][$i], $_POST['occurrence'][$i], $_POST['class_id']);
+			$subject_schedule_id = InsertSubjectSchedule($subject_id, $_POST['from_time'][$i], $_POST['to_time'][$i], $_POST['start_date'][$i], $_POST['occurrence'][$i], $_POST['class_id']);
+
+			// Insert the schedule to subject calendar
+			for ($j=0; $j < $_POST['occurrence'][$i]; $j++) { 
+				$event_title = $_POST['subject_name'];
+				$event_details = $subject_details;
+				// Calculate for the next date or next recurrence
+				$event_date = date('Y-m-d', strtotime('+'.$j.' week', strtotime($_POST['start_date'][$i])));
+				$event_from_date = date('Y-m-d H:i:s', strtotime("$event_date ".$_POST['from_time'][$i]));
+				$event_to_date = date('Y-m-d H:i:s', strtotime("$event_date ".$_POST['to_time'][$i]));
+				InsertSubjectCalendar($event_title, $event_details, $event_from_date, $event_to_date, $subject_id, $_POST['class_id'], $subject_schedule_id);
+			}
 		}
 	}
 }
@@ -73,11 +85,36 @@ if($_POST['process_type'] == "update"){
 			for ($i=0; $i < sizeof($_POST['start_date']); $i++) { 
 				// If the subject schedule is not set it means it is a new subject schedule. Insert the data to subject schedule
 				if(!isset($_POST['subject_schedule_id'][$i]) || empty($_POST['subject_schedule_id'][$i])){
-					InsertSubjectSchedule($_POST['subject_id'], $_POST['from_time'][$i], $_POST['to_time'][$i], $_POST['start_date'][$i], $_POST['occurrence'][$i], $_POST['class_id']);
+					$subject_schedule_id = InsertSubjectSchedule($_POST['subject_id'], $_POST['from_time'][$i], $_POST['to_time'][$i], $_POST['start_date'][$i], $_POST['occurrence'][$i], $_POST['class_id']);
+
+					// Insert the schedule to subject calendar
+					for ($j=0; $j < $_POST['occurrence'][$i]; $j++) { 
+						$event_title = $_POST['subject_name'];
+						$event_details = $subject_details;
+						// Calculate for the next date or next recurrence
+						$event_date = date('Y-m-d', strtotime('+'.$j.' week', strtotime($_POST['start_date'][$i])));
+						$event_from_date = date('Y-m-d H:i:s', strtotime("$event_date ".$_POST['from_time'][$i]));
+						$event_to_date = date('Y-m-d H:i:s', strtotime("$event_date ".$_POST['to_time'][$i]));
+						InsertSubjectCalendar($event_title, $event_details, $event_from_date, $event_to_date, $_POST['subject_id'], $_POST['class_id'], $subject_schedule_id);
+					}
 				}
 				// If the subject schedule is already set the row needs to be updated
 				else{
 					UpdateSubjectSchedule($_POST['subject_schedule_id'][$i], $_POST['subject_id'], $_POST['from_time'][$i], $_POST['to_time'][$i], $_POST['start_date'][$i], $_POST['occurrence'][$i], $_POST['class_id']);
+
+					// Delete the schedule calendar 
+					DeleteSubjectCalendar($_POST['subject_schedule_id'][$i]);
+
+					// Insert the schedule to subject calendar
+					for ($j=0; $j < $_POST['occurrence'][$i]; $j++) { 
+						$event_title = $_POST['subject_name'];
+						$event_details = $subject_details;
+						// Calculate for the next date or next recurrence
+						$event_date = date('Y-m-d', strtotime('+'.$j.' week', strtotime($_POST['start_date'][$i])));
+						$event_from_date = date('Y-m-d H:i:s', strtotime("$event_date ".$_POST['from_time'][$i]));
+						$event_to_date = date('Y-m-d H:i:s', strtotime("$event_date ".$_POST['to_time'][$i]));
+						InsertSubjectCalendar($event_title, $event_details, $event_from_date, $event_to_date, $_POST['subject_id'], $_POST['class_id'], $_POST['subject_schedule_id'][$i]);
+					}
 				}
 			}
 		}
@@ -88,6 +125,7 @@ if($_POST['process_type'] == "update"){
 if ($_POST['process_type'] == "delete-schedule") {
 	// Delete subject schedule
 	if(DeleteSubjectSchedule($_POST['subject_schedule_id']) == TRUE){
+		DeleteSubjectCalendar($_POST['subject_schedule_id']);
 		echo "Schedule Deleted";
 	}
 }
