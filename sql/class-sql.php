@@ -679,7 +679,7 @@ function CountAllLateDueNote($user_id)
 				-- notes that don't fall under any subjects will be displayed (i.e. General Note)
 				AND (subject_id NOT IN (SELECT subject_id FROM unenrolled_subjects) OR subject_id IS NULL)
 				-- due date must be the current date to get the today
-				AND due_date = CURDATE()";
+				AND DATEDIFF(CURDATE(), due_date) >= '1'";
 	$result = $conn->query($sql);
 	$row = $result->fetch_assoc();
 	$conn -> close();
