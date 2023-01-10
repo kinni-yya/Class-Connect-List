@@ -59,7 +59,14 @@ while($row = $select_announcement_result->fetch_assoc()) {
 			}
 			 ?>
 			&emsp;<button class="btn btn-outline-success" data-id="<?php echo $row['note_id']; ?>" onclick="CompleteTask(this)">Complete</button>
-			&emsp;<button class="btn btn-outline-info">Add to My List</button>
+			&emsp;<button class="btn btn-outline-info" data-id='<?php echo json_encode(
+                    array(
+                        'user_id' => $_SESSION['user_id'],
+                        'due_date' => $row['due_date'],
+                        'due_time' => $row['due_time'],
+                        'note_title' => $row['note_title'],
+                        'description' => $row['description']
+                ))?>' onclick="AddMyListNote(this)">Add to My List</button>
 			&emsp;<button class="btn btn-outline-secondary" onclick="CloseDisplayNote(this)">Close</button>
 		</div>
 		
@@ -101,7 +108,7 @@ while($row = $select_announcement_result->fetch_assoc()) {
 						<select name="subject_id" class="form-control">
 							<option value="0">General Note</option>
 							<?php 
-							$subject_specific = GetAMemberSubjectNames($_GET['class_id']);
+							$subject_specific = GetAMemberSubjectNames($member_id, $_GET['class_id']); 
 							// Get all the subject id and title from database and show it in a dropdown list
 							while($subject_row = $subject_specific->fetch_assoc()){
 								// Check if the subject id list match with the subject id of the note
@@ -141,6 +148,7 @@ while($row = $select_announcement_result->fetch_assoc()) {
 
 				<div class="form-group">
 					<input type="hidden" name="note_id" value="<?php echo $row['note_id'];?>">
+					<input type="hidden" name="class_id" value="<?php echo $_GET['class_id'];?>">
 				</div>
 			<!-- END Form to add Note -->
       		</div>
@@ -183,7 +191,7 @@ while($row = $select_announcement_result->fetch_assoc()) {
 						<select name="subject_id" class="form-control">
 							<option value="0">General Note</option>
 							<?php 
-							$subject_specific = GetAMemberSubjectNames($_GET['class_id']);
+							$subject_specific = GetAMemberSubjectNames($member_id, $_GET['class_id']); 
 							// Get all the subject id and title from database and show it in a dropdown list
 							while($subject_row = $subject_specific->fetch_assoc()){
 								// Check if the subject id list match with the subject id of the note
