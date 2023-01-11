@@ -1,6 +1,42 @@
 <?php 
 require_once('../dbconnect.php');
-OpenSession(); ?>
+OpenSession(); 
+
+
+if (!isset($_GET['filter']) && empty($_GET['filter'])) {
+    $_GET['filter'] = "sdm";
+    header("Location: calendar.php?filter=" . $_GET['filter']);
+}
+else if($_GET['filter'] == "sdm"){
+    $schedules = SelectCalendarRecord($_SESSION['user_id'], "sdm");
+}
+else if($_GET['filter'] == "sd"){
+    $schedules = SelectCalendarRecord($_SESSION['user_id'], "sd");
+}
+else if($_GET['filter'] == "sm"){
+    $schedules = SelectCalendarRecord($_SESSION['user_id'], "sm");
+}
+else if($_GET['filter'] == "dm"){
+    $schedules = SelectCalendarRecord($_SESSION['user_id'], "dm");
+}
+else if($_GET['filter'] == "s"){
+    $schedules = SelectCalendarRecord($_SESSION['user_id'], "s");
+}
+else if($_GET['filter'] == "d"){
+    $schedules = SelectCalendarRecord($_SESSION['user_id'], "d");
+}
+else if($_GET['filter'] == "m"){
+    $schedules = SelectCalendarRecord($_SESSION['user_id'], "m");
+}
+
+
+$sched_res = [];
+foreach($schedules->fetch_all(MYSQLI_ASSOC) as $row){
+    $row['sdate'] = date("F d, Y h:i A",strtotime($row['start_datetime']));
+    $row['edate'] = date("F d, Y h:i A",strtotime($row['end_datetime']));
+    $sched_res[$row['calendar_id']] = $row;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,19 +74,19 @@ OpenSession(); ?>
                         <div class="container-fluid">
                             <div class="form-group mb-2">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                                    <input class="form-check-input" type="checkbox" value="" id="subject-filter" checked>
                                     <label class="form-check-label" for="flexCheckChecked">
                                         Subject Schedule
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                                    <input class="form-check-input" type="checkbox" value="" id="due-filter" checked>
                                     <label class="form-check-label" for="flexCheckChecked">
                                         Deadlines
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                                    <input class="form-check-input" type="checkbox" value="" id="mylist-filter" checked>
                                     <label class="form-check-label" for="flexCheckChecked">
                                         My List
                                     </label>
@@ -203,17 +239,7 @@ OpenSession(); ?>
     <!-- Full calendar script -->
     <script src="https://unpkg.com/fullcalendar@5.10.1/main.js"></script>
 
-<?php 
-// Show only the calendar per class and exlude the subjects the user is unenrolled
-$schedules = SelectCalendarRecord($_SESSION['user_id']);
 
-$sched_res = [];
-foreach($schedules->fetch_all(MYSQLI_ASSOC) as $row){
-    $row['sdate'] = date("F d, Y h:i A",strtotime($row['start_datetime']));
-    $row['edate'] = date("F d, Y h:i A",strtotime($row['end_datetime']));
-    $sched_res[$row['calendar_id']] = $row;
-}
-?>
 <script>
     var scheds = $.parseJSON('<?= json_encode($sched_res) ?>')
     var calendar;
@@ -355,6 +381,64 @@ $("#edit-event-form").submit(function(e){
         }
     });
 });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function(e){
+        if("<?php echo $_GET['filter'] ?>" == "sd"){
+            $("#mylist-filter").prop('checked', false);
+        }
+        else if("<?php echo $_GET['filter'] ?>" == "sm"){
+            $("#due-filter").prop('checked', false);
+        }
+        else if("<?php echo $_GET['filter'] ?>" == "dm"){
+            $("#subject-filter").prop('checked', false);
+        }
+        else if("<?php echo $_GET['filter'] ?>" == "s"){
+            $("#due-filter").prop('checked', false);
+            $("#mylist-filter").prop('checked', false);
+        }
+        else if("<?php echo $_GET['filter'] ?>" == "d"){
+            $("#subject-filter").prop('checked', false);
+            $("#mylist-filter").prop('checked', false);
+        }
+        else if("<?php echo $_GET['filter'] ?>" == "m"){
+            $("#subject-filter").prop('checked', false);
+            $("#due-filter").prop('checked', false);
+        }
+
+    });
+
+    $(".form-check-input").click(function(e){
+        if($("#subject-filter").is(":checked") && $("#due-filter").is(":checked") && $("#mylist-filter").is(":checked")){
+            window.location.replace("calendar.php?filter=sdm");
+        }
+        // Only subject and due are checked
+        else if($("#subject-filter").is(":checked") && $("#due-filter").is(":checked") && !($("#mylist-filter").is(":checked"))){
+            window.location.replace("calendar.php?filter=sd");
+        }
+        // Only subject and mylist are checked
+        else if($("#subject-filter").is(":checked") && !($("#due-filter").is(":checked")) && $("#mylist-filter").is(":checked")){
+            window.location.replace("calendar.php?filter=sm");
+        }
+        // Only due and mylist are checked
+        else if(!($("#subject-filter").is(":checked")) && $("#due-filter").is(":checked") && $("#mylist-filter").is(":checked")){
+            window.location.replace("calendar.php?filter=dm");
+        }
+        else if($("#subject-filter").is(":checked") && !($("#due-filter").is(":checked")) && !($("#mylist-filter").is(":checked"))){
+            window.location.replace("calendar.php?filter=s");
+        }
+        else if(!($("#subject-filter").is(":checked")) && $("#due-filter").is(":checked") && !($("#mylist-filter").is(":checked"))){
+            window.location.replace("calendar.php?filter=d");
+        }
+        else if(!($("#subject-filter").is(":checked")) && !($("#due-filter").is(":checked")) && $("#mylist-filter").is(":checked")){
+            window.location.replace("calendar.php?filter=m");
+        }
+        else if(!($("#subject-filter").is(":checked")) && !($("#due-filter").is(":checked")) && !($("#mylist-filter").is(":checked"))){
+            window.location.replace("calendar.php?filter=sdm");
+        }
+
+    });
 </script>
 
 </body>
