@@ -3,15 +3,30 @@
 // Select calendar per class and exclude unenrolled subeject
 function SelectClassCalendar($class_id, $member_id){
 	$conn = OpenCon();
-	$sql = "SELECT *
-        FROM calendar
-        WHERE class_id = '$class_id' AND (subject_id NOT IN (
-            SELECT subject_id
-            FROM unenroll
-            WHERE member_id = '$member_id') OR subject_id IS NULL)";
-    $result = $conn->query($sql);
-    $conn->close();
-    return $result;
+	$sql = "SET @c_id = 0";
+	if ($conn->query($sql) === TRUE) {
+		$sql = "(SELECT (@c_id := @c_id + 1) AS 'calendar_id', calendar.*
+				FROM calendar
+				WHERE class_id = '$class_id' AND (subject_id NOT IN (
+					SELECT subject_id
+					FROM unenroll
+					WHERE member_id = '$member_id') OR subject_id IS NULL)
+				)
+				UNION ALL
+				(SELECT (@c_id := @c_id + 1) AS 'calendar_id', NULL AS 'event_id', subject_calendar.event_title, subject_calendar.event_details, subject_calendar.event_from_date, subject_calendar.event_to_date, subject_calendar.class_id, subject_calendar.subject_id
+				FROM subject_calendar
+				WHERE class_id = '$class_id' AND (subject_id NOT IN (
+					SELECT subject_id
+					FROM unenroll
+					WHERE member_id = '$member_id') OR subject_id IS NULL)
+				)";
+		$result = $conn->query($sql);
+	    $conn->close();
+	    return $result;
+		}
+	else{
+		echo "Error: " . $sql . "<br>" . $conn->error;
+	}
 }
 
 // Insert into calendar
@@ -58,14 +73,14 @@ function DeleteClassCalendarEvent($event_id, $conn){
 }
 
 // Select the calendar per user
-function SelectCalendarRecord($user_id){
+function SelectCalendarRecord($user_id, $filter){
 	$conn = OpenCon();
 	// Unioned the table that the user can see after excluding the unenroll and the table for user calendar
 	// Set c_id as calendar_id which is a temporary row that auto incremate which will serve as the array key for the calendar
 	// Added the class_id to determine if the event is from a user or from a class
 	$sql = "SET @c_id = 0";
 	if ($conn->query($sql) === TRUE) {
-		$sql = "(SELECT (@c_id := @c_id + 1) AS 'calendar_id', calendar.event_id, calendar.event_title, calendar.description, calendar.start_datetime, calendar.end_datetime, member.user_id, calendar.class_id
+		$due_sql = "(SELECT (@c_id := @c_id + 1) AS 'calendar_id', calendar.event_id, calendar.event_title, calendar.description, calendar.start_datetime, calendar.end_datetime, member.user_id, calendar.class_id
 				FROM calendar
 				JOIN member
 				ON calendar.class_id = member.class_id
@@ -76,14 +91,12 @@ function SelectCalendarRecord($user_id){
 					SELECT class_id
 					FROM archive_class
 					WHERE user_id = '$user_id')
-				)
-				UNION ALL
-				(SELECT (@c_id := @c_id + 1) AS 'calendar_id', user_calendar.*, NULL as 'class_id'
+				)";
+		$mylist_sql = "(SELECT (@c_id := @c_id + 1) AS 'calendar_id', user_calendar.event_id, user_calendar.event_title, user_calendar.event_details AS 'description', user_calendar.event_from_date AS 'start_datetime', user_calendar.event_to_date AS 'end_datetime', user_calendar.user_id, NULL as 'class_id'
 				FROM user_calendar
 				WHERE user_id = '$user_id'
-				)
-				UNION ALL
-				(SELECT (@c_id := @c_id + 1) AS 'calendar_id', subject_calendar.event_id, subject_calendar.event_title, subject_calendar.event_details, subject_calendar.event_from_date, subject_calendar.event_to_date, member.user_id, subject_calendar.class_id
+				)";
+		$subject_sql = "(SELECT (@c_id := @c_id + 1) AS 'calendar_id', subject_calendar.event_id, subject_calendar.event_title, subject_calendar.event_details AS 'description', subject_calendar.event_from_date AS 'start_datetime', subject_calendar.event_to_date AS 'end_datetime', member.user_id, subject_calendar.class_id
 				FROM subject_calendar
 				JOIN member
 				ON subject_calendar.class_id = member.class_id
@@ -95,6 +108,27 @@ function SelectCalendarRecord($user_id){
 					FROM archive_class
 					WHERE user_id = '$user_id')
 				)";
+		if($filter == "sdm"){
+		    $sql = $subject_sql." UNION ALL ".$due_sql." UNION ALL ".$mylist_sql;
+		}
+		else if($filter == "sd"){
+		    $sql = $subject_sql." UNION ALL ".$due_sql;
+		}
+		else if($filter == "sm"){
+		    $sql = $subject_sql." UNION ALL ".$mylist_sql;
+		}
+		else if($filter == "dm"){
+		    $sql = $due_sql." UNION ALL ".$mylist_sql;
+		}
+		else if($filter == "s"){
+		    $sql = $subject_sql;
+		}
+		else if($filter == "d"){
+		    $sql = $due_sql;
+		}
+		else if($filter == "m"){
+		    $sql = $mylist_sql;
+		}
 		$result = $conn->query($sql);
 	    $conn->close();
 	    return $result;
