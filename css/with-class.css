@@ -9,6 +9,7 @@
 
 button {
   width: 100px;
+  cursor: pointer;
 }
 #popup {
   display: none;
@@ -192,6 +193,7 @@ input:focus{
   color: #009087;
   font-size: 20px;
   position: absolute;
+  cursor: pointer;
 }
 
 #center{

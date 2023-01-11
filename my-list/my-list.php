@@ -2,10 +2,10 @@
 include "../dbconnect.php";
 OpenSession();
 
-// Check if the user is in a class
-if (checkClassJoin($_SESSION['user_id']) == FALSE) {
-    header("location: ../class/no-class.php");
-}
+// // Check if the user is in a class
+// if (checkClassJoin($_SESSION['user_id']) == FALSE) {
+//     header("location: ../class/no-class.php");
+// }
 ?>
 
 

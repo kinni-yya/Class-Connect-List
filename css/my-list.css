@@ -116,12 +116,16 @@ input[type="time"], input[type="date"]{
     width: 100%;
 }
 
-.subjbuttons{
+.subjbuttons button{
+    margin-inline: 3px;
+}
+
+/* .subjbuttons{
     position: relative;
     width: 100%;
     display: flex;
     justify-content:space-between;
-}
+} */
 
 p, span{
     background-color: transparent;
@@ -137,10 +141,30 @@ p, span{
     color: #009087;
 }
 
-.notedetails{
-    margin-bottom: 10px;
+.notedetails{ 
+    box-sizing: border-box;
+    padding: 5px;
+    margin-bottom: 40px;
     height: 60px;
     overflow: auto;
+}
+
+.notedetails::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  /* Handle */
+.notedetails.notedetails::-webkit-scrollbar-thumb {
+    background: #009087;
+    border-radius: 10px;
+  }
+  
+  /* Track */
+.notedetails::-webkit-scrollbar-track {
+    background: #EDEDED;
+    border-radius: 10px;
+    box-shadow: inset 2px 2px 5px rgba(100, 104, 128, 0.6),
+            inset -4px -4px 9px rgba(255, 255, 255, 1);
 }
 
 .fa-solid{
